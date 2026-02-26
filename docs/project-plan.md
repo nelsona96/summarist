@@ -91,8 +91,8 @@
 
 ### Steps
 
-1. Run `npx create-next-app@latest` — select TypeScript, ESLint, App Router, `src/` directory. **Decline Tailwind.**
-2. Create folder structure inside `src/`:
+1. (DONE) Run `npx create-next-app@latest` — select TypeScript, ESLint, App Router, `src/` directory. **Decline Tailwind.**
+2. (DONE) Create folder structure inside `src/`:
    - `app/` — routes
    - `components/` — split into `auth/`, `layout/`, `book/`, `player/`, `ui/`, `home/`
    - `store/` — Redux store + slices
@@ -100,22 +100,22 @@
    - `lib/` — Firebase config, API helpers, utilities
    - `types/` — shared TypeScript interfaces
    - `hooks/` — custom hooks
-3. Install runtime deps: `@reduxjs/toolkit react-redux clsx sonner react-icons @stripe/stripe-js firebase`
-4. Install dev deps for testing: `vitest @testing-library/react @testing-library/jest-dom @testing-library/user-event @vitejs/plugin-react jsdom`
-5. Configure Vitest: create `vitest.config.ts` with React plugin, jsdom environment, and path aliases matching your `tsconfig.json`
-6. Add a `test` script to `package.json`: `"test": "vitest"`, `"test:run": "vitest run"`
-7. Set up Redux Toolkit: `store/store.ts` with `configureStore`, export `RootState` and `AppDispatch` types, create typed `useAppSelector` / `useAppDispatch` hooks in `hooks/redux.ts`, create a `"use client"` `Providers.tsx` that wraps children in `<Provider store={store}>`
-8. Set up Firebase: create project in Firebase Console (enable Auth + Firestore), create `lib/firebase.ts` with config, add keys to `.env.local`
-9. Define `Book` interface in `types/book.ts` — all 16 fields from the API
-10. Create `lib/api.ts` — typed fetch helpers for the 5 Summarist endpoints
-11. Set up global styles in `app/globals.css` — CSS reset, CSS custom properties for theming (`--color-bg`, `--color-text`, `--color-primary`, `--color-secondary`, `--color-border`, etc.), base font styles
-12. Write a sanity test: test one of your API helper functions or a simple utility to verify the testing setup works
-13. Set up Prettier: install `prettier eslint-config-prettier` (dev deps), create `.prettierrc`, add `eslint-config-prettier` to ESLint config, add `"format": "prettier --write ."` script, configure VS Code format-on-save
-14. Set up Husky + lint-staged: install `husky lint-staged` (dev deps), run `npx husky init`, configure `lint-staged` in `package.json` to run Prettier + ESLint + type-check on staged files
-15. Set up GitHub Actions: create `.github/workflows/ci.yml` — triggers on push to `main` and PRs to `main`, steps: checkout → install Node → install deps → `tsc --noEmit` → `npm run lint` → `npm run test:run`
-16. Create error handling files:
+3. (DONE) Install runtime deps: `@reduxjs/toolkit react-redux clsx sonner react-icons @stripe/stripe-js firebase`
+4. (DONE) Install dev deps for testing: `vitest @testing-library/react @testing-library/jest-dom @testing-library/user-event @vitejs/plugin-react jsdom`
+5. (DONE) Configure Vitest: create `vitest.config.ts` with React plugin, jsdom environment, and path aliases matching your `tsconfig.json`
+6. (DONE) Add a `test` script to `package.json`: `"test": "vitest"`, `"test:run": "vitest run"`
+7. (DONE) Set up Redux Toolkit: `store/store.ts` with `configureStore`, export `RootState` and `AppDispatch` types, create typed `useAppSelector` / `useAppDispatch` hooks in `hooks/redux.ts`, create a `"use client"` `Providers.tsx` that wraps children in `<Provider store={store}>`
+8. (DONE) Set up Firebase: create project in Firebase Console (enable Auth + Firestore), create `lib/firebase.ts` with config, add keys to `.env.local`
+9. (DONE) Define `Book` interface in `types/book.ts` — all 16 fields from the API
+10. (DONE) Create `lib/api.ts` — typed fetch helpers for the 5 Summarist endpoints
+11. (DONE) Set up global styles in `app/globals.css` — CSS reset, CSS custom properties for theming (`--color-bg`, `--color-text`, `--color-primary`, `--color-secondary`, `--color-border`, etc.), base font styles
+12. (DONE) Write a sanity test: test one of your API helper functions or a simple utility to verify the testing setup works
+13. (DONE) Set up Prettier: install `prettier eslint-config-prettier` (dev deps), create `.prettierrc`, add `eslint-config-prettier` to ESLint config, add `"format": "prettier --write ."` script, configure VS Code format-on-save
+14. (SKIP) Set up Husky + lint-staged: install `husky lint-staged` (dev deps), run `npx husky init`, configure `lint-staged` in `package.json` to run Prettier + ESLint + type-check on staged files
+15. (DONE) Set up GitHub Actions: create `.github/workflows/ci.yml` — triggers on push to `main` and PRs to `main`, steps: checkout → install Node → install deps → `tsc --noEmit` → `npm run lint` → `npm run test:run`
+16. (DONE) Create error handling files:
     - `app/not-found.tsx` — global 404 page ("Page not found" + link to home), styled with CSS Modules
-    - `app/global-error.tsx` — `"use client"`, includes `<html>` and `<body>`, receives `error` and `reset` props, shows "Something went wrong" + "Try again" button
+    - (SKIP) `app/global-error.tsx` — `"use client"`, includes `<html>` and `<body>`, receives `error` and `reset` props, shows "Something went wrong" + "Try again" button
     - `components/ui/ErrorFallback.tsx` — reusable error UI component (accepts `error` + `reset` props), used inside every route-level `error.tsx`
 17. Init Git, `.gitignore` (include `.env.local`), initial commit, push to GitHub
 18. Connect to Vercel, verify deployment

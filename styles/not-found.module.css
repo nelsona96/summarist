@@ -1,0 +1,42 @@
+.container {
+  margin: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  height: calc(100dvh - 3rem);
+}
+
+.error {
+  display: flex;
+  align-items: center;
+}
+
+.errorStatus {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.errorMessage {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.errorDivider {
+  margin: 0 1rem;
+  width: 2px;
+  height: 32px;
+  background-color: var(--color-primary-font);
+}
+
+@media (max-width: 440px) {
+  .error {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .errorDivider {
+    display: none;
+  }
+}

@@ -1,0 +1,16 @@
+.button {
+    padding: .75rem 1.5rem;
+    color: var(--color-primary-font);
+    background-color: var(--color-primary-accent);
+    border: none;
+    border-radius: .25rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 150ms ease;
+}
+
+.button:hover {
+    background-color: var(--color-btn-hover);
+}
