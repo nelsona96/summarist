@@ -5,12 +5,15 @@
   justify-content: center;
   align-items: center;
   gap: 2rem;
-  height: calc(100dvh - 3rem);
+  height: calc(100dvh - (3rem + 60px));
+  transition: height 150ms ease;
 }
 
 .error {
   display: flex;
+  flex-direction: column;
   align-items: center;
+  gap: 0.5rem;
 }
 
 .errorStatus {
@@ -21,22 +24,28 @@
 .errorMessage {
   font-size: 1.5rem;
   font-weight: 500;
+  text-align: center;
+  text-wrap: balance;
 }
 
 .errorDivider {
-  margin: 0 1rem;
+  display: none;
   width: 2px;
   height: 32px;
   background-color: var(--color-primary-font);
 }
 
-@media (max-width: 440px) {
+@media (min-width: 440px) {
+  .container {
+    height: calc(100dvh - (3rem + 80px));
+  }
+
   .error {
-    flex-direction: column;
-    gap: 0.5rem;
+    flex-direction: row;
+    gap: 1rem;
   }
 
   .errorDivider {
-    display: none;
+    display: inline;
   }
 }

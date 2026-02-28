@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import styles from "@/styles/ErrorButton.module.css";
+import styles from "./ErrorButton.module.css";
 
 interface ErrorButtonOnClick {
   onClick: () => void;

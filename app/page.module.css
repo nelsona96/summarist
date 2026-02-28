@@ -3,11 +3,18 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100dvh;
-  background-color: var(--color-secondary-bg);
+  height: calc(100dvh - 60px);
+  background-color: #fff;
+  transition: height 150ms ease;
 }
 
 .message {
   text-align: center;
   text-wrap: balance;
+}
+
+@media (min-width: 580px) {
+  .container {
+    height: calc(100dvh - 80px);
+  }
 }

@@ -1,5 +1,5 @@
 import ErrorButton from "./ErrorButton";
-import styles from "@/styles/ErrorFallback.module.css";
+import styles from "./ErrorFallback.module.css";
 
 interface ErrorFallbackProps {
   onReset: () => void;
