@@ -20,7 +20,7 @@ export default function ErrorButton({
   if (onClick) {
     return (
       <button
-        className={styles.button}
+        className={`button`}
         onClick={onClick}
         aria-label="Try again"
       >
@@ -32,7 +32,7 @@ export default function ErrorButton({
   if (href) {
     return (
       <Link
-        className={styles.button}
+        className={`button`}
         href={href}
         aria-label="Return to home page"
       >

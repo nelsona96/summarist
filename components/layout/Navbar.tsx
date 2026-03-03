@@ -5,8 +5,8 @@ import styles from "./Navbar.module.css";
 
 export default function Navbar() {
   return (
-    <header className={styles.header}>
-      <div className={styles.container}>
+    <header>
+      <div className={`container ${styles.navContainer}`}>
         <Image className={styles.logo} src={logo} alt="Summarist logo" />
         <nav className={styles.nav} aria-label="Main navigation">
           <ul className={styles.navLinks}>
@@ -15,17 +15,17 @@ export default function Navbar() {
                 Login
               </Link>
             </li>
-            <li className={styles.disabled}>
+            <li>
               <span className={styles.navLink} aria-disabled="true">
                 About
               </span>
             </li>
-            <li className={styles.disabled}>
+            <li>
               <span className={styles.navLink} aria-disabled="true">
                 Contact
               </span>
             </li>
-            <li className={styles.disabled}>
+            <li>
               <span className={styles.navLink} aria-disabled="true">
                 Help
               </span>

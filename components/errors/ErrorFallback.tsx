@@ -7,9 +7,13 @@ interface ErrorFallbackProps {
 
 export default function ErrorFallback({ onReset }: ErrorFallbackProps) {
   return (
-    <main className={styles.container}>
-      <h1 className={styles.errorMessage}>Oops! Something went wrong.</h1>
-      <ErrorButton onClick={onReset} />
+    <main>
+      <div className={styles.container}>
+        <div className={styles.errorWrapper}>
+          <h1 className={styles.errorMessage}>Oops! Something went wrong.</h1>
+          <ErrorButton onClick={onReset} />
+        </div>
+      </div>
     </main>
   );
 }
