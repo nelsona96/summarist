@@ -15,21 +15,21 @@ export default function Navbar() {
                 Login
               </Link>
             </li>
-                <li>
-                  <span className={styles.navLink} aria-disabled="true">
-                    About
-                  </span>
-                </li>
-                <li>
-                  <span className={styles.navLink} aria-disabled="true">
-                    Contact
-                  </span>
-                </li>
-                <li>
-                  <span className={styles.navLink} aria-disabled="true">
-                    Help
-                  </span>
-                </li>
+            <li className={styles.disabled}>
+              <span className={styles.navLink} aria-disabled="true">
+                About
+              </span>
+            </li>
+            <li className={styles.disabled}>
+              <span className={styles.navLink} aria-disabled="true">
+                Contact
+              </span>
+            </li>
+            <li className={styles.disabled}>
+              <span className={styles.navLink} aria-disabled="true">
+                Help
+              </span>
+            </li>
           </ul>
         </nav>
       </div>

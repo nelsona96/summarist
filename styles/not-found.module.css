@@ -1,28 +1,43 @@
 .container {
-  margin: 1.5rem;
+  padding: var(--space-lg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100dvh - var(--navbar-height-mobile));
+  transition: height var(--transition);
+}
+
+.errorWrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 2rem;
-  height: calc(100dvh - (3rem + 60px));
-  transition: height 150ms ease;
+  gap: var(--space-xl);
+  padding-bottom: var(--navbar-height-mobile);
+  transition:
+    padding var(--transition),
+    gap var(--transition);
 }
 
 .error {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--space-sm);
+}
+
+.errorStatus,
+.errorMessage {
+  transition: font-size var(--transition);
 }
 
 .errorStatus {
-  font-size: 2rem;
+  font-size: var(--font-size-2xl);
   font-weight: 700;
 }
 
 .errorMessage {
-  font-size: 1.5rem;
+  font-size: var(--font-size-xl);
   font-weight: 500;
   text-align: center;
   text-wrap: balance;
@@ -36,16 +51,36 @@
 }
 
 @media (min-width: 440px) {
-  .container {
-    height: calc(100dvh - (3rem + 80px));
-  }
-
   .error {
     flex-direction: row;
-    gap: 1rem;
+    gap: var(--space-md);
   }
 
   .errorDivider {
     display: inline;
+  }
+}
+
+@media (min-width: 580px) {
+  .container {
+    height: calc(100dvh - var(--navbar-height-desktop));
+  }
+
+  .errorWrapper {
+    padding-bottom: var(--navbar-height-desktop);
+  }
+}
+
+@media (min-width: 768px) {
+  .errorWrapper {
+    gap: var(--space-2xl);
+  }
+
+  .errorStatus {
+    font-size: var(--font-size-3xl);
+  }
+
+  .errorMessage {
+    font-size: var(--font-size-2xl);
   }
 }

@@ -1,3 +1,12 @@
+/* 
+  Breakpoints (mobile-first, use min-width):
+  - xs: 440px     extra small (small phones)
+  - sm: 580px     small (medium/large phones, landscape/small tablets)
+  - md: 768px     medium (medium/large tablets)
+  - lg: 1024px    large (desktops)
+
+*/
+
 :root {
   /* Background Colors: */
   --color-primary-bg: #fff;
@@ -14,6 +23,38 @@
   --color-primary-font: #032b41;
   --color-secondary-font: #394547;
   --color-muted-font: #6b757b;
+
+  /* Border Color:  */
+  --color-border: #e1e7ea;
+
+  /* Font Sizes: */
+  --font-size-sm: 0.875rem; /* 14px */
+  --font-size-md: 1rem; /* 16px */
+  --font-size-lg: 1.25rem; /* 20px */
+  --font-size-xl: 1.5rem; /* 24px */
+  --font-size-2xl: 2rem; /* 32px */
+  --font-size-3xl: 2.5rem; /* 40px */
+
+  /* Spacing Scale: */
+  --space-xs: 0.25rem; /* 4px */
+  --space-sm: 0.5rem; /* 8px */
+  --space-md: 1rem; /* 16px */
+  --space-lg: 1.5rem; /* 24px */
+  --space-xl: 2rem; /* 32px */
+  --space-2xl: 3rem; /* 48px */
+  --space-3xl: 4rem; /* 64px */
+
+  /* Border Radius:  */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  /* Transition Speed:  */
+  --transition: 0.2s ease;
+
+  /* Navbar:  */
+  --navbar-height-mobile: 60px;
+  --navbar-height-desktop: 80px;
 }
 
 * {
@@ -33,6 +74,11 @@ body {
   font-family: var(--font-roboto), sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  max-width: 100%;
+  display: block;
 }
 
 a {
