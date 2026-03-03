@@ -13,12 +13,18 @@ export default function Landing() {
           </h1>
           <p className={styles.landingPara}>
             Great summaries for busy people, individuals who barely have time to
-            read, and even people who don't like to read.
+            read, and even people who don&apos;t like to read.
           </p>
           <Button text="Login" />
         </div>
         <div className={styles.imgWrapper}>
-        <Image className={styles.img} src={landingImg} width={400} height={380} alt="Landing image" />
+          <Image
+            className={styles.img}
+            src={landingImg}
+            width={400}
+            height={380}
+            alt="Landing image"
+          />
         </div>
       </div>
     </section>
