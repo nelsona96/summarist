@@ -18,9 +18,10 @@ export default function ErrorButton({
   if (onClick) {
     return (
       <button
-        className={`button`}
-        onClick={onClick}
-        aria-label="Try again"
+      type="button"
+      aria-label="Try again"
+      onClick={onClick}
+      className={`button`}
       >
         Try Again
       </button>
@@ -30,9 +31,9 @@ export default function ErrorButton({
   if (href) {
     return (
       <Link
-        className={`button`}
-        href={href}
-        aria-label="Return to home page"
+      aria-label="Return to home page"
+      href={href}
+      className={`button`}
       >
         Go Home
       </Link>

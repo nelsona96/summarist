@@ -9,7 +9,7 @@ export default function ErrorFallback({ onReset }: ErrorFallbackProps) {
   return (
     <main>
       <div className={styles.container}>
-        <div className={styles.errorWrapper}>
+        <div role="alert" className={styles.errorWrapper}>
           <h1 className={styles.errorMessage}>Oops! Something went wrong.</h1>
           <ErrorButton onClick={onReset} />
         </div>

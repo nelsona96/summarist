@@ -5,7 +5,7 @@ import styles from "./Landing.module.css";
 
 export default function Landing() {
   return (
-    <section id="landing" className={`homeSection`}>
+    <section id="landing" aria-label="Landing" className={`homeSection`}>
       <div className={`container ${styles.landingContainer}`}>
         <div className={styles.landingContent}>
           <h1 className={styles.landingTitle}>
@@ -23,7 +23,7 @@ export default function Landing() {
             src={landingImg}
             width={400}
             height={380}
-            alt="Landing image"
+            alt="Person reading a digital book summary"
           />
         </div>
       </div>

@@ -13,17 +13,17 @@ interface FeatureData {
 
 const featureData: Record<FeatureProps["variant"], FeatureData> = {
   readListen: {
-    icon: <AiFillFileText className={styles.featureIcon} />,
+    icon: <AiFillFileText aria-hidden="true" className={styles.featureIcon} />,
     title: "Read or listen",
     description: "Save time by getting the core ideas from the best books.",
   },
   find: {
-    icon: <AiFillBulb className={styles.featureIcon} />,
+    icon: <AiFillBulb aria-hidden="true" className={styles.featureIcon} />,
     title: "Find your next read",
     description: "Explore book lists and personalized recommendations.",
   },
   briefcasts: {
-    icon: <AiFillAudio className={styles.featureIcon} />,
+    icon: <AiFillAudio aria-hidden="true" className={styles.featureIcon} />,
     title: "Briefcasts",
     description: "Gain valuable insights from briefcasts.",
   },

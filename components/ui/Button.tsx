@@ -5,5 +5,5 @@ interface ButtonProps {
 }
 
 export default function Button({ text }: ButtonProps) {
-  return <button className={`button ${styles.homeCta}`}>{text}</button>;
+  return <button type="button" aria-label="Login" className={`button ${styles.homeCta}`}>{text}</button>;
 }
