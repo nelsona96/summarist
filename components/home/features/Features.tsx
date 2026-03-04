@@ -1,5 +1,6 @@
 import Feature from "./Feature";
 import styles from "./Features.module.css";
+import Statistics from "./statistics/Statistics";
 
 export default function Features() {
   return (
@@ -11,6 +12,8 @@ export default function Features() {
           <Feature variant="find" />
           <Feature variant="briefcasts" />
         </div>
+        <Statistics variant="first" />
+        <Statistics variant="second" />
       </div>
     </section>
   );
