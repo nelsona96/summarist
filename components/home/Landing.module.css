@@ -13,7 +13,7 @@
   font-size: var(--font-size-xl);
   text-wrap: balance;
   line-height: 1;
-  margin-bottom: var(--space-sm);
+  margin-bottom: var(--space-md);
 }
 
 .landingPara {
@@ -22,7 +22,7 @@
   font-weight: 300;
   line-height: 1.5;
   text-wrap: pretty;
-  margin-bottom: var(--space-xl);
+  margin-bottom: var(--space-md);
 }
 
 .imgWrapper {
