@@ -5,7 +5,7 @@ import styles from "./Landing.module.css";
 
 export default function Landing() {
   return (
-    <section className={styles.landing}>
+    <section id="landing" className={`homeSection`}>
       <div className={`container ${styles.landingContainer}`}>
         <div className={styles.landingContent}>
           <h1 className={styles.landingTitle}>
