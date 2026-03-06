@@ -23,6 +23,7 @@ export default function Landing() {
             src={landingImg}
             width={400}
             height={380}
+            priority
             alt="Person reading a digital book summary"
           />
         </div>
