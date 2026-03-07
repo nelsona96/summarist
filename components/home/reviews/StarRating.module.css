@@ -1,0 +1,5 @@
+.starsWrapper {
+    display: flex;
+    color: #0564f1;
+    font-size: var(--font-size-lg);
+}

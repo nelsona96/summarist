@@ -33,7 +33,7 @@ export default function Feature({ variant }: FeatureProps) {
   const data = featureData[variant];
 
   return (
-    <article className={styles.featureContainer}>
+    <article className={styles.featureWrapper}>
       {data.icon}
       <h3 className={styles.featureTitle}>{data.title}</h3>
       <p className={styles.featurePara}>{data.description}</p>
