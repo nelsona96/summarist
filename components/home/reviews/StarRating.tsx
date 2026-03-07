@@ -11,8 +11,9 @@ export default function StarRating({ rating }: StarRatingProps) {
 
   return (
     <span
-      className={styles.starsWrapper}
+      role="img"
       aria-label={`${rating} out of 5 stars`}
+      className={styles.starsWrapper}
     >
       {stars.map((_, index) => (
         <AiFillStar key={index} />

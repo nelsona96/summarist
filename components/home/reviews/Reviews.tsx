@@ -9,7 +9,7 @@ const reviewsData: ReviewData[] = [
     name: "Hanna M.",
     message: (
       <>
-        This app has been a <strong>game-changer</strong> for me! It's saved me
+        This app has been a <strong>game-changer</strong> for me! It&apost;s saved me
         so much time and effort in reading and comprehending books. Highly
         recommend it to all book lovers.
       </>
@@ -22,7 +22,7 @@ const reviewsData: ReviewData[] = [
       <>
         I love this app! It provides{" "}
         <strong>concise and accurate summaries</strong> of books in a way that
-        is easy to understand. It's also very user-friendly and intuitive.
+        is easy to understand. It&apost;s also very user-friendly and intuitive.
       </>
     ),
     rating: 5,
@@ -43,10 +43,10 @@ const reviewsData: ReviewData[] = [
     name: "Ryan R.",
     message: (
       <>
-        If you're a busy person who{" "}
-        <strong>loves reading but doesn't have the time</strong> to read every
+        If you&apost;re a busy person who{" "}
+        <strong>loves reading but doesn&apost;t have the time</strong> to read every
         book in full, this app is for you! The summaries are thorough and
-        provide a great overview of the book's content.
+        provide a great overview of the book&apost;s content.
       </>
     ),
     rating: 5,
