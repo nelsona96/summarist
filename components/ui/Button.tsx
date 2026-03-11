@@ -1,5 +1,6 @@
 "use client";
 
+import clsx from "clsx";
 import styles from "./Button.module.css";
 
 interface ButtonProps {
@@ -25,9 +26,9 @@ export default function Button({
   return (
     <button
       type={type}
-      disabled={disabled}
       onClick={handleClick}
-      className={`button ${styles.homeCta}`}
+      disabled={disabled}
+      className={clsx("button", styles[variant])}
     >
       {label}
     </button>
