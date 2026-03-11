@@ -3,7 +3,7 @@ import NumberCard from "./NumberCard";
 
 export default function Numbers() {
   return (
-    <section id="numbers" aria-label="Numbers" className={`homeSection`}>
+    <section id="numbers" aria-label="Numbers" className={`section`}>
       <div className={`container`}>
         <h2 className={`sectionTitle`}>Start growing with Summarist now</h2>
         <div className={styles.numbersWrapper}>

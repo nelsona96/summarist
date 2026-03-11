@@ -3,7 +3,7 @@ import FooterBlock from "./FooterBlock";
 
 export default function Footer() {
   return (
-    <footer className={`homeSection ${styles.footerSection}`}>
+    <footer className={`section ${styles.footerSection}`}>
       <div className={`container`}>
         <div className={styles.top}>
           <FooterBlock variant="actions" />

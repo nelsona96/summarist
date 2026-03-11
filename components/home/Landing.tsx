@@ -5,7 +5,7 @@ import styles from "./Landing.module.css";
 
 export default function Landing() {
   return (
-    <section id="landing" aria-label="Landing" className={`homeSection`}>
+    <section id="landing" aria-label="Landing" className={`section`}>
       <div className={`container ${styles.landingContainer}`}>
         <div className={styles.landingContent}>
           <h1 className={styles.landingTitle}>

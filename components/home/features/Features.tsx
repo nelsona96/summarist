@@ -4,7 +4,7 @@ import Statistics from "./statistics/Statistics";
 
 export default function Features() {
   return (
-    <section id="features" aria-label="Features" className={`homeSection`}>
+    <section id="features" aria-label="Features" className={`section`}>
       <div className={`container`}>
         <h2 className={`sectionTitle`}>Understand books in a few minutes</h2>
         <div className={styles.featuresWrapper}>

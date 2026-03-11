@@ -55,7 +55,7 @@ const reviewsData: ReviewData[] = [
 
 export default function Reviews() {
   return (
-    <section id="reviews" aria-label="Reviews" className={`homeSection`}>
+    <section id="reviews" aria-label="Reviews" className={`section`}>
       <div className={`container`}>
         <h2 className={`sectionTitle`}>What our members say</h2>
         <div className={styles.reviewsWrapper}>
