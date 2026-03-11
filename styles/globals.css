@@ -98,7 +98,7 @@ button {
 }
 
 .section {
-  padding: var(--space-lg) 0;
+  padding: var(--space-xl) 0;
 }
 
 .sectionTitle {
@@ -136,12 +136,6 @@ button {
 
 .button:hover {
   background-color: var(--color-btn-hover);
-}
-
-@media (min-width: 580px) {
-  .section {
-    padding: var(--space-xl) 0;
-  }
 }
 
 @media (min-width: 768px) {
