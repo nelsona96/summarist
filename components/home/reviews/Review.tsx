@@ -6,7 +6,7 @@ export default function Review({ name, message, rating }: ReviewData) {
   return (
     <article className={styles.review}>
       <div className={styles.reviewHeader}>
-        <h3 className={styles.name}>{name}</h3>
+        <p className={styles.name}>{name}</p>
         <StarRating rating={rating} />
       </div>
       <p className={styles.message}>{message}</p>
