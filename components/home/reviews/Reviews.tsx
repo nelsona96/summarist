@@ -9,9 +9,9 @@ const reviewsData: ReviewData[] = [
     name: "Hanna M.",
     message: (
       <>
-        This app has been a <strong>game-changer</strong> for me! It&apos;s saved me
-        so much time and effort in reading and comprehending books. Highly
-        recommend it to all book lovers.
+        This app has been a <strong>game-changer</strong> for me! It&apos;s
+        saved me so much time and effort in reading and comprehending books.
+        Highly recommend it to all book lovers.
       </>
     ),
     rating: 5,
@@ -44,8 +44,8 @@ const reviewsData: ReviewData[] = [
     message: (
       <>
         If you&apos;re a busy person who{" "}
-        <strong>loves reading but doesn&apos;t have the time</strong> to read every
-        book in full, this app is for you! The summaries are thorough and
+        <strong>loves reading but doesn&apos;t have the time</strong> to read
+        every book in full, this app is for you! The summaries are thorough and
         provide a great overview of the book&apos;s content.
       </>
     ),
@@ -57,8 +57,8 @@ export default function Reviews() {
   return (
     <section id="reviews" aria-label="Reviews" className={`homeSection`}>
       <div className={`container`}>
+        <h2 className={`sectionTitle`}>What our members say</h2>
         <div className={styles.reviewsWrapper}>
-          <h2 className={`sectionTitle`}>What our members say</h2>
           {reviewsData.map((review, index) => (
             <Review key={index} {...review} />
           ))}
