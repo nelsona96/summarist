@@ -3,7 +3,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: calc(100dvh - var(--navbar-height-mobile));
+  height: 100dvh;
 }
 
 .errorWrapper {
@@ -12,7 +12,6 @@
   justify-content: center;
   align-items: center;
   gap: var(--space-xl);
-  padding-bottom: var(--navbar-height-mobile);
 }
 
 .error {
@@ -49,16 +48,6 @@
 
   .errorDivider {
     display: inline;
-  }
-}
-
-@media (min-width: 580px) {
-  .container {
-    height: calc(100dvh - var(--navbar-height-desktop));
-  }
-
-  .errorWrapper {
-    padding-bottom: var(--navbar-height-desktop);
   }
 }
 
