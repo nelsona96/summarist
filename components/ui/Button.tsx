@@ -1,8 +1,8 @@
 "use client";
 
 import clsx from "clsx";
+import { toast } from "sonner";
 import styles from "./Button.module.css";
-
 interface ButtonProps {
   variant: "homeCta" | "guest" | "google";
   type: "submit" | "reset" | "button";
@@ -20,7 +20,11 @@ export default function Button({
 }: ButtonProps) {
   // Temporary onClick function:
   const handleClick = () => {
-    alert("Hi there! This functionality has not yet been implemented.");
+    onClick
+      ? onClick()
+      : toast.info("Hi there!", {
+          description: "This functionality has not yet been implemented.",
+        });
   };
 
   return (
