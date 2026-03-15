@@ -39,10 +39,6 @@
 }
 
 @media (min-width: 580px) {
-  .landing {
-    padding: var(--space-xl) 0;
-  }
-
   .landingTitle {
     font-size: var(--font-size-2xl);
   }
