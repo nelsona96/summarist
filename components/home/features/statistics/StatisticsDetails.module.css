@@ -24,7 +24,7 @@
     font-size: var(--font-size-md);
     font-weight: 300;
     text-wrap: pretty;
-    color: var(--color-secondary-font)
+    color: var(--color-secondary-font);
 }
 
 @media (min-width: 768px) {
