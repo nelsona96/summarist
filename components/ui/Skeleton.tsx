@@ -20,12 +20,5 @@ export default function Skeleton({
     marginBottom: marginBottom,
   };
 
-  return (
-    <div
-      role="status"
-      aria-label="Loading content"
-      style={skeletonStyles}
-      className={styles.skeleton}
-    ></div>
-  );
+  return <div style={skeletonStyles} className={styles.skeleton}></div>;
 }
