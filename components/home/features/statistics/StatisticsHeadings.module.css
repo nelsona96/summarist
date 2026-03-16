@@ -1,0 +1,24 @@
+.headingsWrapper {
+    width: 100%;
+}
+
+.heading {
+    font-size: var(--font-size-xl);
+    font-weight: 500;
+    color: var(--color-muted-font);
+    margin-bottom: var(--space-md);
+}
+
+.heading:last-child {
+    margin-bottom: 0;
+}
+
+.highlight {
+    color: var(--color-primary-accent);
+}
+
+@media (min-width: 768px) {
+    .heading {
+        font-size: var(--font-size-2xl);
+    }
+}

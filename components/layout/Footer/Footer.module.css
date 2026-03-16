@@ -1,0 +1,35 @@
+.footerSection {
+  padding: var(--space-3xl) 0 var(--space-xl);
+  background-color: var(--color-secondary-bg);
+}
+
+.top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-xl);
+}
+
+.divider {
+  border: none;
+  height: 2px;
+  width: 80%;
+  max-width: 400px;
+  margin: var(--space-xl) auto var(--space-2xl);
+  background-color: var(--color-border);
+}
+
+.copyright {
+  font-weight: 300;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+@media (min-width: 768px) {
+  .top {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+}

@@ -1,0 +1,25 @@
+.review {
+    padding: var(--space-md);
+    margin-bottom: var(--space-xl);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-highlight-bg);
+}
+
+.reviewHeader {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--space-sm);
+    gap: var(--space-sm);
+}
+
+.name {
+    font-weight: 500;
+}
+
+.message {
+    color: var(--color-secondary-font);
+    font-weight: 300;
+    letter-spacing: .3px;
+    line-height: 1.4;
+    text-wrap: pretty;
+}

@@ -1,0 +1,48 @@
+.numberCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  text-align: center;
+  text-wrap: pretty;
+  padding: var(--space-xl) var(--space-lg);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-info-bg);
+}
+
+.numberIcon {
+  color: #0365f2;
+  width: var(--space-2xl);
+  height: var(--space-2xl);
+}
+
+.numberStars {
+  color: #0365f2;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--font-size-xl);
+  height: var(--space-2xl);
+}
+
+.numberTitle {
+  font-size: var(--font-size-2xl);
+  font-weight: 600;
+  margin-bottom: var(--space-sm);
+}
+
+.numberPara {
+  font-size: var(--font-size-md);
+  font-weight: 300;
+  margin-bottom: var(--space-xs);
+}
+
+@media (min-width: 768px) {
+  .numberTitle {
+    font-size: var(--font-size-3xl);
+  }
+
+  .numberPara {
+    font-size: var(--font-size-lg);
+  }
+}

@@ -1,8 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import styles from "@/styles/ErrorButton.module.css";
-
 interface ErrorButtonOnClick {
   onClick: () => void;
   href?: never;
@@ -20,9 +18,10 @@ export default function ErrorButton({
   if (onClick) {
     return (
       <button
-        className={styles.button}
-        onClick={onClick}
-        aria-label="Try again"
+      type="button"
+      aria-label="Try again"
+      onClick={onClick}
+      className={`button`}
       >
         Try Again
       </button>
@@ -32,9 +31,9 @@ export default function ErrorButton({
   if (href) {
     return (
       <Link
-        className={styles.button}
-        href={href}
-        aria-label="Return to home page"
+      aria-label="Return to home page"
+      href={href}
+      className={`button`}
       >
         Go Home
       </Link>

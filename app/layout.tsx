@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import Providers from "./Providers";
-import "./globals.css";
+import { Toaster } from "sonner";
+import styles from "@/styles/ToastStyles.module.css";
+import "@/styles/globals.css";
 
 const roboto = Roboto({
   weight: ["300", "400", "500", "600", "700"],
@@ -23,7 +25,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={roboto.variable}>
-        <Providers>{children}</Providers>
+        <Providers>
+          {children}
+          <Toaster
+            position="bottom-center"
+            toastOptions={{
+              classNames: {
+                toast: styles.toast,
+                title: styles.title,
+                description: styles.description,
+              },
+            }}
+          />
+        </Providers>
       </body>
     </html>
   );

@@ -1,0 +1,40 @@
+.featureWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.featureIcon {
+    width: 3rem;
+    height: 3rem;
+    color: var(--color-primary-font);
+    margin-bottom: var(--space-sm);
+}
+
+.featureTitle {
+    font-size: var(--font-size-lg);
+    font-weight: 500;
+    margin-bottom: var(--space-md);
+}
+
+.featurePara {
+    font-weight: 300;
+    text-wrap: pretty;
+    color: var(--color-secondary-font);
+}
+
+@media (min-width: 768px) {
+    .featureIcon {
+        width: 4rem;
+        height: 4rem;
+    }
+
+    .featureTitle {
+        font-size: var(--font-size-xl);
+    }
+
+    .featurePara {
+        font-size: 1.125rem; /* feature description - on-off size */
+    }
+}

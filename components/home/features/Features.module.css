@@ -1,0 +1,12 @@
+.featuresWrapper {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-2xl);
+  margin-bottom: 6rem;
+}
+
+@media (min-width: 768px) {
+  .featuresWrapper {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

@@ -1,0 +1,12 @@
+.toast {
+  background-color: var(--color-highlight-bg) !important;
+  color: var(--color-primary-font) !important;
+}
+
+.title {
+  font-weight: 600 !important;
+}
+
+.description {
+  color: var(--color-primary-font) !important;
+}
