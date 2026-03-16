@@ -20,11 +20,13 @@ export default function Button({
 }: ButtonProps) {
   // Temporary onClick function:
   const handleClick = () => {
-    onClick
-      ? onClick()
-      : toast.info("Hi there!", {
-          description: "This functionality has not yet been implemented.",
-        });
+    if (onClick) {
+      onClick();
+    } else {
+      toast.info("Hi there!", {
+        description: "This functionality has not yet been implemented.",
+      });
+    }
   };
 
   return (
