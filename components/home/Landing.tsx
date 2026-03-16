@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Button from "../ui/Button";
-import landingImg from "@/public/assets/landing.png";
 import styles from "./Landing.module.css";
 
 export default function Landing() {
@@ -20,7 +19,7 @@ export default function Landing() {
         <div className={styles.imgWrapper}>
           <Image
             className={styles.img}
-            src={landingImg}
+            src="/assets/landing.png"
             width={400}
             height={380}
             priority
