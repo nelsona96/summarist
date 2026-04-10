@@ -56,7 +56,7 @@ export default function AuthModal() {
           <button className={styles.forgotPassword}>
             Forgot your password?
           </button>
-          <button className={styles.signUp}>Don't have an account?</button>
+          <button className={styles.signUp}>Don&apos;t have an account?</button>
         </div>
       </div>
     </div>
