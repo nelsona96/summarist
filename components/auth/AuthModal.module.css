@@ -9,9 +9,9 @@
   transition: backdrop-filter var(--transition);
 }
 
-/* .visibleWrapper {
+.visibleWrapper {
   backdrop-filter: brightness(50%);
-} */
+}
 
 .modal {
   position: relative;
@@ -24,11 +24,11 @@
   transition: transform var(--transition);
 }
 
-/* .visibleModal {
+.visibleModal {
   opacity: 100%;
   visibility: visible;
   transform: translateY(0%);
-} */
+}
 
 .modalContent {
   display: flex;
