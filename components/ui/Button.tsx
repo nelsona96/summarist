@@ -34,7 +34,7 @@ export default function Button({
       type={type}
       onClick={handleClick}
       disabled={disabled}
-      className={clsx(styles.button, styles[variant])}
+      className={clsx("button", styles[variant])}
       style={{ maxWidth, height: height ?? "40px" }}
     >
       {variant === "guest" && (
