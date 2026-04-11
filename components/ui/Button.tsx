@@ -1,10 +1,10 @@
 "use client";
 
 import clsx from "clsx";
-import { toast } from "sonner";
 import styles from "./Button.module.css";
 import { IoPerson } from "react-icons/io5";
 import { FcGoogle } from "react-icons/fc";
+import { notImplemented } from "@/lib/utils";
 
 interface ButtonProps {
   variant: "login" | "guest" | "google";
@@ -24,11 +24,7 @@ export default function Button({
   maxWidth,
 }: ButtonProps) {
   const handleClick = () => {
-    onClick
-      ? onClick()
-      : toast.info("Hi there!", {
-          description: "This functionality has not yet been implemented.",
-        });
+    onClick ? onClick() : notImplemented();
   };
 
   return (

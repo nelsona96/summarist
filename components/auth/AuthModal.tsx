@@ -11,6 +11,7 @@ import {
   setInput,
 } from "@/store/authSlice";
 import Button from "../ui/Button";
+import { notImplemented } from "@/lib/utils";
 
 export default function AuthModal() {
   const dispatch = useAppDispatch();
@@ -119,10 +120,12 @@ export default function AuthModal() {
           </form>
         </div>
         <div className={styles.modalBottom}>
-          <button className={styles.forgotPassword}>
+          <button onClick={notImplemented} className={styles.forgotPassword}>
             Forgot your password?
           </button>
-          <button className={styles.signUp}>Don&apos;t have an account?</button>
+          <button onClick={notImplemented} className={styles.signUp}>
+            Don&apos;t have an account?
+          </button>
         </div>
       </div>
     </div>

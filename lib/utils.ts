@@ -1,3 +1,5 @@
+import { toast } from "sonner";
+
 // Temporary function for making sure Vitest is setup and running correctly
 export function formatTime(seconds: number): string {
   const minutes = Math.floor(seconds / 60);
@@ -9,4 +11,10 @@ export function formatTime(seconds: number): string {
   const time = `${minutesString}:${secondsString}`;
 
   return time;
+}
+
+export function notImplemented() {
+  toast.info("Hi there!", {
+    description: "This functionality has not yet been implemented.",
+  });
 }
