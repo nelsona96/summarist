@@ -100,8 +100,14 @@
   right: 0;
   display: flex;
   background-color: transparent;
+  color: var(--color-secondary-font);
   font-size: var(--font-size-xl);
   padding: 8px 16px;
+  transition: color var(--transition);
+}
+
+.passwordVisible:hover {
+  color: #000;
 }
 
 .modalBottom {
