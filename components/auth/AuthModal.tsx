@@ -2,13 +2,15 @@ import styles from "./AuthModal.module.css";
 import clsx from "clsx";
 import Button from "../ui/Button";
 import { IoCloseOutline } from "react-icons/io5";
-import { useEffect } from "react";
-import { useAppSelector, useAppDispatch } from "@/hooks/redux";
-import { handleModalToggle } from "@/store/authSlice";
+import { useEffect, useRef, useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { startClose, finalizeClose, openModal } from "@/store/authSlice";
 
 export default function AuthModal() {
-  const isOpen = useAppSelector((state) => state.auth.isOpen);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const { isClosing } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     document.body.style.overflowY = "hidden";
@@ -18,24 +20,41 @@ export default function AuthModal() {
     };
   }, []);
 
-  const closeModal = (e: React.MouseEvent<HTMLElement>) => {
-    e.target === e.currentTarget && dispatch(handleModalToggle());
+  useEffect(() => {
+    if (!isClosing) {
+      timerRef.current && clearTimeout(timerRef.current);
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() => setIsVisible(true)),
+      );
+    }
+
+    if (isClosing) {
+      setIsVisible(false);
+      timerRef.current = setTimeout(() => {
+        dispatch(finalizeClose());
+      }, 200);
+    }
+  }, [isClosing]);
+
+  const toggleModal = () => {
+    !isClosing && dispatch(startClose());
+    isClosing && dispatch(openModal());
   };
 
   return (
     <div
-      onClick={closeModal}
-      className={clsx(styles.wrapper, isOpen && styles.visibleWrapper)}
+      onClick={(e) => e.target === e.currentTarget && toggleModal()}
+      className={clsx(styles.wrapper, isVisible && styles.visibleWrapper)}
     >
       <div
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-title"
-        className={clsx(styles.modal, isOpen && styles.visibleModal)}
+        className={clsx(styles.modal, isVisible && styles.visibleModal)}
       >
         <div className={styles.modalContent}>
           <button
-            onClick={closeModal}
+            onClick={() => dispatch(startClose())}
             aria-label="Close login modal"
             className={styles.close}
           >

@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { toast } from "sonner";
 import styles from "./Button.module.css";
 import { useAppDispatch } from "@/hooks/redux";
-import { handleModalToggle } from "@/store/authSlice";
+import { openModal } from "@/store/authSlice";
 interface ButtonProps {
   variant: "homeCta" | "guest" | "google";
   type: "submit" | "reset" | "button";
@@ -25,7 +25,7 @@ export default function Button({
   // Temporary onClick function:
   const handleClick = (variant: ButtonProps["variant"]) => {
     if (variant === "homeCta") {
-      dispatch(handleModalToggle());
+      dispatch(openModal());
     } else {
       toast.info("Hi there!", {
         description: "This functionality has not yet been implemented.",
