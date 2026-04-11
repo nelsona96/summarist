@@ -26,6 +26,26 @@
   transform: translateY(0%);
 }
 
+.separator {
+  display: flex;
+  align-items: center;
+  margin: var(--space-md) 0;
+}
+
+.separator::before,
+.separator::after {
+  content: "";
+  display: block;
+  flex-grow: 1;
+  height: 1px;
+  background-color: #bac8ce;
+}
+
+.separatorText {
+  margin: 0 var(--space-lg);
+  font-weight: 500;
+}
+
 .modalContent {
   display: flex;
   flex-direction: column;

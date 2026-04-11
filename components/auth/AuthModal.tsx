@@ -68,9 +68,19 @@ export default function AuthModal() {
           >
             <IoCloseOutline />
           </button>
+
           <h2 id="modal-title" className={styles.title}>
             Log in to Summarist
           </h2>
+
+          <Button variant="guest" type="button" label="Login as a Guest" />
+
+          <Separator />
+
+          <Button variant="google" type="button" label="Login with Google" />
+
+          <Separator />
+
           <form className={styles.form}>
             <label htmlFor="email" className={styles.srOnly}>
               Email Address
@@ -119,6 +129,7 @@ export default function AuthModal() {
             <Button variant="login" type="button" label="Login" />
           </form>
         </div>
+
         <div className={styles.modalBottom}>
           <button onClick={notImplemented} className={styles.forgotPassword}>
             Forgot your password?
@@ -128,6 +139,14 @@ export default function AuthModal() {
           </button>
         </div>
       </div>
+    </div>
+  );
+}
+
+function Separator() {
+  return (
+    <div className={styles.separator}>
+      <span className={styles.separatorText}>or</span>
     </div>
   );
 }
