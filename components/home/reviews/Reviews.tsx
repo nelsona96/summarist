@@ -62,7 +62,7 @@ export default function Reviews() {
           {reviewsData.map((review, index) => (
             <Review key={index} {...review} />
           ))}
-          <Button variant="homeCta" type="button" label="Login" />
+          <Button variant="login" type="button" label="Login" />
         </div>
       </div>
     </section>

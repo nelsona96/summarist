@@ -115,7 +115,7 @@ export default function AuthModal() {
                 )}
               </button>
             </div>
-            <Button variant="homeCta" type="button" label="Login" />
+            <Button variant="login" type="button" label="Login" />
           </form>
         </div>
         <div className={styles.modalBottom}>

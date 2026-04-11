@@ -5,8 +5,11 @@ import { toast } from "sonner";
 import styles from "./Button.module.css";
 import { useAppDispatch } from "@/hooks/redux";
 import { openModal } from "@/store/authSlice";
+import { IoPerson } from "react-icons/io5";
+import { FcGoogle } from "react-icons/fc";
+
 interface ButtonProps {
-  variant: "homeCta" | "guest" | "google";
+  variant: "login" | "guest" | "google";
   type: "submit" | "reset" | "button";
   label: string;
   onClick?: () => void;
@@ -24,7 +27,7 @@ export default function Button({
 
   // Temporary onClick function:
   const handleClick = (variant: ButtonProps["variant"]) => {
-    if (variant === "homeCta") {
+    if (variant === "login") {
       dispatch(openModal());
     } else {
       toast.info("Hi there!", {
@@ -38,8 +41,16 @@ export default function Button({
       type={type}
       onClick={() => handleClick(variant)}
       disabled={disabled}
-      className={clsx("button", styles[variant])}
+      className={clsx(styles.button, styles[variant])}
     >
+      {variant === "guest" && (
+        <IoPerson className={clsx(styles.icon, styles.guestIcon)} />
+      )}
+
+      {variant === "google" && (
+        <FcGoogle className={clsx(styles.icon, styles.googleIcon)} />
+      )}
+
       {label}
     </button>
   );
