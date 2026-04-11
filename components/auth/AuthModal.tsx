@@ -2,6 +2,7 @@ import styles from "./AuthModal.module.css";
 import clsx from "clsx";
 import Button from "../ui/Button";
 import { IoCloseOutline } from "react-icons/io5";
+import { BiSolidShow, BiSolidHide } from "react-icons/bi";
 import { useEffect, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import {
@@ -13,8 +14,9 @@ import {
 
 export default function AuthModal() {
   const dispatch = useAppDispatch();
-  const [isVisible, setIsVisible] = useState<boolean>(false);
   const { isClosing, input } = useAppSelector((state) => state.auth);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
@@ -86,17 +88,33 @@ export default function AuthModal() {
             <label htmlFor="password" className={styles.srOnly}>
               Password
             </label>
-            <input
-              onChange={(e) =>
-                dispatch(setInput({ field: "password", value: e.target.value }))
-              }
-              value={input.password}
-              id="password"
-              type="password"
-              autoComplete="current-password"
-              placeholder="Password"
-              className={styles.input}
-            />
+            <div className={styles.passwordInput}>
+              <input
+                onChange={(e) =>
+                  dispatch(
+                    setInput({ field: "password", value: e.target.value }),
+                  )
+                }
+                value={input.password}
+                id="password"
+                type={showPassword ? "text" : "password"}
+                autoComplete="current-password"
+                placeholder="Password"
+                className={styles.input}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+                className={styles.passwordVisible}
+              >
+                {showPassword ? (
+                  <BiSolidHide aria-hidden="true" />
+                ) : (
+                  <BiSolidShow aria-hidden="true" />
+                )}
+              </button>
+            </div>
             <Button variant="homeCta" type="button" label="Login" />
           </form>
         </div>
