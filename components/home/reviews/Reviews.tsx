@@ -1,7 +1,7 @@
 import type { ReviewData } from "@/types/review";
 import styles from "./Reviews.module.css";
-import Button from "@/components/ui/Button";
 import Review from "./Review";
+import HomeButton from "../HomeButton";
 
 // Pre-set data to emulate pulling from a database:
 const reviewsData: ReviewData[] = [
@@ -62,12 +62,7 @@ export default function Reviews() {
           {reviewsData.map((review, index) => (
             <Review key={index} {...review} />
           ))}
-          <Button
-            variant="login"
-            type="button"
-            label="Login"
-            maxWidth="300px"
-          />
+          <HomeButton />
         </div>
       </div>
     </section>

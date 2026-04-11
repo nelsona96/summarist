@@ -1,6 +1,5 @@
 import styles from "./AuthModal.module.css";
 import clsx from "clsx";
-import Button from "../ui/Button";
 import { IoCloseOutline } from "react-icons/io5";
 import { BiSolidShow, BiSolidHide } from "react-icons/bi";
 import { useEffect, useRef, useState } from "react";
@@ -11,6 +10,7 @@ import {
   openModal,
   setInput,
 } from "@/store/authSlice";
+import Button from "../ui/Button";
 
 export default function AuthModal() {
   const dispatch = useAppDispatch();

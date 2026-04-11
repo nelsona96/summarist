@@ -3,8 +3,6 @@
 import clsx from "clsx";
 import { toast } from "sonner";
 import styles from "./Button.module.css";
-import { useAppDispatch } from "@/hooks/redux";
-import { openModal } from "@/store/authSlice";
 import { IoPerson } from "react-icons/io5";
 import { FcGoogle } from "react-icons/fc";
 
@@ -25,23 +23,18 @@ export default function Button({
   disabled,
   maxWidth,
 }: ButtonProps) {
-  const dispatch = useAppDispatch();
-
-  // Temporary onClick function:
-  const handleClick = (variant: ButtonProps["variant"]) => {
-    if (variant === "login") {
-      dispatch(openModal());
-    } else {
-      toast.info("Hi there!", {
-        description: "This functionality has not yet been implemented.",
-      });
-    }
+  const handleClick = () => {
+    onClick
+      ? onClick()
+      : toast.info("Hi there!", {
+          description: "This functionality has not yet been implemented.",
+        });
   };
 
   return (
     <button
       type={type}
-      onClick={() => handleClick(variant)}
+      onClick={handleClick}
       disabled={disabled}
       className={clsx(styles.button, styles[variant])}
       style={{ maxWidth }}
