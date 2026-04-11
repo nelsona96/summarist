@@ -4,12 +4,17 @@ import Button from "../ui/Button";
 import { IoCloseOutline } from "react-icons/io5";
 import { useEffect, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { startClose, finalizeClose, openModal } from "@/store/authSlice";
+import {
+  startClose,
+  finalizeClose,
+  openModal,
+  setInput,
+} from "@/store/authSlice";
 
 export default function AuthModal() {
-  const [isVisible, setIsVisible] = useState<boolean>(false);
-  const { isClosing } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const { isClosing, input } = useAppSelector((state) => state.auth);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
@@ -68,6 +73,10 @@ export default function AuthModal() {
               Email Address
             </label>
             <input
+              onChange={(e) =>
+                dispatch(setInput({ field: "email", value: e.target.value }))
+              }
+              value={input.email}
               id="email"
               type="email"
               autoComplete="email"
@@ -78,6 +87,10 @@ export default function AuthModal() {
               Password
             </label>
             <input
+              onChange={(e) =>
+                dispatch(setInput({ field: "password", value: e.target.value }))
+              }
+              value={input.password}
               id="password"
               type="password"
               autoComplete="current-password"
