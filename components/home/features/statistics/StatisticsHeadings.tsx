@@ -50,7 +50,7 @@ export default function StatisticsHeadings({
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % headings.length);
-    }, 3000);
+    }, 2000);
 
     return () => {
       clearInterval(interval);
