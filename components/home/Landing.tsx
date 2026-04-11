@@ -14,7 +14,7 @@ export default function Landing() {
             Great summaries for busy people, individuals who barely have time to
             read, and even people who don&apos;t like to read.
           </p>
-          <Button variant="login" type="button" label="Login" />
+          <Button variant="login" type="button" label="Login" maxWidth="300px" />
         </div>
         <div className={styles.imgWrapper}>
           <Image
