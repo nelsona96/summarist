@@ -5,9 +5,10 @@ import StatisticsHeadings from "./StatisticsHeadings";
 
 interface StatisticsProps {
   variant: "first" | "second";
+  delay?: boolean;
 }
 
-export default function Statistics({ variant }: StatisticsProps) {
+export default function Statistics({ variant, delay }: StatisticsProps) {
   return (
     <div
       className={clsx(
@@ -15,7 +16,7 @@ export default function Statistics({ variant }: StatisticsProps) {
         variant === "second" && styles.flexReverse,
       )}
     >
-      <StatisticsHeadings variant={variant} />
+      <StatisticsHeadings variant={variant} delay={delay} />
       <StatisticsDetails variant={variant} />
     </div>
   );

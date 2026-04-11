@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import clsx from "clsx";
 import styles from "./StatisticsHeadings.module.css";
 
 interface StatisticsHeadingsProps {
   variant: "first" | "second";
+  delay?: boolean;
 }
 
 interface StatisticsHeadingsData {
@@ -40,22 +41,34 @@ const statisticsHeadingsData: Record<
 
 export default function StatisticsHeadings({
   variant,
+  delay,
 }: StatisticsHeadingsProps) {
   const headings = useMemo(
     () => statisticsHeadingsData[variant].headings,
     [variant],
   );
   const [activeIndex, setActiveIndex] = useState(0);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % headings.length);
-    }, 2000);
+    if (delay) {
+      setTimeout(() => {
+        startInterval();
+      }, 12000);
+    } else {
+      startInterval();
+    }
 
     return () => {
-      clearInterval(interval);
+      intervalRef.current && clearInterval(intervalRef.current);
     };
   }, [headings]);
+
+  const startInterval = () => {
+    intervalRef.current = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % headings.length);
+    }, 2000);
+  };
 
   return (
     <ul className={styles.headingsWrapper}>

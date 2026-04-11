@@ -13,7 +13,7 @@ export default function Features() {
           <Feature variant="briefcasts" />
         </div>
         <Statistics variant="first" />
-        <Statistics variant="second" />
+        <Statistics variant="second" delay />
       </div>
     </section>
   );
