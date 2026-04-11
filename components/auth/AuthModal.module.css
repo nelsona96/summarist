@@ -86,6 +86,10 @@
   transition: border-color var(--transition);
 }
 
+.input:hover {
+  border-color: var(--color-muted-font);
+}
+
 .input:focus {
   border-color: var(--color-primary-accent);
 }
