@@ -10,6 +10,7 @@ export default function Navbar() {
           className={styles.logo}
           width={200}
           height={46.5}
+          priority
           src="/assets/logo.png"
           alt="Summarist logo"
         />
