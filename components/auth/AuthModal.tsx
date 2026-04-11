@@ -23,6 +23,10 @@ export default function AuthModal() {
   useEffect(() => {
     document.body.style.overflowY = "hidden";
 
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() => setIsVisible(true)),
+    );
+
     return () => {
       document.body.style.overflowY = "";
     };
@@ -30,10 +34,8 @@ export default function AuthModal() {
 
   useEffect(() => {
     if (!isClosing) {
+      setIsVisible(true);
       timerRef.current && clearTimeout(timerRef.current);
-      requestAnimationFrame(() =>
-        requestAnimationFrame(() => setIsVisible(true)),
-      );
     }
 
     if (isClosing) {
