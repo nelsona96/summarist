@@ -13,6 +13,7 @@ interface ButtonProps {
   onClick?: () => void;
   disabled?: boolean;
   maxWidth?: string;
+  height?: string;
 }
 
 export default function Button({
@@ -22,6 +23,7 @@ export default function Button({
   onClick,
   disabled,
   maxWidth,
+  height,
 }: ButtonProps) {
   const handleClick = () => {
     onClick ? onClick() : notImplemented();
@@ -33,7 +35,7 @@ export default function Button({
       onClick={handleClick}
       disabled={disabled}
       className={clsx(styles.button, styles[variant])}
-      style={{ maxWidth }}
+      style={{ maxWidth, height: height ?? "40px" }}
     >
       {variant === "guest" && (
         <IoPerson className={clsx(styles.icon, styles.guestIcon)} />

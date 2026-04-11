@@ -4,7 +4,7 @@
   font-size: var(--font-size-md);
   font-weight: 500;
   text-align: center;
-  padding: var(--space-sm) var(--space-lg);
+  padding: 0 var(--space-lg);
   border-radius: var(--radius-sm);
   transition: background-color var(--transition);
 }
@@ -16,10 +16,10 @@
 
 .icon {
   position: absolute;
-  left: 1.125rem;
+  left: 1.25rem;
   top: 50%;
   transform: translate(-50%, -50%);
-  font-size: 1.5rem;
+  font-size: 1.75rem;
 }
 
 /* 
