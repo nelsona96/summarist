@@ -6,7 +6,7 @@
   align-items: center;
   flex-direction: column;
   z-index: 9999;
-  transition: backdrop-filter var(--transition);
+  transition: backdrop-filter var(--transition-spring);
 }
 
 .visibleWrapper {
@@ -19,7 +19,7 @@
   transform: translateY(100%);
   border-radius: var(--space-md) var(--space-md) 0 0;
   background-color: var(--color-primary-bg);
-  transition: transform var(--transition);
+  transition: transform var(--transition-spring);
 }
 
 .visibleModal {
