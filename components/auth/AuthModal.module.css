@@ -59,8 +59,14 @@
   right: 0;
   display: flex;
   background-color: transparent;
+  color: var(--color-secondary-font);
   font-size: var(--font-size-2xl);
   padding: var(--space-sm);
+  transition: color var(--transition);
+}
+
+.close:hover {
+  color: #000;
 }
 
 .title {
@@ -97,6 +103,10 @@
 
 .passwordInput {
   position: relative;
+}
+
+.passwordInput:has(.passwordVisible:hover) .input {
+  border-color: var(--color-muted-font);
 }
 
 .passwordVisible {
