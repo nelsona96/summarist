@@ -19,11 +19,13 @@
   transform: translateY(100%);
   border-radius: var(--space-md) var(--space-md) 0 0;
   background-color: var(--color-primary-bg);
-  transition: transform var(--transition-spring);
+  transition:
+    transform var(--transition-spring),
+    opacity var(--transition-spring);
 }
 
 .visibleModal {
-  transform: translateY(0%);
+  transform: translateY(0%) !important;
 }
 
 .separator {
@@ -45,6 +47,12 @@
   margin: 0 var(--space-lg);
   font-weight: 500;
   color: var(--color-secondary-font);
+}
+
+.modalContent {
+  width: 100%;
+  max-width: 440px;
+  margin: 0 auto;
 }
 
 .modalContent {
@@ -166,4 +174,26 @@
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border-width: 0;
+}
+
+@media (min-width: 500px) {
+  .wrapper {
+    justify-content: center;
+    transition: backdrop-filter var(--transition);
+  }
+
+  .modal {
+    max-width: 400px;
+    overflow: hidden;
+    opacity: 0;
+    border-radius: var(--space-sm);
+    transform: translateY(3%);
+    transition:
+      transform var(--transition),
+      opacity var(--transition);
+  }
+
+  .visibleModal {
+    opacity: 1;
+  }
 }
