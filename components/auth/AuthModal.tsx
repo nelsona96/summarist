@@ -56,10 +56,11 @@ export default function AuthModal() {
   const data = variantData[currentVariant];
 
   useEffect(() => {
-    document.body.style.overflowY = "hidden";
-
     requestAnimationFrame(() =>
-      requestAnimationFrame(() => setIsVisible(true)),
+      requestAnimationFrame(() => {
+        setIsVisible(true);
+        document.body.style.overflowY = "hidden";
+      }),
     );
 
     return () => {
