@@ -1,3 +1,4 @@
+import type { ModalVariants } from "@/store/authSlice";
 import styles from "./AuthModal.module.css";
 import clsx from "clsx";
 import { IoCloseOutline } from "react-icons/io5";
@@ -9,16 +10,50 @@ import {
   finalizeClose,
   openModal,
   setInput,
+  setCurrentVariant,
 } from "@/store/authSlice";
 import Button from "../ui/Button";
-import { notImplemented } from "@/lib/utils";
+
+interface VariantData {
+  title: string;
+  btnLabel: string;
+  googleLabel?: string;
+  variantToggle: string;
+  autoPassword?: string;
+}
+
+const variantData: Record<ModalVariants, VariantData> = {
+  login: {
+    title: "Log in to Summarist",
+    btnLabel: "Login",
+    googleLabel: "Login with Google",
+    variantToggle: "Don't have an account?",
+    autoPassword: "current-password",
+  },
+  register: {
+    title: "Sign up to Summarist",
+    btnLabel: "Sign Up",
+    googleLabel: "Sign up with Google",
+    variantToggle: "Already have an account?",
+    autoPassword: "new-password",
+  },
+  forgotPassword: {
+    title: "Reset Your Password",
+    btnLabel: "Send Reset Password Link",
+    variantToggle: "Go to Login",
+  },
+};
 
 export default function AuthModal() {
   const dispatch = useAppDispatch();
-  const { isClosing, input } = useAppSelector((state) => state.auth);
+  const { isClosing, input, currentVariant } = useAppSelector(
+    (state) => state.auth,
+  );
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const data = variantData[currentVariant];
 
   useEffect(() => {
     document.body.style.overflowY = "hidden";
@@ -51,6 +86,13 @@ export default function AuthModal() {
     isClosing && dispatch(openModal());
   };
 
+  const toggleVariant = (goToVariant: ModalVariants): void => {
+    dispatch(setInput({ field: "email", value: "" }));
+    dispatch(setInput({ field: "password", value: "" }));
+
+    dispatch(setCurrentVariant(goToVariant));
+  };
+
   return (
     <div
       onClick={(e) => e.target === e.currentTarget && toggleModal()}
@@ -72,16 +114,27 @@ export default function AuthModal() {
           </button>
 
           <h2 id="modal-title" className={styles.title}>
-            Log in to Summarist
+            {data?.title}
           </h2>
 
-          <Button variant="guest" type="button" label="Login as a Guest" />
+          {currentVariant === "login" && (
+            <>
+              <Button variant="guest" type="button" label="Login as a Guest" />
+              <Separator />
+            </>
+          )}
 
-          <Separator />
+          {currentVariant === "login" || currentVariant === "register" ? (
+            <>
+              <Button
+                variant="google"
+                type="button"
+                label={data.googleLabel!}
+              />
 
-          <Button variant="google" type="button" label="Login with Google" />
-
-          <Separator />
+              <Separator />
+            </>
+          ) : null}
 
           <form className={styles.form}>
             <label htmlFor="email" className={styles.srOnly}>
@@ -98,46 +151,67 @@ export default function AuthModal() {
               placeholder="Email Address"
               className={styles.input}
             />
-            <label htmlFor="password" className={styles.srOnly}>
-              Password
-            </label>
-            <div className={styles.passwordInput}>
-              <input
-                onChange={(e) =>
-                  dispatch(
-                    setInput({ field: "password", value: e.target.value }),
-                  )
-                }
-                value={input.password}
-                id="password"
-                type={showPassword ? "text" : "password"}
-                autoComplete="current-password"
-                placeholder="Password"
-                className={styles.input}
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword((prev) => !prev)}
-                aria-label={showPassword ? "Hide password" : "Show password"}
-                className={styles.passwordVisible}
-              >
-                {showPassword ? (
-                  <BiSolidHide aria-hidden="true" />
-                ) : (
-                  <BiSolidShow aria-hidden="true" />
-                )}
-              </button>
-            </div>
-            <Button variant="login" type="button" label="Login" />
+
+            {currentVariant === "login" || currentVariant === "register" ? (
+              <>
+                <label htmlFor="password" className={styles.srOnly}>
+                  Password
+                </label>
+                <div className={styles.passwordInput}>
+                  <input
+                    onChange={(e) =>
+                      dispatch(
+                        setInput({
+                          field: "password",
+                          value: e.target.value,
+                        }),
+                      )
+                    }
+                    value={input.password}
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    autoComplete={data.autoPassword}
+                    placeholder="Password"
+                    className={styles.input}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    aria-label={
+                      showPassword ? "Hide password" : "Show password"
+                    }
+                    className={styles.passwordVisible}
+                  >
+                    {showPassword ? (
+                      <BiSolidHide aria-hidden="true" />
+                    ) : (
+                      <BiSolidShow aria-hidden="true" />
+                    )}
+                  </button>
+                </div>
+              </>
+            ) : null}
+
+            <Button variant="login" type="button" label={data.btnLabel} />
           </form>
         </div>
 
         <div className={styles.modalBottom}>
-          <button onClick={notImplemented} className={styles.forgotPassword}>
-            Forgot your password?
-          </button>
-          <button onClick={notImplemented} className={styles.signUp}>
-            Don&apos;t have an account?
+          {currentVariant === "login" && (
+            <button
+              onClick={() => toggleVariant("forgotPassword")}
+              className={styles.forgotPassword}
+            >
+              Forgot your password?
+            </button>
+          )}
+          <button
+            onClick={() =>
+              toggleVariant(currentVariant === "login" ? "register" : "login")
+            }
+            className={styles.signUp}
+          >
+            {data.variantToggle}
           </button>
         </div>
       </div>

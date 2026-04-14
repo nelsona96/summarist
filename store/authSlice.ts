@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+type ModalVariants = "login" | "register" | "forgotPassword";
+
 export interface AuthState {
   isOpen: boolean;
   isClosing: boolean;
@@ -7,6 +9,7 @@ export interface AuthState {
     email: string;
     password: string;
   };
+  currentVariant: ModalVariants;
 }
 
 const initialState: AuthState = {
@@ -16,6 +19,7 @@ const initialState: AuthState = {
     email: "",
     password: "",
   },
+  currentVariant: "login",
 };
 
 export const authSlice = createSlice({
@@ -39,10 +43,20 @@ export const authSlice = createSlice({
     ) => {
       state.input[action.payload.field] = action.payload.value;
     },
+    setCurrentVariant: (state, action: PayloadAction<ModalVariants>) => {
+      state.currentVariant = action.payload;
+    },
   },
 });
 
-export const { openModal, startClose, finalizeClose, setInput } =
-  authSlice.actions;
+export const {
+  openModal,
+  startClose,
+  finalizeClose,
+  setInput,
+  setCurrentVariant,
+} = authSlice.actions;
+
+export type { ModalVariants };
 
 export default authSlice.reducer;
