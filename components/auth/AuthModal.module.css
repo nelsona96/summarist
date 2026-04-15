@@ -25,7 +25,7 @@
 }
 
 .visibleModal {
-  transform: translateY(0%) !important;
+  transform: translateY(0%);
 }
 
 .separator {
@@ -194,6 +194,7 @@
   }
 
   .visibleModal {
+    transform: translateY(0%);
     opacity: 1;
   }
 }
