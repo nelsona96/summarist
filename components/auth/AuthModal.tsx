@@ -60,11 +60,14 @@ export default function AuthModal() {
   const modalRef = useRef<HTMLDivElement | null>(null);
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
+  const isTouchDeviceRef = useRef(false);
 
   const data = variantData[currentVariant];
 
   useEffect(() => {
     triggerRef.current = document.activeElement as HTMLElement;
+
+    isTouchDeviceRef.current = window.matchMedia("(pointer: coarse)").matches;
 
     requestAnimationFrame(() =>
       requestAnimationFrame(() => {
@@ -72,7 +75,7 @@ export default function AuthModal() {
 
         controllerRef.current = new AbortController();
 
-        emailRef.current?.focus();
+        !isTouchDeviceRef.current && emailRef.current?.focus();
 
         document.body.style.overflowY = "hidden";
 
@@ -119,7 +122,7 @@ export default function AuthModal() {
 
     dispatch(setCurrentVariant(goToVariant));
 
-    setTimeout(() => emailRef.current?.focus(), 0);
+    setTimeout(() => !isTouchDeviceRef.current && emailRef.current?.focus(), 0);
   };
 
   const handleFocus = (e: React.KeyboardEvent<HTMLDivElement>) => {
