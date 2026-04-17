@@ -13,6 +13,7 @@ import {
   setCurrentVariant,
 } from "@/store/authSlice";
 import Button from "../ui/Button";
+import { notImplemented } from "@/lib/utils";
 
 interface VariantData {
   title: string;
@@ -44,26 +45,53 @@ const variantData: Record<ModalVariants, VariantData> = {
   },
 };
 
+const focusable =
+  'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
 export default function AuthModal() {
   const dispatch = useAppDispatch();
   const { isClosing, input, currentVariant } = useAppSelector(
     (state) => state.auth,
   );
-  const [isVisible, setIsVisible] = useState<boolean>(false);
-  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const triggerRef = useRef<HTMLElement | null>(null);
+  const controllerRef = useRef<AbortController | null>(null);
+  const modalRef = useRef<HTMLDivElement | null>(null);
+  const emailRef = useRef<HTMLInputElement | null>(null);
+  const passwordRef = useRef<HTMLInputElement | null>(null);
 
   const data = variantData[currentVariant];
 
   useEffect(() => {
+    triggerRef.current = document.activeElement as HTMLElement;
+
     requestAnimationFrame(() =>
       requestAnimationFrame(() => {
         setIsVisible(true);
+
+        controllerRef.current = new AbortController();
+
+        emailRef.current?.focus();
+
         document.body.style.overflowY = "hidden";
+
+        document.addEventListener(
+          "keydown",
+          (e) => {
+            e.key === "Escape" && toggleModal();
+          },
+          { signal: controllerRef.current.signal },
+        );
       }),
     );
 
     return () => {
+      triggerRef.current?.focus();
+
+      controllerRef.current?.abort();
+
       document.body.style.overflowY = "";
     };
   }, []);
@@ -92,6 +120,29 @@ export default function AuthModal() {
     dispatch(setInput({ field: "password", value: "" }));
 
     dispatch(setCurrentVariant(goToVariant));
+
+    setTimeout(() => emailRef.current?.focus(), 0);
+  };
+
+  const handleFocus = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    const focusElements = modalRef.current?.querySelectorAll(focusable);
+    const active = document.activeElement;
+    const first = focusElements?.[0] as HTMLElement;
+    const last = focusElements?.[focusElements?.length - 1] as HTMLElement;
+
+    if (!e.shiftKey && active === last) {
+      e.preventDefault();
+      first?.focus();
+    } else if (e.shiftKey && active === first) {
+      e.preventDefault();
+      last?.focus();
+    }
+  };
+
+  const handleEmailKeyDown = (e: React.KeyboardEvent) => {
+    currentVariant === "forgotPassword"
+      ? notImplemented()
+      : passwordRef.current?.focus();
   };
 
   return (
@@ -100,9 +151,11 @@ export default function AuthModal() {
       className={clsx(styles.wrapper, isVisible && styles.visibleWrapper)}
     >
       <div
+        onKeyDown={(e) => e.key === "Tab" && handleFocus(e)}
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-title"
+        ref={modalRef}
         className={clsx(styles.modal, isVisible && styles.visibleModal)}
       >
         <div className={styles.modalContent}>
@@ -115,7 +168,7 @@ export default function AuthModal() {
           </button>
 
           <h2 id="modal-title" className={styles.title}>
-            {data?.title}
+            {data.title}
           </h2>
 
           {currentVariant === "login" && (
@@ -137,14 +190,16 @@ export default function AuthModal() {
             </>
           ) : null}
 
-          <form className={styles.form}>
+          <form onSubmit={(e) => e.preventDefault()} className={styles.form}>
             <label htmlFor="email" className={styles.srOnly}>
               Email Address
             </label>
             <input
+              ref={emailRef}
               onChange={(e) =>
                 dispatch(setInput({ field: "email", value: e.target.value }))
               }
+              onKeyDown={(e) => e.key === "Enter" && handleEmailKeyDown(e)}
               value={input.email}
               id="email"
               type="email"
@@ -160,6 +215,7 @@ export default function AuthModal() {
                 </label>
                 <div className={styles.passwordInput}>
                   <input
+                    ref={passwordRef}
                     onChange={(e) =>
                       dispatch(
                         setInput({
@@ -168,6 +224,7 @@ export default function AuthModal() {
                         }),
                       )
                     }
+                    onKeyDown={(e) => e.key === "Enter" && notImplemented()}
                     value={input.password}
                     id="password"
                     type={showPassword ? "text" : "password"}
