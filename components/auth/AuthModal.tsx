@@ -8,7 +8,6 @@ import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import {
   startClose,
   finalizeClose,
-  openModal,
   setInput,
   setCurrentVariant,
 } from "@/store/authSlice";
@@ -80,7 +79,7 @@ export default function AuthModal() {
         document.addEventListener(
           "keydown",
           (e) => {
-            e.key === "Escape" && toggleModal();
+            e.key === "Escape" && closeModal();
           },
           { signal: controllerRef.current.signal },
         );
@@ -110,9 +109,8 @@ export default function AuthModal() {
     }
   }, [isClosing]);
 
-  const toggleModal = () => {
+  const closeModal = () => {
     !isClosing && dispatch(startClose());
-    isClosing && dispatch(openModal());
   };
 
   const toggleVariant = (goToVariant: ModalVariants): void => {
@@ -147,7 +145,7 @@ export default function AuthModal() {
 
   return (
     <div
-      onClick={(e) => e.target === e.currentTarget && toggleModal()}
+      onClick={(e) => e.target === e.currentTarget && closeModal()}
       className={clsx(styles.wrapper, isVisible && styles.visibleWrapper)}
     >
       <div
