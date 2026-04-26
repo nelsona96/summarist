@@ -2,7 +2,12 @@ import type { ModalVariants } from "@/store/authSlice";
 import styles from "./AuthModal.module.css";
 import clsx from "clsx";
 import { IoCloseOutline } from "react-icons/io5";
-import { BiSolidShow, BiSolidHide } from "react-icons/bi";
+import {
+  BiSolidShow,
+  BiSolidHide,
+  BiCheckCircle,
+  BiErrorCircle,
+} from "react-icons/bi";
 import { useEffect, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import {
@@ -205,28 +210,46 @@ export default function AuthModal() {
             </label>
 
             <div className={styles.emailInput}>
-              <input
-                ref={emailRef}
-                onChange={(e) =>
-                  dispatch(setInput({ field: "email", value: e.target.value }))
-                }
-                onKeyDown={(e) => e.key === "Enter" && handleEmailKeyDown(e)}
-                value={input.email}
-                id="email"
-                aria-invalid={emailInput.isValid === false}
-                aria-describedby={
-                  emailInput.isValid === false ? "email-error" : undefined
-                }
-                type="text"
-                inputMode="email"
-                autoComplete="email"
-                placeholder="Email Address"
-                className={clsx(
-                  styles.input,
-                  emailInput.isValid === true && styles.validInput,
-                  emailInput.isValid === false && styles.invalidInput,
+              <div className={styles.emailWrapper}>
+                <input
+                  ref={emailRef}
+                  onChange={(e) =>
+                    dispatch(
+                      setInput({ field: "email", value: e.target.value }),
+                    )
+                  }
+                  onKeyDown={(e) => e.key === "Enter" && handleEmailKeyDown(e)}
+                  value={input.email}
+                  id="email"
+                  aria-invalid={emailInput.isValid === false}
+                  aria-describedby={
+                    emailInput.isValid === false ? "email-error" : undefined
+                  }
+                  type="text"
+                  inputMode="email"
+                  autoComplete="email"
+                  placeholder="Email Address"
+                  className={clsx(
+                    styles.input,
+                    emailInput.isValid === true && styles.validInput,
+                    emailInput.isValid === false && styles.invalidInput,
+                  )}
+                />
+
+                {emailInput.isValid === true && (
+                  <BiCheckCircle
+                    aria-hidden="true"
+                    className={clsx(styles.validIcon, styles.emailIcon)}
+                  />
                 )}
-              />
+
+                {emailInput.isValid === false && (
+                  <BiErrorCircle
+                    aria-hidden="true"
+                    className={clsx(styles.invalidIcon, styles.emailIcon)}
+                  />
+                )}
+              </div>
 
               <p
                 id="email-error"
@@ -280,20 +303,36 @@ export default function AuthModal() {
                     {passwordInput.errorMessage}
                   </p>
 
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword((prev) => !prev)}
-                    aria-label={
-                      showPassword ? "Hide password" : "Show password"
-                    }
-                    className={styles.passwordVisible}
-                  >
-                    {showPassword ? (
-                      <BiSolidHide aria-hidden="true" />
-                    ) : (
-                      <BiSolidShow aria-hidden="true" />
+                  <div className={styles.passwordIcons}>
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword((prev) => !prev)}
+                      aria-label={
+                        showPassword ? "Hide password" : "Show password"
+                      }
+                      className={styles.passwordVisible}
+                    >
+                      {showPassword ? (
+                        <BiSolidHide aria-hidden="true" />
+                      ) : (
+                        <BiSolidShow aria-hidden="true" />
+                      )}
+                    </button>
+
+                    {passwordInput.isValid === true && (
+                      <BiCheckCircle
+                        aria-hidden="true"
+                        className={styles.validIcon}
+                      />
                     )}
-                  </button>
+
+                    {passwordInput.isValid === false && (
+                      <BiErrorCircle
+                        aria-hidden="true"
+                        className={styles.invalidIcon}
+                      />
+                    )}
+                  </div>
                 </div>
               </>
             ) : null}
