@@ -13,6 +13,8 @@ import {
 } from "@/store/authSlice";
 import Button from "../ui/Button";
 import { notImplemented } from "@/lib/utils";
+import useDebounceValue from "@/hooks/useDebounceValue";
+import useValidateInput from "@/hooks/useValidateInput";
 
 interface VariantData {
   title: string;
@@ -61,6 +63,12 @@ export default function AuthModal() {
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const isTouchDeviceRef = useRef(false);
+
+  // Debounced Input Validation:
+  const debouncedEmail = useDebounceValue<string>(input.email, 350);
+  const debouncedPassword = useDebounceValue<string>(input.password, 350);
+  const emailInput = useValidateInput(debouncedEmail, "email");
+  const passwordInput = useValidateInput(debouncedPassword, "password");
 
   const data = variantData[currentVariant];
 
@@ -162,7 +170,7 @@ export default function AuthModal() {
         <div className={styles.modalContent}>
           <button
             onClick={() => dispatch(startClose())}
-            aria-label="Close login modal"
+            aria-label="Close modal"
             className={styles.close}
           >
             <IoCloseOutline />
@@ -195,19 +203,39 @@ export default function AuthModal() {
             <label htmlFor="email" className={styles.srOnly}>
               Email Address
             </label>
-            <input
-              ref={emailRef}
-              onChange={(e) =>
-                dispatch(setInput({ field: "email", value: e.target.value }))
-              }
-              onKeyDown={(e) => e.key === "Enter" && handleEmailKeyDown(e)}
-              value={input.email}
-              id="email"
-              type="email"
-              autoComplete="email"
-              placeholder="Email Address"
-              className={styles.input}
-            />
+
+            <div className={styles.emailInput}>
+              <input
+                ref={emailRef}
+                onChange={(e) =>
+                  dispatch(setInput({ field: "email", value: e.target.value }))
+                }
+                onKeyDown={(e) => e.key === "Enter" && handleEmailKeyDown(e)}
+                value={input.email}
+                id="email"
+                aria-invalid={emailInput.isValid === false}
+                aria-describedby={
+                  emailInput.isValid === false ? "email-error" : undefined
+                }
+                type="text"
+                inputMode="email"
+                autoComplete="email"
+                placeholder="Email Address"
+                className={clsx(
+                  styles.input,
+                  emailInput.isValid === true && styles.validInput,
+                  emailInput.isValid === false && styles.invalidInput,
+                )}
+              />
+
+              <p
+                id="email-error"
+                aria-live="polite"
+                className={styles.invalidInputMessage}
+              >
+                {emailInput.errorMessage}
+              </p>
+            </div>
 
             {currentVariant === "login" || currentVariant === "register" ? (
               <>
@@ -228,11 +256,30 @@ export default function AuthModal() {
                     onKeyDown={(e) => e.key === "Enter" && notImplemented()}
                     value={input.password}
                     id="password"
+                    aria-invalid={passwordInput.isValid === false}
+                    aria-describedby={
+                      passwordInput.isValid === false
+                        ? "password-error"
+                        : undefined
+                    }
                     type={showPassword ? "text" : "password"}
                     autoComplete={data.autoPassword}
                     placeholder="Password"
-                    className={styles.input}
+                    className={clsx(
+                      styles.input,
+                      passwordInput.isValid === true && styles.validInput,
+                      passwordInput.isValid === false && styles.invalidInput,
+                    )}
                   />
+
+                  <p
+                    id="password-error"
+                    aria-live="polite"
+                    className={styles.invalidInputMessage}
+                  >
+                    {passwordInput.errorMessage}
+                  </p>
+
                   <button
                     type="button"
                     onClick={() => setShowPassword((prev) => !prev)}

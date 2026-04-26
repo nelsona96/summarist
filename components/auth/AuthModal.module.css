@@ -101,20 +101,49 @@
   transition: border-color var(--transition);
 }
 
-.input:hover {
+.inputWrapper {
+  position: relative;
+}
+
+.input:hover,
+.input:focus {
   border-color: var(--color-muted-font);
 }
 
-.input:focus {
-  border-color: var(--color-primary-accent);
-}
-
+.emailInput,
 .passwordInput {
   position: relative;
 }
 
-.passwordInput:has(.passwordVisible:hover) .input {
+.invalidInputMessage {
+  font-size: var(--font-size-sm);
+  margin-top: var(--space-xs);
+  color: var(--color-error);
+}
+
+.invalidInputMessage:empty {
+  display: none;
+}
+
+.passwordInput:has(.passwordVisible:hover) .input,
+.passwordInput:has(.passwordVisible:focus) .input {
   border-color: var(--color-muted-font);
+}
+
+.validInput,
+.validInput:focus,
+.validInput:hover,
+.passwordInput:has(.passwordVisible:hover) .validInput,
+.passwordInput:has(.passwordVisible:focus) .validInput {
+  border-color: var(--color-success);
+}
+
+.invalidInput,
+.invalidInput:focus,
+.invalidInput:hover,
+.passwordInput:has(.passwordVisible:hover) .invalidInput,
+.passwordInput:has(.passwordVisible:focus) .invalidInput {
+  border-color: var(--color-error);
 }
 
 .passwordVisible {
