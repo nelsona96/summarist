@@ -1,11 +1,14 @@
 "use client";
 
-import { useAppDispatch } from "@/hooks/redux";
-import { openModal } from "@/store/authSlice";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { openModal } from "@/store/authModalSlice";
 import Button from "../ui/Button";
+import { useRouter } from "next/navigation";
 
 export default function HomeButton() {
   const dispatch = useAppDispatch();
+  const router = useRouter();
+  const isLoggedIn = useAppSelector((state) => state.auth.user !== null);
 
   return (
     <Button
@@ -13,7 +16,9 @@ export default function HomeButton() {
       type="button"
       label="Login"
       maxWidth="300px"
-      onClick={() => dispatch(openModal())}
+      onClick={() =>
+        isLoggedIn ? router.push("/for-you") : dispatch(openModal())
+      }
     />
   );
 }

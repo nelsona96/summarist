@@ -1,62 +1,51 @@
+import { AppUser, SubscriptionStatus } from "@/types/user";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-type ModalVariants = "login" | "register" | "forgotPassword";
-
-export interface AuthState {
-  isOpen: boolean;
-  isClosing: boolean;
-  input: {
-    email: string;
-    password: string;
-  };
-  currentVariant: ModalVariants;
+interface AuthState {
+  user: AppUser | null;
+  subscriptionStatus: SubscriptionStatus;
+  isLoading: boolean;
+  error: string | null;
 }
 
 const initialState: AuthState = {
-  isOpen: false,
-  isClosing: false,
-  input: {
-    email: "",
-    password: "",
-  },
-  currentVariant: "login",
+  user: null,
+  subscriptionStatus: null,
+  isLoading: true,
+  error: null,
 };
 
 export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    openModal: (state) => {
-      state.isOpen = true;
-      state.isClosing = false;
+    setUser: (state, action: PayloadAction<AppUser | null>) => {
+      state.user = action.payload;
     },
-    startClose: (state) => {
-      state.isClosing = true;
-    },
-    finalizeClose: (state) => {
-      state.isOpen = false;
-      state.isClosing = false;
-    },
-    setInput: (
+    setSubscriptionStatus: (
       state,
-      action: PayloadAction<{ field: "email" | "password"; value: string }>,
+      action: PayloadAction<SubscriptionStatus>,
     ) => {
-      state.input[action.payload.field] = action.payload.value;
+      state.subscriptionStatus = action.payload;
     },
-    setCurrentVariant: (state, action: PayloadAction<ModalVariants>) => {
-      state.currentVariant = action.payload;
+    setIsLoading: (state, action: PayloadAction<boolean>) => {
+      state.isLoading = action.payload;
+    },
+    setError: (state, action: PayloadAction<string>) => {
+      state.error = action.payload;
+    },
+    clearError: (state) => {
+      state.error = null;
     },
   },
 });
 
-export const {
-  openModal,
-  startClose,
-  finalizeClose,
-  setInput,
-  setCurrentVariant,
-} = authSlice.actions;
-
-export type { ModalVariants };
-
 export default authSlice.reducer;
+
+export const {
+  setUser,
+  setSubscriptionStatus,
+  setIsLoading,
+  setError,
+  clearError,
+} = authSlice.actions;

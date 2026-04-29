@@ -1,8 +1,18 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./Navbar.module.css";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { signOut } from "firebase/auth";
+import { auth } from "@/lib/firebase";
+import { openModal } from "@/store/authModalSlice";
 
 export default function Navbar() {
+  const isLoggedIn = useAppSelector((state) => state.auth.user !== null);
+
+  const dispatch = useAppDispatch();
+
   return (
     <header>
       <div className={`container ${styles.navContainer}`}>
@@ -17,9 +27,14 @@ export default function Navbar() {
         <nav className={styles.nav} aria-label="Main navigation">
           <ul className={styles.navLinks}>
             <li>
-              <Link className={styles.primaryLink} href="/for-you">
-                Login
-              </Link>
+              <button
+                onClick={() => {
+                  !isLoggedIn ? dispatch(openModal()) : signOut(auth);
+                }}
+                className={styles.primaryLink}
+              >
+                {isLoggedIn ? "Log Out" : "Login"}
+              </button>
             </li>
             <li>
               <span className={styles.navLink} aria-disabled="true">

@@ -1,4 +1,4 @@
-import type { ModalVariants } from "@/store/authSlice";
+import type { ModalVariants } from "@/store/authModalSlice";
 import styles from "./AuthModal.module.css";
 import clsx from "clsx";
 import { IoCloseOutline } from "react-icons/io5";
@@ -15,11 +15,19 @@ import {
   finalizeClose,
   setInput,
   setCurrentVariant,
-} from "@/store/authSlice";
+  clearInput,
+} from "@/store/authModalSlice";
 import Button from "../ui/Button";
 import { notImplemented } from "@/lib/utils";
 import useDebounceValue from "@/hooks/useDebounceValue";
 import useValidateInput from "@/hooks/useValidateInput";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "@/lib/firebase";
+import { useAuthAction } from "@/hooks/useAuthAction";
+import { useRouter } from "next/navigation";
 
 interface VariantData {
   title: string;
@@ -56,9 +64,10 @@ const focusable =
 
 export default function AuthModal() {
   const dispatch = useAppDispatch();
-  const { isClosing, input, currentVariant } = useAppSelector(
-    (state) => state.auth,
+  const { isClosing, input, currentVariant, protectedRoute } = useAppSelector(
+    (state) => state.authModal,
   );
+
   const [isVisible, setIsVisible] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -74,6 +83,8 @@ export default function AuthModal() {
   const debouncedPassword = useDebounceValue<string>(input.password, 350);
   const emailInput = useValidateInput(debouncedEmail, "email");
   const passwordInput = useValidateInput(debouncedPassword, "password");
+
+  const router = useRouter();
 
   const data = variantData[currentVariant];
 
@@ -126,12 +137,11 @@ export default function AuthModal() {
   }, [isClosing]);
 
   const closeModal = () => {
-    !isClosing && dispatch(startClose());
+    if (!isClosing && !protectedRoute) dispatch(startClose());
   };
 
   const toggleVariant = (goToVariant: ModalVariants): void => {
-    dispatch(setInput({ field: "email", value: "" }));
-    dispatch(setInput({ field: "password", value: "" }));
+    dispatch(clearInput());
 
     dispatch(setCurrentVariant(goToVariant));
 
@@ -154,9 +164,54 @@ export default function AuthModal() {
   };
 
   const handleEmailKeyDown = (e: React.KeyboardEvent) => {
-    currentVariant === "forgotPassword"
-      ? notImplemented()
-      : passwordRef.current?.focus();
+    if (currentVariant !== "forgotPassword") {
+      e.preventDefault();
+      passwordRef.current?.focus();
+    }
+  };
+
+  // Firebase Authentication Methods
+  const execute = useAuthAction();
+
+  const handleRegister = async () => {
+    execute(
+      () => createUserWithEmailAndPassword(auth, input.email, input.password),
+      () => router.push("/for-you"),
+    );
+  };
+
+  const handleLogin = async () => {
+    execute(
+      () => signInWithEmailAndPassword(auth, input.email, input.password),
+      () => router.push("/for-you"),
+    );
+  };
+
+  const handleLoginGuest = async () => {
+    const guestEmail = "guest@email.com";
+    const guestPassword = "guestpassword";
+
+    execute(
+      () => signInWithEmailAndPassword(auth, guestEmail, guestPassword),
+      () => router.push("/for-you"),
+    );
+  };
+
+  // Email & password form submission
+  const handleSubmit = (e: React.SubmitEvent) => {
+    e.preventDefault();
+
+    if (currentVariant !== "forgotPassword") {
+      if (debouncedEmail.length === 0 || debouncedPassword.length === 0) return;
+    } else {
+      if (debouncedEmail.length === 0) return;
+    }
+
+    if (emailInput.errorMessage || passwordInput.errorMessage) return;
+
+    if (currentVariant === "login") return handleLogin();
+    if (currentVariant === "register") return handleRegister();
+    if (currentVariant === "forgotPassword") return notImplemented();
   };
 
   return (
@@ -173,13 +228,15 @@ export default function AuthModal() {
         className={clsx(styles.modal, isVisible && styles.visibleModal)}
       >
         <div className={styles.modalContent}>
-          <button
-            onClick={() => dispatch(startClose())}
-            aria-label="Close modal"
-            className={styles.close}
-          >
-            <IoCloseOutline />
-          </button>
+          {!protectedRoute && (
+            <button
+              onClick={() => dispatch(startClose())}
+              aria-label="Close modal"
+              className={styles.close}
+            >
+              <IoCloseOutline />
+            </button>
+          )}
 
           <h2 id="modal-title" className={styles.title}>
             {data.title}
@@ -187,7 +244,12 @@ export default function AuthModal() {
 
           {currentVariant === "login" && (
             <>
-              <Button variant="guest" type="button" label="Login as a Guest" />
+              <Button
+                variant="guest"
+                type="button"
+                label="Login as a Guest"
+                onClick={handleLoginGuest}
+              />
               <Separator />
             </>
           )}
@@ -198,13 +260,14 @@ export default function AuthModal() {
                 variant="google"
                 type="button"
                 label={data.googleLabel!}
+                onClick={() => notImplemented()}
               />
 
               <Separator />
             </>
           ) : null}
 
-          <form onSubmit={(e) => e.preventDefault()} className={styles.form}>
+          <form onSubmit={handleSubmit} className={styles.form}>
             <label htmlFor="email" className={styles.srOnly}>
               Email Address
             </label>
@@ -276,7 +339,6 @@ export default function AuthModal() {
                         }),
                       )
                     }
-                    onKeyDown={(e) => e.key === "Enter" && notImplemented()}
                     value={input.password}
                     id="password"
                     aria-invalid={passwordInput.isValid === false}
@@ -337,7 +399,7 @@ export default function AuthModal() {
               </>
             ) : null}
 
-            <Button variant="login" type="button" label={data.btnLabel} />
+            <Button variant="login" type="submit" label={data.btnLabel} />
           </form>
         </div>
 

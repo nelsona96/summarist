@@ -4,7 +4,6 @@ import clsx from "clsx";
 import styles from "./Button.module.css";
 import { IoPerson } from "react-icons/io5";
 import { FcGoogle } from "react-icons/fc";
-import { notImplemented } from "@/lib/utils";
 
 interface ButtonProps {
   variant: "login" | "guest" | "google";
@@ -26,7 +25,7 @@ export default function Button({
   height,
 }: ButtonProps) {
   const handleClick = () => {
-    onClick ? onClick() : notImplemented();
+    onClick && onClick();
   };
 
   return (
