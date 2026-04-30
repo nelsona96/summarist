@@ -8,7 +8,7 @@ export function useAuthAction() {
 
   const execute = async (
     firebaseAction: () => Promise<unknown>,
-    onSuccess: () => void,
+    onSuccess?: () => void,
   ) => {
     try {
       dispatch(clearError());
@@ -23,7 +23,7 @@ export function useAuthAction() {
         dispatch(setError(error.message));
       }
     } finally {
-      onSuccess();
+      onSuccess && onSuccess();
       dispatch(setIsLoading(false));
     }
   };

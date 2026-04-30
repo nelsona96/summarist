@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import styles from "./Navbar.module.css";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { signOut } from "firebase/auth";

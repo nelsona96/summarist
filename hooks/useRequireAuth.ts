@@ -1,4 +1,4 @@
-import { openModal, setProtectedRoute } from "@/store/authModalSlice";
+import { openModal } from "@/store/authModalSlice";
 import { useAppDispatch, useAppSelector } from "./redux";
 import { useEffect } from "react";
 
