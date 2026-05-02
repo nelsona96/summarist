@@ -18,12 +18,13 @@ export function useAuthAction() {
 
       dispatch(startClose());
       dispatch(clearInput());
+
+      onSuccess && onSuccess();
     } catch (error) {
       if (error instanceof FirebaseError) {
         dispatch(setError(error.message));
       }
     } finally {
-      onSuccess && onSuccess();
       dispatch(setIsLoading(false));
     }
   };

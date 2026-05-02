@@ -23,7 +23,9 @@ import useDebounceValue from "@/hooks/useDebounceValue";
 import useValidateInput from "@/hooks/useValidateInput";
 import {
   createUserWithEmailAndPassword,
+  GoogleAuthProvider,
   signInWithEmailAndPassword,
+  signInWithPopup,
 } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { useAuthAction } from "@/hooks/useAuthAction";
@@ -172,6 +174,7 @@ export default function AuthModal() {
 
   // Firebase Authentication Methods
   const execute = useAuthAction();
+  const provider = new GoogleAuthProvider();
 
   const handleRegister = async () => {
     execute(
@@ -183,6 +186,13 @@ export default function AuthModal() {
   const handleLogin = async () => {
     execute(
       () => signInWithEmailAndPassword(auth, input.email, input.password),
+      () => router.push("/for-you"),
+    );
+  };
+
+  const handleLoginGoogle = async () => {
+    execute(
+      () => signInWithPopup(auth, provider),
       () => router.push("/for-you"),
     );
   };
@@ -260,7 +270,7 @@ export default function AuthModal() {
                 variant="google"
                 type="button"
                 label={data.googleLabel!}
-                onClick={() => notImplemented()}
+                onClick={handleLoginGoogle}
               />
 
               <Separator />
