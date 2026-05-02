@@ -69,6 +69,7 @@ export default function AuthModal() {
   const { isClosing, input, currentVariant, protectedRoute } = useAppSelector(
     (state) => state.authModal,
   );
+  const { error } = useAppSelector((state) => state.auth);
 
   const [isVisible, setIsVisible] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -251,6 +252,10 @@ export default function AuthModal() {
           <h2 id="modal-title" className={styles.title}>
             {data.title}
           </h2>
+
+          <p aria-live="polite" className={styles.errorMessage}>
+            {error}
+          </p>
 
           {currentVariant === "login" && (
             <>
