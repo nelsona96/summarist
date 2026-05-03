@@ -1,15 +1,19 @@
 import { openModal } from "@/store/authModalSlice";
 import { useAppDispatch, useAppSelector } from "./redux";
-import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function useRequireAuth() {
   const dispatch = useAppDispatch();
-  const { user, isLoading } = useAppSelector((state) => state.auth);
-  const isLoggedIn = user !== null;
+  const router = useRouter();
+  const isLoggedIn = useAppSelector((state) => state.auth.user !== null);
 
-  useEffect(() => {
-    if (!isLoggedIn && !isLoading) {
-      dispatch(openModal());
+  const requireAuth = (redirectPath: string) => {
+    if (isLoggedIn) {
+      router.push(redirectPath);
+    } else {
+      dispatch(openModal(redirectPath));
     }
-  }, [isLoggedIn, isLoading]);
+  };
+
+  return requireAuth;
 }

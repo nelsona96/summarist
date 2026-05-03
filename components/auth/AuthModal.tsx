@@ -29,7 +29,7 @@ import {
 } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { useAuthAction } from "@/hooks/useAuthAction";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 interface VariantData {
   title: string;
@@ -66,7 +66,7 @@ const focusable =
 
 export default function AuthModal() {
   const dispatch = useAppDispatch();
-  const { isClosing, input, currentVariant, protectedRoute } = useAppSelector(
+  const { isClosing, input, currentVariant } = useAppSelector(
     (state) => state.authModal,
   );
   const { error } = useAppSelector((state) => state.auth);
@@ -88,6 +88,7 @@ export default function AuthModal() {
   const passwordInput = useValidateInput(debouncedPassword, "password");
 
   const router = useRouter();
+  const pathname = usePathname();
 
   const data = variantData[currentVariant];
 
@@ -140,7 +141,7 @@ export default function AuthModal() {
   }, [isClosing]);
 
   const closeModal = () => {
-    if (!isClosing && !protectedRoute) dispatch(startClose());
+    if (!isClosing) dispatch(startClose());
   };
 
   const toggleVariant = (goToVariant: ModalVariants): void => {
@@ -176,26 +177,25 @@ export default function AuthModal() {
   // Firebase Authentication Methods
   const execute = useAuthAction();
   const provider = new GoogleAuthProvider();
+  const routeToDashboard =
+    pathname === "/" ? () => router.push("/for-you") : undefined;
 
   const handleRegister = async () => {
     execute(
       () => createUserWithEmailAndPassword(auth, input.email, input.password),
-      () => router.push("/for-you"),
+      routeToDashboard,
     );
   };
 
   const handleLogin = async () => {
     execute(
       () => signInWithEmailAndPassword(auth, input.email, input.password),
-      () => router.push("/for-you"),
+      routeToDashboard,
     );
   };
 
   const handleLoginGoogle = async () => {
-    execute(
-      () => signInWithPopup(auth, provider),
-      () => router.push("/for-you"),
-    );
+    execute(() => signInWithPopup(auth, provider), routeToDashboard);
   };
 
   const handleLoginGuest = async () => {
@@ -204,7 +204,7 @@ export default function AuthModal() {
 
     execute(
       () => signInWithEmailAndPassword(auth, guestEmail, guestPassword),
-      () => router.push("/for-you"),
+      routeToDashboard,
     );
   };
 
@@ -239,15 +239,13 @@ export default function AuthModal() {
         className={clsx(styles.modal, isVisible && styles.visibleModal)}
       >
         <div className={styles.modalContent}>
-          {!protectedRoute && (
-            <button
-              onClick={() => dispatch(startClose())}
-              aria-label="Close modal"
-              className={styles.close}
-            >
-              <IoCloseOutline />
-            </button>
-          )}
+          <button
+            onClick={() => dispatch(startClose())}
+            aria-label="Close modal"
+            className={styles.close}
+          >
+            <IoCloseOutline />
+          </button>
 
           <h2 id="modal-title" className={styles.title}>
             {data.title}

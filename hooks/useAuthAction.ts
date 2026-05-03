@@ -1,10 +1,15 @@
 import { clearError, setError, setIsLoading } from "@/store/authSlice";
 import { clearInput, startClose } from "@/store/authModalSlice";
-import { useAppDispatch } from "./redux";
+import { useAppDispatch, useAppSelector } from "./redux";
 import { FirebaseError } from "firebase/app";
+import { useRouter } from "next/navigation";
 
 export function useAuthAction() {
   const dispatch = useAppDispatch();
+  const router = useRouter();
+  const pendingRedirect = useAppSelector(
+    (state) => state.authModal.pendingRedirect,
+  );
 
   const execute = async (
     firebaseAction: () => Promise<unknown>,
@@ -19,7 +24,9 @@ export function useAuthAction() {
       dispatch(startClose());
       dispatch(clearInput());
 
-      onSuccess && onSuccess();
+      if (onSuccess) onSuccess();
+
+      if (pendingRedirect) router.push(pendingRedirect);
     } catch (error) {
       if (error instanceof FirebaseError) {
         dispatch(setError(error.message));

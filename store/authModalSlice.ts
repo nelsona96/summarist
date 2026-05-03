@@ -10,7 +10,7 @@ export interface ModalState {
     password: string;
   };
   currentVariant: ModalVariants;
-  protectedRoute: boolean;
+  pendingRedirect: string;
 }
 
 const initialState: ModalState = {
@@ -21,16 +21,17 @@ const initialState: ModalState = {
     password: "",
   },
   currentVariant: "login",
-  protectedRoute: false,
+  pendingRedirect: "",
 };
 
 export const authModalSlice = createSlice({
   name: "authModal",
   initialState,
   reducers: {
-    openModal: (state) => {
+    openModal: (state, action: PayloadAction<string | undefined>) => {
       state.isOpen = true;
       state.isClosing = false;
+      if (action.payload) state.pendingRedirect = action.payload;
     },
     startClose: (state) => {
       state.isClosing = true;
@@ -38,6 +39,7 @@ export const authModalSlice = createSlice({
     finalizeClose: (state) => {
       state.isOpen = false;
       state.isClosing = false;
+      state.pendingRedirect = "";
     },
     setInput: (
       state,
@@ -52,9 +54,6 @@ export const authModalSlice = createSlice({
     setCurrentVariant: (state, action: PayloadAction<ModalVariants>) => {
       state.currentVariant = action.payload;
     },
-    setProtectedRoute: (state, action: PayloadAction<boolean>) => {
-      state.protectedRoute = action.payload;
-    },
   },
 });
 
@@ -65,7 +64,6 @@ export const {
   setInput,
   clearInput,
   setCurrentVariant,
-  setProtectedRoute,
 } = authModalSlice.actions;
 
 export type { ModalVariants };

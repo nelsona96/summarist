@@ -1,4 +1,3 @@
-import RequireAuth from "@/components/auth/RequireAuth";
 import { ReactNode } from "react";
 
 export default function DashboardLayout({
@@ -6,7 +5,6 @@ export default function DashboardLayout({
 }: Readonly<{ children: ReactNode }>) {
   return (
     <div>
-      <RequireAuth />
       <aside>Sidebar Placeholder</aside>
       <main>
         <div>Searchbar Placeholder</div>

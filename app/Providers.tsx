@@ -8,8 +8,8 @@ import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { setUser, setIsLoading } from "@/store/authSlice";
-import { usePathname, useRouter } from "next/navigation";
-import { setProtectedRoute, startClose } from "@/store/authModalSlice";
+import { usePathname } from "next/navigation";
+import { startClose } from "@/store/authModalSlice";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (
@@ -51,7 +51,6 @@ function AuthListener() {
 
   useEffect(() => {
     if (pathname === "/") dispatch(startClose());
-    dispatch(setProtectedRoute(pathname !== "/"));
   }, [pathname, dispatch]);
 
   return null;
