@@ -5,9 +5,9 @@ import store from "@/store/store";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import AuthModal from "@/components/auth/AuthModal";
 import { useEffect } from "react";
-import { getRedirectResult, onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/lib/firebase";
-import { setUser, setIsLoading, setError } from "@/store/authSlice";
+import { setUser, setIsLoading } from "@/store/authSlice";
 import { usePathname, useRouter } from "next/navigation";
 import { setProtectedRoute, startClose } from "@/store/authModalSlice";
 
@@ -29,7 +29,6 @@ function ModalToggle() {
 function AuthListener() {
   const dispatch = useAppDispatch();
   const pathname = usePathname();
-  const router = useRouter();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
@@ -54,23 +53,6 @@ function AuthListener() {
     if (pathname === "/") dispatch(startClose());
     dispatch(setProtectedRoute(pathname !== "/"));
   }, [pathname, dispatch]);
-
-  useEffect(() => {
-    getRedirectResult(auth)
-      .then((result) => {
-        if (result?.user) {
-          router.push("/for-you");
-          console.log("user present");
-        } else {
-          console.log("user not present");
-        }
-        console.log(result);
-      })
-      .catch((error) => {
-        dispatch(setError(error.message));
-        console.error(error);
-      });
-  }, []);
 
   return null;
 }
