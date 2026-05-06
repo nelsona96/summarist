@@ -138,6 +138,7 @@ export default function AuthModal() {
       setIsVisible(false);
       timerRef.current = setTimeout(() => {
         dispatch(finalizeClose());
+        dispatch(clearError());
       }, 200);
     }
   }, [isClosing]);
