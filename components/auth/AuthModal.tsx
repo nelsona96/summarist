@@ -8,7 +8,7 @@ import {
   BiCheckCircle,
   BiErrorCircle,
 } from "react-icons/bi";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import {
   startClose,
@@ -86,8 +86,22 @@ export default function AuthModal() {
   // Debounced Input Validation:
   const debouncedEmail = useDebounceValue<string>(input.email, 350);
   const debouncedPassword = useDebounceValue<string>(input.password, 350);
-  const emailInput = useValidateInput(debouncedEmail, "email");
-  const passwordInput = useValidateInput(debouncedPassword, "password");
+
+  const [emailTouched, setEmailTouched] = useState(false);
+  const [passwordTouched, setPasswordTouched] = useState(false);
+
+  const emailInput = useValidateInput(
+    input.email,
+    debouncedEmail,
+    "email",
+    emailTouched,
+  );
+  const passwordInput = useValidateInput(
+    input.password,
+    debouncedPassword,
+    "password",
+    passwordTouched,
+  );
 
   const router = useRouter();
   const pathname = usePathname();
@@ -176,6 +190,18 @@ export default function AuthModal() {
     }
   };
 
+  const handleInputOnChange = (
+    e: React.ChangeEvent,
+    type: "email" | "password",
+  ) => {
+    if (type === "email" && !emailTouched) setEmailTouched(true);
+    if (type === "password" && !passwordTouched) setPasswordTouched(true);
+
+    if (e.target instanceof HTMLInputElement) {
+      dispatch(setInput({ field: type, value: e.target.value }));
+    }
+  };
+
   // Firebase Authentication Methods
   const execute = useAuthAction();
   const provider = new GoogleAuthProvider();
@@ -221,13 +247,18 @@ export default function AuthModal() {
   const handleSubmit = (e: React.SubmitEvent) => {
     e.preventDefault();
 
-    if (currentVariant !== "forgotPassword") {
-      if (debouncedEmail.length === 0 || debouncedPassword.length === 0) return;
-    } else {
-      if (debouncedEmail.length === 0) return;
-    }
+    const invalidEmail = debouncedEmail.length === 0 || emailInput.errorMessage;
+    const invalidPassword =
+      debouncedPassword.length === 0 || passwordInput.errorMessage;
 
-    if (emailInput.errorMessage || passwordInput.errorMessage) return;
+    setEmailTouched(true);
+    setPasswordTouched(true);
+
+    if (currentVariant === "forgotPassword") {
+      if (invalidEmail) return;
+    } else {
+      if (invalidEmail || invalidPassword) return;
+    }
 
     if (currentVariant === "login") return handleLogin();
     if (currentVariant === "register") return handleRegister();
@@ -298,11 +329,7 @@ export default function AuthModal() {
               <div className={styles.emailWrapper}>
                 <input
                   ref={emailRef}
-                  onChange={(e) =>
-                    dispatch(
-                      setInput({ field: "email", value: e.target.value }),
-                    )
-                  }
+                  onChange={(e) => handleInputOnChange(e, "email")}
                   onKeyDown={(e) => e.key === "Enter" && handleEmailKeyDown(e)}
                   value={input.email}
                   id="email"
@@ -353,14 +380,7 @@ export default function AuthModal() {
                 <div className={styles.passwordInput}>
                   <input
                     ref={passwordRef}
-                    onChange={(e) =>
-                      dispatch(
-                        setInput({
-                          field: "password",
-                          value: e.target.value,
-                        }),
-                      )
-                    }
+                    onChange={(e) => handleInputOnChange(e, "password")}
                     value={input.password}
                     id="password"
                     aria-invalid={passwordInput.isValid === false}

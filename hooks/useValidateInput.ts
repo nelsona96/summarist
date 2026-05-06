@@ -1,20 +1,32 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type InputTypes = "email" | "password";
+
+type ValidationTypes = true | string;
 
 interface StateTypes {
   isValid: boolean | null;
   errorMessage: string;
 }
 
-type ValidationTypes = true | string;
+interface InputErrors {
+  invalid: string;
+  empty: string;
+}
 
-const errorMessages = {
+interface ErrorMessages {
+  email: InputErrors;
+  password: InputErrors;
+}
+
+const errorMessages: ErrorMessages = {
   email: {
     invalid: "Please enter a valid email address",
+    empty: "Email address is required",
   },
   password: {
     invalid: "Password must be 8 or more characters",
+    empty: "Password is required",
   },
 };
 
@@ -35,13 +47,25 @@ const validatePassword = (value: string): ValidationTypes => {
 };
 
 export default function useValidateInput(
-  value: string,
+  liveValue: string,
+  debouncedValue: string,
   type: InputTypes,
+  touched: boolean,
 ): StateTypes {
   const [isValid, setIsValid] = useState<boolean | null>(null);
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const hasHadValue = useRef(false);
 
   useEffect(() => {
+    if (debouncedValue.length > 0) hasHadValue.current = true;
+
+    const isPending =
+      (!touched && debouncedValue.length === 0) ||
+      (!hasHadValue.current &&
+        liveValue.length > 0 &&
+        debouncedValue.length === 0);
+
+    // Handle validation result
     const handleResult = (result: ValidationTypes) => {
       if (result === true) {
         setIsValid(true);
@@ -52,22 +76,31 @@ export default function useValidateInput(
       }
     };
 
-    if (value.length === 0) {
+    // Check if input has been touched
+    if (isPending) {
       setIsValid(null);
       setErrorMessage("");
       return;
     }
 
+    // Validate empty input after touched = true
+    if (debouncedValue.length === 0 && touched) {
+      setIsValid(false);
+      setErrorMessage(errorMessages[type].empty);
+      return;
+    }
+
+    // Validate input
     if (type === "email") {
-      const result = validateEmail(value);
+      const result = validateEmail(debouncedValue);
       handleResult(result);
     }
 
     if (type === "password") {
-      const result = validatePassword(value);
+      const result = validatePassword(debouncedValue);
       handleResult(result);
     }
-  }, [value, type]);
+  }, [liveValue, debouncedValue, type, touched]);
 
   return { isValid, errorMessage };
 }
