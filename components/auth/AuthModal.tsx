@@ -15,21 +15,21 @@ import {
   finalizeClose,
   setInput,
   setCurrentVariant,
-  clearInput,
 } from "@/store/authModalSlice";
 import Button from "../ui/Button";
-import { notImplemented } from "@/lib/utils";
 import useDebounceValue from "@/hooks/useDebounceValue";
 import useValidateInput from "@/hooks/useValidateInput";
 import {
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { useAuthAction } from "@/hooks/useAuthAction";
 import { usePathname, useRouter } from "next/navigation";
+import { clearError } from "@/store/authSlice";
 
 interface VariantData {
   title: string;
@@ -37,6 +37,7 @@ interface VariantData {
   googleLabel?: string;
   variantToggle: string;
   autoPassword?: string;
+  successMessage?: string;
 }
 
 const variantData: Record<ModalVariants, VariantData> = {
@@ -58,6 +59,7 @@ const variantData: Record<ModalVariants, VariantData> = {
     title: "Reset Your Password",
     btnLabel: "Send Reset Password Link",
     variantToggle: "Go to Login",
+    successMessage: "Reset password email has been sent!",
   },
 };
 
@@ -70,9 +72,9 @@ export default function AuthModal() {
     (state) => state.authModal,
   );
   const { error } = useAppSelector((state) => state.auth);
-
   const [isVisible, setIsVisible] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const triggerRef = useRef<HTMLElement | null>(null);
   const controllerRef = useRef<AbortController | null>(null);
@@ -145,8 +147,7 @@ export default function AuthModal() {
   };
 
   const toggleVariant = (goToVariant: ModalVariants): void => {
-    dispatch(clearInput());
-
+    dispatch(clearError());
     dispatch(setCurrentVariant(goToVariant));
 
     setTimeout(() => !isTouchDeviceRef.current && emailRef.current?.focus(), 0);
@@ -208,6 +209,13 @@ export default function AuthModal() {
     );
   };
 
+  const handleResetPassword = async () => {
+    execute(
+      () => sendPasswordResetEmail(auth, input.email),
+      () => setSuccessMessage(data.successMessage || ""),
+    );
+  };
+
   // Email & password form submission
   const handleSubmit = (e: React.SubmitEvent) => {
     e.preventDefault();
@@ -222,7 +230,7 @@ export default function AuthModal() {
 
     if (currentVariant === "login") return handleLogin();
     if (currentVariant === "register") return handleRegister();
-    if (currentVariant === "forgotPassword") return notImplemented();
+    if (currentVariant === "forgotPassword") return handleResetPassword();
   };
 
   return (
@@ -412,7 +420,22 @@ export default function AuthModal() {
               </>
             ) : null}
 
-            <Button variant="login" type="submit" label={data.btnLabel} />
+            <Button
+              variant="login"
+              type="submit"
+              label={data.btnLabel}
+              disabled={
+                currentVariant === "forgotPassword" && successMessage
+                  ? true
+                  : false
+              }
+            />
+
+            {currentVariant === "forgotPassword" && (
+              <p aria-live="polite" className={styles.successMessage}>
+                {successMessage}
+              </p>
+            )}
           </form>
         </div>
 

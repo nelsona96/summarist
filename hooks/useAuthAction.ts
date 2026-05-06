@@ -5,6 +5,7 @@ import { FirebaseError } from "firebase/app";
 import { useRouter } from "next/navigation";
 
 export function useAuthAction() {
+  const { currentVariant } = useAppSelector((state) => state.authModal);
   const dispatch = useAppDispatch();
   const router = useRouter();
   const pendingRedirect = useAppSelector(
@@ -21,12 +22,14 @@ export function useAuthAction() {
 
       await firebaseAction();
 
-      dispatch(startClose());
-      dispatch(clearInput());
+      if (currentVariant !== "forgotPassword") {
+        dispatch(startClose());
+        dispatch(clearInput());
+
+        if (pendingRedirect) router.push(pendingRedirect);
+      }
 
       if (onSuccess) onSuccess();
-
-      if (pendingRedirect) router.push(pendingRedirect);
     } catch (error) {
       if (error instanceof FirebaseError) {
         dispatch(setError(error.message));
