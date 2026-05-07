@@ -1,0 +1,16 @@
+.loading {
+  font-size: var(--font-size-xl);
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  animation: spinner 700ms linear infinite;
+}
+
+@keyframes spinner {
+  from {
+    rotate: 0deg;
+  }
+  to {
+    rotate: 360deg;
+  }
+}

@@ -4,14 +4,14 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 interface AuthState {
   user: AppUser | null;
   subscriptionStatus: SubscriptionStatus;
-  isLoading: boolean;
+  isAuthLoading: boolean;
   error: string | null;
 }
 
 const initialState: AuthState = {
   user: null,
   subscriptionStatus: null,
-  isLoading: true,
+  isAuthLoading: true,
   error: null,
 };
 
@@ -29,7 +29,7 @@ export const authSlice = createSlice({
       state.subscriptionStatus = action.payload;
     },
     setIsLoading: (state, action: PayloadAction<boolean>) => {
-      state.isLoading = action.payload;
+      state.isAuthLoading = action.payload;
     },
     setError: (state, action: PayloadAction<string>) => {
       state.error = action.payload;

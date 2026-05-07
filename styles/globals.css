@@ -176,7 +176,7 @@ button {
 }
 
 .button:disabled {
-  filter: grayscale(70%);
+  filter: grayscale(30%);
   pointer-events: none;
 }
 

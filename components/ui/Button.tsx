@@ -4,16 +4,7 @@ import clsx from "clsx";
 import styles from "./Button.module.css";
 import { IoPerson } from "react-icons/io5";
 import { FcGoogle } from "react-icons/fc";
-
-interface ButtonProps {
-  variant: "login" | "guest" | "google";
-  type: "submit" | "reset" | "button";
-  label: string;
-  onClick?: () => void;
-  disabled?: boolean;
-  maxWidth?: string;
-  height?: string;
-}
+import { ButtonProps } from "@/types/button";
 
 export default function Button({
   variant,
@@ -23,6 +14,8 @@ export default function Button({
   disabled,
   maxWidth,
   height,
+  ariaBusy,
+  ariaLabel,
 }: ButtonProps) {
   const handleClick = () => {
     onClick && onClick();
@@ -30,6 +23,8 @@ export default function Button({
 
   return (
     <button
+      aria-label={ariaLabel}
+      aria-busy={ariaBusy}
       type={type}
       onClick={handleClick}
       disabled={disabled}

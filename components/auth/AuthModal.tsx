@@ -1,4 +1,5 @@
 import type { ModalVariants } from "@/store/authModalSlice";
+import type { ButtonVariants } from "@/types/button";
 import styles from "./AuthModal.module.css";
 import clsx from "clsx";
 import { IoCloseOutline } from "react-icons/io5";
@@ -16,7 +17,6 @@ import {
   setInput,
   setCurrentVariant,
 } from "@/store/authModalSlice";
-import Button from "../ui/Button";
 import useDebounceValue from "@/hooks/useDebounceValue";
 import useValidateInput from "@/hooks/useValidateInput";
 import {
@@ -30,6 +30,7 @@ import { auth } from "@/lib/firebase";
 import { useAuthAction } from "@/hooks/useAuthAction";
 import { usePathname, useRouter } from "next/navigation";
 import { clearError } from "@/store/authSlice";
+import AuthButton from "./AuthButton";
 
 interface VariantData {
   title: string;
@@ -71,10 +72,14 @@ export default function AuthModal() {
   const { isClosing, input, currentVariant } = useAppSelector(
     (state) => state.authModal,
   );
+  const { isAuthLoading } = useAppSelector((state) => state.auth);
   const { error } = useAppSelector((state) => state.auth);
   const [isVisible, setIsVisible] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
+  const [loadingButton, setLoadingButton] = useState<ButtonVariants | null>(
+    null,
+  );
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const triggerRef = useRef<HTMLElement | null>(null);
   const controllerRef = useRef<AbortController | null>(null);
@@ -86,10 +91,8 @@ export default function AuthModal() {
   // Debounced Input Validation:
   const debouncedEmail = useDebounceValue<string>(input.email, 350);
   const debouncedPassword = useDebounceValue<string>(input.password, 350);
-
   const [emailTouched, setEmailTouched] = useState(false);
   const [passwordTouched, setPasswordTouched] = useState(false);
-
   const emailInput = useValidateInput(
     input.email,
     debouncedEmail,
@@ -209,38 +212,57 @@ export default function AuthModal() {
     pathname === "/" ? () => router.push("/for-you") : undefined;
 
   const handleRegister = async () => {
-    execute(
+    setLoadingButton("login");
+
+    await execute(
       () => createUserWithEmailAndPassword(auth, input.email, input.password),
       routeToDashboard,
     );
+
+    setLoadingButton(null);
   };
 
   const handleLogin = async () => {
-    execute(
+    setLoadingButton("login");
+
+    await execute(
       () => signInWithEmailAndPassword(auth, input.email, input.password),
       routeToDashboard,
     );
+
+    setLoadingButton(null);
   };
 
   const handleLoginGoogle = async () => {
-    execute(() => signInWithPopup(auth, provider), routeToDashboard);
+    setLoadingButton("google");
+
+    await execute(() => signInWithPopup(auth, provider), routeToDashboard);
+
+    setLoadingButton(null);
   };
 
   const handleLoginGuest = async () => {
+    setLoadingButton("guest");
     const guestEmail = "guest@email.com";
     const guestPassword = "guestpassword";
 
-    execute(
+    await execute(
       () => signInWithEmailAndPassword(auth, guestEmail, guestPassword),
       routeToDashboard,
     );
+
+    setLoadingButton(null);
   };
 
   const handleResetPassword = async () => {
-    execute(
+    setLoadingButton("login");
+
+    await execute(
       () => sendPasswordResetEmail(auth, input.email),
       () => setSuccessMessage(data.successMessage || ""),
     );
+
+    setLoadingButton(null);
   };
 
   // Email & password form submission
@@ -297,11 +319,13 @@ export default function AuthModal() {
 
           {currentVariant === "login" && (
             <>
-              <Button
+              <AuthButton
                 variant="guest"
                 type="button"
                 label="Login as a Guest"
                 onClick={handleLoginGuest}
+                loadingButton={loadingButton}
+                disabled={isAuthLoading}
               />
               <Separator />
             </>
@@ -309,11 +333,13 @@ export default function AuthModal() {
 
           {currentVariant === "login" || currentVariant === "register" ? (
             <>
-              <Button
+              <AuthButton
                 variant="google"
                 type="button"
                 label={data.googleLabel!}
                 onClick={handleLoginGoogle}
+                loadingButton={loadingButton}
+                disabled={isAuthLoading}
               />
 
               <Separator />
@@ -441,12 +467,14 @@ export default function AuthModal() {
               </>
             ) : null}
 
-            <Button
+            <AuthButton
               variant="login"
               type="submit"
               label={data.btnLabel}
+              loadingButton={loadingButton}
               disabled={
-                currentVariant === "forgotPassword" && successMessage
+                isAuthLoading ||
+                (currentVariant === "forgotPassword" && successMessage)
                   ? true
                   : false
               }
