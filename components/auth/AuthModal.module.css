@@ -16,6 +16,8 @@
 .modal {
   position: relative;
   width: 100%;
+  margin: var(--space-xl) 0 0;
+  overflow: scroll;
   transform: translateY(100%);
   border-radius: var(--space-md) var(--space-md) 0 0;
   background-color: var(--color-primary-bg);
@@ -274,14 +276,25 @@
   }
 
   .modal {
+    scrollbar-width: none;
     max-width: 400px;
-    overflow: hidden;
+    margin: var(--space-md) 0;
     opacity: 0;
     border-radius: var(--space-sm);
     transform: translateY(3%);
     transition:
       transform var(--transition),
       opacity var(--transition);
+  }
+
+  .modal::-webkit-scrollbar {
+    display: none;
+  }
+
+  .close {
+    padding: 0;
+    top: var(--space-sm);
+    right: var(--space-sm);
   }
 
   .visibleModal {
