@@ -9,7 +9,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "@/lib/firebase";
 import {
   setUser,
-  setIsLoading,
+  setIsAuthLoading,
   setSubscriptionStatus,
 } from "@/store/authSlice";
 import { usePathname } from "next/navigation";
@@ -64,7 +64,7 @@ function AuthListener() {
         dispatch(setSubscriptionStatus(null));
       }
 
-      dispatch(setIsLoading(false));
+      dispatch(setIsAuthLoading(false));
     });
 
     return unsubscribe;

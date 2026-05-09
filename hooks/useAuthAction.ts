@@ -1,4 +1,4 @@
-import { clearError, setError, setIsLoading } from "@/store/authSlice";
+import { clearError, setError, setIsAuthLoading } from "@/store/authSlice";
 import { clearInput, startClose } from "@/store/authModalSlice";
 import { useAppDispatch, useAppSelector } from "./redux";
 import { FirebaseError } from "firebase/app";
@@ -18,7 +18,7 @@ export function useAuthAction() {
   ) => {
     try {
       dispatch(clearError());
-      dispatch(setIsLoading(true));
+      dispatch(setIsAuthLoading(true));
 
       await firebaseAction();
 
@@ -35,7 +35,7 @@ export function useAuthAction() {
         dispatch(setError(error.message));
       }
     } finally {
-      dispatch(setIsLoading(false));
+      dispatch(setIsAuthLoading(false));
     }
   };
 

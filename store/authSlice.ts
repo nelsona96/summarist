@@ -28,7 +28,7 @@ export const authSlice = createSlice({
     ) => {
       state.subscriptionStatus = action.payload;
     },
-    setIsLoading: (state, action: PayloadAction<boolean>) => {
+    setIsAuthLoading: (state, action: PayloadAction<boolean>) => {
       state.isAuthLoading = action.payload;
     },
     setError: (state, action: PayloadAction<string>) => {
@@ -45,7 +45,7 @@ export default authSlice.reducer;
 export const {
   setUser,
   setSubscriptionStatus,
-  setIsLoading,
+  setIsAuthLoading,
   setError,
   clearError,
 } = authSlice.actions;
