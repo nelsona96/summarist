@@ -69,6 +69,8 @@ function SplashScreenToggle() {
   >("animating");
 
   const animateOut = useCallback(() => {
+    window.scrollTo(0, 0);
+
     setTimeout(() => {
       setShowSplashScreen(isLoading.current);
     }, 200);
