@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import store from "@/store/store";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import AuthModal from "@/components/auth/AuthModal";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { setUser, setIsLoading } from "@/store/authSlice";
@@ -68,19 +68,18 @@ function SplashScreenToggle() {
     "animating" | "loading" | "ready"
   >("animating");
 
-  const animateOut = () => {
+  const animateOut = useCallback(() => {
     setTimeout(() => {
       setShowSplashScreen(isLoading.current);
     }, 200);
-  };
+  }, []);
 
   useEffect(() => {
     setTimeout(() => {
       setSplashPhase(isLoading.current ? "loading" : "ready");
-
       animateOut();
     }, 2500);
-  }, []);
+  }, [animateOut]);
 
   useEffect(() => {
     if (!showSplashScreen) return;
@@ -91,7 +90,7 @@ function SplashScreenToggle() {
       setSplashPhase("ready");
       animateOut();
     }
-  }, [isAuthLoading]);
+  }, [showSplashScreen, isAuthLoading, splashPhase]);
 
   return showSplashScreen ? <SplashScreen splashPhase={splashPhase} /> : null;
 }
