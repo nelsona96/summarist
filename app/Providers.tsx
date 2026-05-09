@@ -12,7 +12,7 @@ import {
   setIsAuthLoading,
   setSubscriptionStatus,
 } from "@/store/authSlice";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { startClose } from "@/store/authModalSlice";
 import SplashScreen from "@/components/ui/SplashScreen";
 import { doc, getDoc, setDoc } from "firebase/firestore";
@@ -72,11 +72,19 @@ function AuthListener() {
 
 function RouteListener() {
   const dispatch = useAppDispatch();
+  const { user, isAuthLoading } = useAppSelector((state) => state.auth);
   const pathname = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
     if (pathname === "/") dispatch(startClose());
   }, [pathname, dispatch]);
+
+  useEffect(() => {
+    if (!isAuthLoading && user && pathname === "/") {
+      router.replace("/for-you");
+    }
+  }, [user, isAuthLoading, pathname, router]);
 
   return null;
 }
