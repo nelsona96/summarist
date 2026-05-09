@@ -35,18 +35,14 @@ function AuthListener() {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-      dispatch(
-        setUser(
-          firebaseUser
-            ? {
-                uid: firebaseUser.uid,
-                email: firebaseUser.email,
-              }
-            : null,
-        ),
-      );
-
       if (firebaseUser) {
+        dispatch(
+          setUser({
+            uid: firebaseUser.uid,
+            email: firebaseUser.email,
+          }),
+        );
+
         const docRef = doc(db, `users/${firebaseUser.uid}`);
         const docSnap = await getDoc(docRef);
 
@@ -61,6 +57,7 @@ function AuthListener() {
           dispatch(setSubscriptionStatus("basic"));
         }
       } else {
+        dispatch(setUser(null));
         dispatch(setSubscriptionStatus(null));
       }
 
