@@ -61,11 +61,9 @@ export default function StatisticsHeadings({
   };
 
   useEffect(() => {
-    console.log("setting timeout");
     // Wait for slashPhase === "animating" to be complete in SplashScreenToggle within Providers.tsx
     timerRef.current = setTimeout(() => {
       setIsSplashScreenAnimating(false);
-      console.log("cat");
     }, 2500);
 
     return () => {
