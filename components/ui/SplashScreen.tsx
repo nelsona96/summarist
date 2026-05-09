@@ -9,6 +9,7 @@ export default function SplashScreen({
   splashPhase: "animating" | "loading" | "ready";
 }) {
   useEffect(() => {
+    // Removes inline style overflow-y: hidden set on body in layout.tsx - restores scroll on mount
     return () => {
       document.body.style.removeProperty("overflow-y");
     };
