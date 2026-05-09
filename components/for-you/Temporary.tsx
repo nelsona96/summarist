@@ -7,13 +7,15 @@ import { signOut } from "firebase/auth";
 import Link from "next/link";
 
 export default function Temporary() {
-  const userEmail = useAppSelector((state) => state.auth.user?.email);
+  const { user, subscriptionStatus } = useAppSelector((state) => state.auth);
+  const userEmail = user?.email;
   const requireAuth = useRequireAuth();
 
   return (
     <div>
       <br />
       <p>Current User: {userEmail ? userEmail : "none"}</p>
+      <p>Subscription Status: {subscriptionStatus} </p>
       <br />
       <button onClick={() => requireAuth("/library")}>Test Soft Gate</button>
       <br />

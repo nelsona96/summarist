@@ -6,11 +6,17 @@ import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import AuthModal from "@/components/auth/AuthModal";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "@/lib/firebase";
-import { setUser, setIsLoading } from "@/store/authSlice";
+import { auth, db } from "@/lib/firebase";
+import {
+  setUser,
+  setIsLoading,
+  setSubscriptionStatus,
+} from "@/store/authSlice";
 import { usePathname } from "next/navigation";
 import { startClose } from "@/store/authModalSlice";
 import SplashScreen from "@/components/ui/SplashScreen";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { SubscriptionStatus } from "@/types/user";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (
@@ -28,7 +34,7 @@ function AuthListener() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       dispatch(
         setUser(
           firebaseUser
@@ -39,6 +45,24 @@ function AuthListener() {
             : null,
         ),
       );
+
+      if (firebaseUser) {
+        const docRef = doc(db, `users/${firebaseUser.uid}`);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          dispatch(
+            setSubscriptionStatus(
+              docSnap.data().subscriptionStatus as SubscriptionStatus,
+            ),
+          );
+        } else {
+          await setDoc(docRef, { subscriptionStatus: "basic" });
+          dispatch(setSubscriptionStatus("basic"));
+        }
+      } else {
+        dispatch(setSubscriptionStatus(null));
+      }
 
       dispatch(setIsLoading(false));
     });
@@ -70,7 +94,6 @@ function SplashScreenToggle() {
 
   const animateOut = useCallback(() => {
     window.scrollTo(0, 0);
-
     setTimeout(() => {
       setShowSplashScreen(isLoading.current);
     }, 200);
