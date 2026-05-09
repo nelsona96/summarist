@@ -1,12 +1,19 @@
 import Image from "next/image";
 import styles from "./SplashScreen.module.css";
 import clsx from "clsx";
+import { useEffect } from "react";
 
 export default function SplashScreen({
   splashPhase,
 }: {
   splashPhase: "animating" | "loading" | "ready";
 }) {
+  useEffect(() => {
+    return () => {
+      document.body.style.removeProperty("overflow-y");
+    };
+  }, []);
+
   return (
     <div
       className={clsx(

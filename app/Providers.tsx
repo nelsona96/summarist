@@ -68,13 +68,17 @@ function SplashScreenToggle() {
     "animating" | "loading" | "ready"
   >("animating");
 
+  const animateOut = () => {
+    setTimeout(() => {
+      setShowSplashScreen(isLoading.current);
+    }, 200);
+  };
+
   useEffect(() => {
     setTimeout(() => {
       setSplashPhase(isLoading.current ? "loading" : "ready");
 
-      setTimeout(() => {
-        setShowSplashScreen(isLoading.current);
-      }, 200);
+      animateOut();
     }, 2500);
   }, []);
 
@@ -85,12 +89,7 @@ function SplashScreenToggle() {
 
     if (!isAuthLoading && splashPhase === "loading") {
       setSplashPhase("ready");
-
-      setTimeout(() => {
-        setShowSplashScreen(false);
-      }, 2000);
-
-      document.body.style.removeProperty("overflow-y");
+      animateOut();
     }
   }, [isAuthLoading]);
 
