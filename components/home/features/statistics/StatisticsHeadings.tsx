@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import clsx from "clsx";
 import styles from "./StatisticsHeadings.module.css";
+import { useAppSelector } from "@/hooks/redux";
 
 interface StatisticsHeadingsProps {
   variant: "first" | "second";
@@ -47,28 +48,46 @@ export default function StatisticsHeadings({
     () => statisticsHeadingsData[variant].headings,
     [variant],
   );
+  const { isAuthLoading } = useAppSelector((state) => state.auth);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isSplashScreenAnimating, setIsSplashScreenAnimating] = useState(true);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  useEffect(() => {
-    if (delay) {
-      setTimeout(() => {
-        startInterval();
-      }, 12000);
-    } else {
-      startInterval();
-    }
-
-    return () => {
-      intervalRef.current && clearInterval(intervalRef.current);
-    };
-  }, [headings]);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const startInterval = () => {
     intervalRef.current = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % headings.length);
     }, 2000);
   };
+
+  useEffect(() => {
+    console.log("setting timeout");
+    // Wait for slashPhase === "animating" to be complete in SplashScreenToggle within Providers.tsx
+    timerRef.current = setTimeout(() => {
+      setIsSplashScreenAnimating(false);
+      console.log("cat");
+    }, 2500);
+
+    return () => {
+      timerRef.current && clearTimeout(timerRef.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isSplashScreenAnimating && !isAuthLoading) {
+      if (delay) {
+        setTimeout(() => {
+          startInterval();
+        }, 12000);
+      } else {
+        startInterval();
+      }
+    }
+
+    return () => {
+      intervalRef.current && clearInterval(intervalRef.current);
+    };
+  }, [headings, isAuthLoading, isSplashScreenAnimating]);
 
   return (
     <ul className={styles.headingsWrapper}>
