@@ -1,0 +1,68 @@
+.splashWrapper {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  inset: 0;
+  height: 100dvh;
+  opacity: 1;
+  background-color: var(--color-primary-bg);
+  z-index: 9999;
+  transition: opacity 200ms ease;
+}
+
+.hidden {
+  opacity: 0;
+}
+
+.logo {
+  will-change: transform;
+  height: auto;
+  animation:
+    fade-in 750ms ease-in-out,
+    scale-in 1250ms ease-in-out,
+    slide-up 1000ms ease-in-out 250ms forwards,
+    hover 1000ms ease-in 4000ms infinite alternate;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scale-in {
+  from {
+    scale: 0.95;
+  }
+  to {
+    scale: 1;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-16px);
+  }
+}
+
+@keyframes hover {
+  from {
+    transform: translateY(-16px);
+  }
+  to {
+    transform: translateY(-8px);
+  }
+}
+
+@media (min-width: 580px) {
+  .logo {
+    width: 260px;
+  }
+}

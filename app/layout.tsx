@@ -24,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={roboto.variable}>
+      <body style={{ overflowY: "hidden" }} className={roboto.variable}>
         <Providers>
           {children}
           <Toaster

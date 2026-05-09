@@ -4,31 +4,28 @@ import { Provider } from "react-redux";
 import store from "@/store/store";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import AuthModal from "@/components/auth/AuthModal";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { setUser, setIsLoading } from "@/store/authSlice";
 import { usePathname } from "next/navigation";
 import { startClose } from "@/store/authModalSlice";
+import SplashScreen from "@/components/ui/SplashScreen";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <Provider store={store}>
       <AuthListener />
+      <RouteListener />
+      <SplashScreenToggle />
       <ModalToggle />
       {children}
     </Provider>
   );
 }
 
-function ModalToggle() {
-  const isOpen = useAppSelector((state) => state.authModal.isOpen);
-  return isOpen ? <AuthModal /> : null;
-}
-
 function AuthListener() {
   const dispatch = useAppDispatch();
-  const pathname = usePathname();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
@@ -49,9 +46,58 @@ function AuthListener() {
     return unsubscribe;
   }, [dispatch]);
 
+  return null;
+}
+
+function RouteListener() {
+  const dispatch = useAppDispatch();
+  const pathname = usePathname();
+
   useEffect(() => {
     if (pathname === "/") dispatch(startClose());
   }, [pathname, dispatch]);
 
   return null;
+}
+
+function SplashScreenToggle() {
+  const { isAuthLoading } = useAppSelector((state) => state.auth);
+  const isLoading = useRef(true);
+  const [showSplashScreen, setShowSplashScreen] = useState(true);
+  const [splashPhase, setSplashPhase] = useState<
+    "animating" | "loading" | "ready"
+  >("animating");
+
+  useEffect(() => {
+    setTimeout(() => {
+      setSplashPhase(isLoading.current ? "loading" : "ready");
+
+      setTimeout(() => {
+        setShowSplashScreen(isLoading.current);
+      }, 200);
+    }, 2500);
+  }, []);
+
+  useEffect(() => {
+    if (!showSplashScreen) return;
+
+    isLoading.current = isAuthLoading;
+
+    if (!isAuthLoading && splashPhase === "loading") {
+      setSplashPhase("ready");
+
+      setTimeout(() => {
+        setShowSplashScreen(false);
+      }, 2000);
+
+      document.body.style.removeProperty("overflow-y");
+    }
+  }, [isAuthLoading]);
+
+  return showSplashScreen ? <SplashScreen splashPhase={splashPhase} /> : null;
+}
+
+function ModalToggle() {
+  const isOpen = useAppSelector((state) => state.authModal.isOpen);
+  return isOpen ? <AuthModal /> : null;
 }

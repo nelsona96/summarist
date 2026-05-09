@@ -1,8 +1,7 @@
 import { ButtonProps, ButtonVariants } from "@/types/button";
 import Button from "../ui/Button";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useAppSelector } from "@/hooks/redux";
-import styles from "./AuthButton.module.css";
+import LoadingSpinner from "../ui/LoadingSpinner";
 
 interface AuthButtonProps extends ButtonProps {
   label: string;
@@ -31,10 +30,7 @@ export default function AuthButton({
       type={type}
       label={
         loadingButton === variant && isAuthLoading ? (
-          <AiOutlineLoading3Quarters
-            aria-hidden="true"
-            className={styles.loading}
-          />
+          <LoadingSpinner size="md" />
         ) : (
           label
         )

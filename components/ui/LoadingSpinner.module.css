@@ -1,9 +1,24 @@
 .loading {
-  font-size: var(--font-size-xl);
   position: absolute;
   inset: 0;
   margin: auto;
   animation: spinner 700ms linear infinite;
+}
+
+.sm {
+  font-size: var(--font-size-lg);
+}
+
+.md {
+  font-size: var(--font-size-xl);
+}
+
+.lg {
+  font-size: var(--font-size-2xl);
+}
+
+.xl {
+  font-size: var(--font-size-3xl);
 }
 
 @keyframes spinner {
