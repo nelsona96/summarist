@@ -208,15 +208,12 @@ export default function AuthModal() {
   // Firebase Authentication Methods
   const execute = useAuthAction();
   const provider = new GoogleAuthProvider();
-  const routeToDashboard =
-    pathname === "/" ? () => router.push("/for-you") : undefined;
 
   const handleRegister = async () => {
     setLoadingButton("login");
 
-    await execute(
-      () => createUserWithEmailAndPassword(auth, input.email, input.password),
-      routeToDashboard,
+    await execute(() =>
+      createUserWithEmailAndPassword(auth, input.email, input.password),
     );
 
     setLoadingButton(null);
@@ -225,9 +222,8 @@ export default function AuthModal() {
   const handleLogin = async () => {
     setLoadingButton("login");
 
-    await execute(
-      () => signInWithEmailAndPassword(auth, input.email, input.password),
-      routeToDashboard,
+    await execute(() =>
+      signInWithEmailAndPassword(auth, input.email, input.password),
     );
 
     setLoadingButton(null);
@@ -236,7 +232,7 @@ export default function AuthModal() {
   const handleLoginGoogle = async () => {
     setLoadingButton("google");
 
-    await execute(() => signInWithPopup(auth, provider), routeToDashboard);
+    await execute(() => signInWithPopup(auth, provider));
 
     setLoadingButton(null);
   };
@@ -246,9 +242,8 @@ export default function AuthModal() {
     const guestEmail = "guest@email.com";
     const guestPassword = "guestpassword";
 
-    await execute(
-      () => signInWithEmailAndPassword(auth, guestEmail, guestPassword),
-      routeToDashboard,
+    await execute(() =>
+      signInWithEmailAndPassword(auth, guestEmail, guestPassword),
     );
 
     setLoadingButton(null);
