@@ -41,40 +41,24 @@
   position: relative;
 }
 
-.invalidInputMessage,
-.errorMessage {
+.invalidInputMessage {
   font-size: var(--font-size-sm);
   color: var(--color-error);
   margin-top: var(--space-xs);
 }
 
-.invalidInputMessage {
-  margin-top: var(--space-xs);
-}
-
-.errorMessage,
 .successMessage {
   text-align: center;
   font-weight: 500;
-  padding: var(--space-sm) var(--space-md);
+  color: #00a04b;
+  background-color: #2bd97c30;
   border: 1px solid;
   border-radius: var(--space-xs);
-}
-
-.errorMessage {
-  margin-bottom: var(--space-lg);
-  border-color: var(--color-error);
-  background-color: #ffd6d8;
-}
-
-.successMessage {
   border-color: var(--color-success);
-  background-color: #2bd97c30;
-  color: #00a04b;
+  padding: var(--space-sm) var(--space-md);
 }
 
 .invalidInputMessage:empty,
-.errorMessage:empty,
 .successMessage:empty {
   pointer-events: none;
   opacity: 0;
