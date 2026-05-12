@@ -17,7 +17,9 @@ export default function HomeButton() {
       label="Login"
       maxWidth="300px"
       onClick={() =>
-        isLoggedIn ? router.push("/for-you") : dispatch(openModal())
+        isLoggedIn
+          ? router.push("/for-you")
+          : dispatch(openModal({ currentVariant: "register" }))
       }
     />
   );

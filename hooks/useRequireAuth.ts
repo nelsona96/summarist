@@ -11,7 +11,7 @@ export default function useRequireAuth() {
     if (isLoggedIn) {
       router.push(redirectPath);
     } else {
-      dispatch(openModal(redirectPath));
+      dispatch(openModal({ pendingRedirect: redirectPath }));
     }
   };
 

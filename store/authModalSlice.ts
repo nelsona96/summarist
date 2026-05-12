@@ -28,10 +28,22 @@ export const authModalSlice = createSlice({
   name: "authModal",
   initialState,
   reducers: {
-    openModal: (state, action: PayloadAction<string | undefined>) => {
+    openModal: (
+      state,
+      action: PayloadAction<
+        { pendingRedirect?: string; currentVariant?: ModalVariants } | undefined
+      >,
+    ) => {
       state.isOpen = true;
       state.isClosing = false;
-      if (action.payload) state.pendingRedirect = action.payload;
+
+      if (action.payload?.pendingRedirect) {
+        state.pendingRedirect = action.payload?.pendingRedirect;
+      }
+
+      if (action.payload?.currentVariant) {
+        state.currentVariant = action.payload?.currentVariant;
+      }
     },
     startClose: (state) => {
       state.isClosing = true;
