@@ -52,6 +52,7 @@ export const authModalSlice = createSlice({
       state.isOpen = false;
       state.isClosing = false;
       state.pendingRedirect = "";
+      state.currentVariant = "login";
     },
     setInput: (
       state,
