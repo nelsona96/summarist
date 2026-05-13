@@ -71,15 +71,11 @@ function AuthListener() {
 }
 
 function RouteListener() {
-  const dispatch = useAppDispatch();
   const { user, isAuthLoading } = useAppSelector((state) => state.auth);
   const pathname = usePathname();
   const router = useRouter();
 
-  useEffect(() => {
-    if (pathname === "/") dispatch(startClose());
-  }, [pathname, dispatch]);
-
+  // Auto route from landing to dashboard if user is logged in
   useEffect(() => {
     if (!isAuthLoading && user && pathname === "/") {
       router.replace("/for-you");
