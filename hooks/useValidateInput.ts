@@ -30,7 +30,7 @@ const errorMessages: ErrorMessages = {
   },
 };
 
-const validateEmail = (value: string): ValidationTypes => {
+export const validateEmail = (value: string): ValidationTypes => {
   if (/.+@.+\..+/.test(value)) {
     return true;
   } else {
@@ -38,7 +38,7 @@ const validateEmail = (value: string): ValidationTypes => {
   }
 };
 
-const validatePassword = (value: string): ValidationTypes => {
+export const validatePassword = (value: string): ValidationTypes => {
   if (value.length >= 8) {
     return true;
   } else {
