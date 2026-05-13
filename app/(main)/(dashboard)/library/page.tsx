@@ -6,7 +6,7 @@ import { openModal } from "@/store/authModalSlice";
 import { signOut } from "firebase/auth";
 import Link from "next/link";
 
-export default function page() {
+export default function Page() {
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.auth);
   return (
