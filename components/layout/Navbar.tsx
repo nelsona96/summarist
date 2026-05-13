@@ -2,14 +2,10 @@
 
 import Image from "next/image";
 import styles from "./Navbar.module.css";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { signOut } from "firebase/auth";
-import { auth } from "@/lib/firebase";
+import { useAppDispatch } from "@/hooks/redux";
 import { openModal } from "@/store/authModalSlice";
 
 export default function Navbar() {
-  const isLoggedIn = useAppSelector((state) => state.auth.user !== null);
-
   const dispatch = useAppDispatch();
 
   return (
@@ -27,12 +23,10 @@ export default function Navbar() {
           <ul className={styles.navLinks}>
             <li>
               <button
-                onClick={() => {
-                  !isLoggedIn ? dispatch(openModal()) : signOut(auth);
-                }}
+                onClick={() => dispatch(openModal())}
                 className={styles.primaryLink}
               >
-                {isLoggedIn ? "Log Out" : "Login"}
+                Login
               </button>
             </li>
             <li>
