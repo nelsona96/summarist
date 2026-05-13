@@ -4,7 +4,6 @@ import { useAppSelector } from "@/hooks/redux";
 import useRequireAuth from "@/hooks/useRequireAuth";
 import { auth } from "@/lib/firebase";
 import { signOut } from "firebase/auth";
-import Link from "next/link";
 
 export default function Temporary() {
   const { user, subscriptionStatus } = useAppSelector((state) => state.auth);
@@ -21,9 +20,6 @@ export default function Temporary() {
       <br />
       {userEmail && (
         <>
-          <br />
-          <Link href={"/"}>Go back home</Link>
-          <br />
           <br />
           <button onClick={() => signOut(auth)}>Log Out</button>
         </>
