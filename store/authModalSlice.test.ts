@@ -40,7 +40,7 @@ describe("authModalSlice", () => {
     expect(result.isClosing).toBe(true);
   });
 
-  it("finalizeClose updates isOpen, isClosing, pendingRedirect in state", () => {
+  it("finalizeClose updates isOpen, isClosing, pendingRedirect, currentVariant in state", () => {
     const openState = reducer(
       undefined,
       openModal({ pendingRedirect: "/library" }),
@@ -50,6 +50,7 @@ describe("authModalSlice", () => {
     expect(result.isOpen).toBe(false);
     expect(result.isClosing).toBe(false);
     expect(result.pendingRedirect).toBe("");
+    expect(result.currentVariant).toBe("login");
   });
 
   it("setInput({field: 'email', value}) updates email input in state", () => {
