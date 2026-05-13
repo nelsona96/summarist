@@ -1,5 +1,5 @@
 import { clearError, setError, setIsAuthLoading } from "@/store/authSlice";
-import { clearInput, startClose } from "@/store/authModalSlice";
+import { startClose } from "@/store/authModalSlice";
 import { useAppDispatch, useAppSelector } from "./redux";
 import { FirebaseError } from "firebase/app";
 import { useRouter } from "next/navigation";
@@ -24,7 +24,6 @@ export function useAuthAction() {
 
       if (currentVariant !== "forgotPassword") {
         dispatch(startClose());
-        dispatch(clearInput());
 
         if (pendingRedirect) router.push(pendingRedirect);
       }

@@ -3,8 +3,6 @@ import reducer, {
   openModal,
   startClose,
   finalizeClose,
-  setInput,
-  clearInput,
   setCurrentVariant,
 } from "./authModalSlice";
 
@@ -53,37 +51,8 @@ describe("authModalSlice", () => {
     expect(result.currentVariant).toBe("login");
   });
 
-  it("setInput({field: 'email', value}) updates email input in state", () => {
-    const result = reducer(
-      undefined,
-      setInput({ field: "email", value: "test@email.com" }),
-    );
-
-    expect(result.input.email).toBe("test@email.com");
-  });
-
-  it("setInput({field: 'password', value}) updates password input in state", () => {
-    const result = reducer(
-      undefined,
-      setInput({ field: "password", value: "testpassword" }),
-    );
-
-    expect(result.input.password).toBe("testpassword");
-  });
-
-  it("clearInput clears email and password inputs in state", () => {
-    const result = reducer(undefined, clearInput());
-
-    expect(result.input.email).toBe("");
-    expect(result.input.password).toBe("");
-  });
-
   it("setCurrentVariant updates currentVariant in state", () => {
-    const stateWithInput = reducer(
-      undefined,
-      setInput({ field: "email", value: "test@email.com" }),
-    );
-    const result = reducer(stateWithInput, setCurrentVariant("register"));
+    const result = reducer(undefined, setCurrentVariant("register"));
 
     expect(result.currentVariant).toBe("register");
   });

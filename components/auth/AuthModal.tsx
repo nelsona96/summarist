@@ -61,10 +61,11 @@ const focusable =
 export default function AuthModal() {
   const dispatch = useAppDispatch();
   const { isAuthLoading, error } = useAppSelector((state) => state.auth);
-  const { isClosing, input, currentVariant } = useAppSelector(
+  const { isClosing, currentVariant } = useAppSelector(
     (state) => state.authModal,
   );
 
+  const [input, setInput] = useState({ email: "", password: "" });
   const [isVisible, setIsVisible] = useState(false);
   const [loadingButton, setLoadingButton] = useState<ButtonVariants | null>(
     null,
@@ -266,6 +267,8 @@ export default function AuthModal() {
           ) : null}
 
           <AuthForm
+            input={input}
+            setInput={setInput}
             data={data}
             emailRef={emailRef}
             loadingButton={loadingButton}

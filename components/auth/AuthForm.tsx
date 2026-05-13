@@ -2,8 +2,7 @@ import type { ButtonVariants } from "@/types/button";
 import styles from "./AuthForm.module.css";
 import clsx from "clsx";
 import { useRef, useState } from "react";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { setInput } from "@/store/authModalSlice";
+import { useAppSelector } from "@/hooks/redux";
 import useDebounceValue from "@/hooks/useDebounceValue";
 import useValidateInput from "@/hooks/useValidateInput";
 import {
@@ -16,6 +15,13 @@ import { VariantData } from "./AuthModal";
 import AuthButton from "./AuthButton";
 
 interface AuthFormProps {
+  input: { email: string; password: string };
+  setInput: (
+    value: React.SetStateAction<{
+      email: string;
+      password: string;
+    }>,
+  ) => void;
   data: VariantData;
   emailRef: React.RefObject<HTMLInputElement | null>;
   loadingButton: ButtonVariants | null;
@@ -25,6 +31,8 @@ interface AuthFormProps {
 }
 
 export default function AuthForm({
+  input,
+  setInput,
   data,
   emailRef,
   loadingButton,
@@ -32,9 +40,8 @@ export default function AuthForm({
   handleRegister,
   handleResetPassword,
 }: AuthFormProps) {
-  const dispatch = useAppDispatch();
   const { isAuthLoading } = useAppSelector((state) => state.auth);
-  const { currentVariant, input } = useAppSelector((state) => state.authModal);
+  const { currentVariant } = useAppSelector((state) => state.authModal);
 
   const [showPassword, setShowPassword] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
@@ -66,14 +73,17 @@ export default function AuthForm({
   };
 
   const handleInputOnChange = (
-    e: React.ChangeEvent,
+    e: React.ChangeEvent<HTMLInputElement>,
     type: "email" | "password",
   ) => {
-    if (type === "email" && !emailTouched) setEmailTouched(true);
-    if (type === "password" && !passwordTouched) setPasswordTouched(true);
+    if (type === "email") {
+      if (!emailTouched) setEmailTouched(true);
+      setInput((prev) => ({ ...prev, email: e.target.value }));
+    }
 
-    if (e.target instanceof HTMLInputElement) {
-      dispatch(setInput({ field: type, value: e.target.value }));
+    if (type === "password") {
+      if (!passwordTouched) setPasswordTouched(true);
+      setInput((prev) => ({ ...prev, password: e.target.value }));
     }
   };
 
