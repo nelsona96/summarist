@@ -1,15 +1,10 @@
 "use client";
 
 import clsx from "clsx";
-import { toast } from "sonner";
 import styles from "./Button.module.css";
-interface ButtonProps {
-  variant: "homeCta" | "guest" | "google";
-  type: "submit" | "reset" | "button";
-  label: string;
-  onClick?: () => void;
-  disabled?: boolean;
-}
+import { IoPerson } from "react-icons/io5";
+import { FcGoogle } from "react-icons/fc";
+import { ButtonProps } from "@/types/button";
 
 export default function Button({
   variant,
@@ -17,25 +12,33 @@ export default function Button({
   label,
   onClick,
   disabled,
+  maxWidth,
+  height,
+  ariaBusy,
+  ariaLabel,
 }: ButtonProps) {
-  // Temporary onClick function:
   const handleClick = () => {
-    if (onClick) {
-      onClick();
-    } else {
-      toast.info("Hi there!", {
-        description: "This functionality has not yet been implemented.",
-      });
-    }
+    onClick && onClick();
   };
 
   return (
     <button
+      aria-label={ariaLabel}
+      aria-busy={ariaBusy}
       type={type}
       onClick={handleClick}
       disabled={disabled}
       className={clsx("button", styles[variant])}
+      style={{ maxWidth, height: height ?? "40px" }}
     >
+      {variant === "guest" && (
+        <IoPerson className={clsx(styles.icon, styles.guestIcon)} />
+      )}
+
+      {variant === "google" && (
+        <FcGoogle className={clsx(styles.icon, styles.googleIcon)} />
+      )}
+
       {label}
     </button>
   );

@@ -1,0 +1,42 @@
+import { clearError, setError, setIsAuthLoading } from "@/store/authSlice";
+import { startClose } from "@/store/authModalSlice";
+import { useAppDispatch, useAppSelector } from "./redux";
+import { FirebaseError } from "firebase/app";
+import { useRouter } from "next/navigation";
+
+export function useAuthAction() {
+  const { currentVariant } = useAppSelector((state) => state.authModal);
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+  const pendingRedirect = useAppSelector(
+    (state) => state.authModal.pendingRedirect,
+  );
+
+  const execute = async (
+    firebaseAction: () => Promise<unknown>,
+    onSuccess?: () => void,
+  ) => {
+    try {
+      dispatch(clearError());
+      dispatch(setIsAuthLoading(true));
+
+      await firebaseAction();
+
+      if (currentVariant !== "forgotPassword") {
+        dispatch(startClose());
+
+        if (pendingRedirect) router.push(pendingRedirect);
+      }
+
+      if (onSuccess) onSuccess();
+    } catch (error) {
+      if (error instanceof FirebaseError) {
+        dispatch(setError(error.message));
+      }
+    } finally {
+      dispatch(setIsAuthLoading(false));
+    }
+  };
+
+  return execute;
+}

@@ -1,8 +1,13 @@
+"use client";
+
 import Image from "next/image";
-import Link from "next/link";
 import styles from "./Navbar.module.css";
+import { useAppDispatch } from "@/hooks/redux";
+import { openModal } from "@/store/authModalSlice";
 
 export default function Navbar() {
+  const dispatch = useAppDispatch();
+
   return (
     <header>
       <div className={`container ${styles.navContainer}`}>
@@ -10,15 +15,19 @@ export default function Navbar() {
           className={styles.logo}
           width={200}
           height={46.5}
+          priority
           src="/assets/logo.png"
           alt="Summarist logo"
         />
         <nav className={styles.nav} aria-label="Main navigation">
           <ul className={styles.navLinks}>
             <li>
-              <Link className={styles.primaryLink} href="/for-you">
+              <button
+                onClick={() => dispatch(openModal())}
+                className={styles.primaryLink}
+              >
                 Login
-              </Link>
+              </button>
             </li>
             <li>
               <span className={styles.navLink} aria-disabled="true">

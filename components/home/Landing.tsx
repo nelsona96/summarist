@@ -1,6 +1,6 @@
 import Image from "next/image";
-import Button from "../ui/Button";
 import styles from "./Landing.module.css";
+import HomeButton from "./HomeButton";
 
 export default function Landing() {
   return (
@@ -14,7 +14,7 @@ export default function Landing() {
             Great summaries for busy people, individuals who barely have time to
             read, and even people who don&apos;t like to read.
           </p>
-          <Button variant="homeCta" type="button" label="Login" />
+          <HomeButton />
         </div>
         <div className={styles.imgWrapper}>
           <Image

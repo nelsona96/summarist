@@ -17,7 +17,7 @@
   /* Accent Colors: */
   --color-primary-accent: #2bd97c;
   --color-secondary-accent: #0365f2;
-  --color-btn-hover: #20ba68;
+  --color-btn-hover: #1ac86b;
 
   /* Font Colors: */
   --color-primary-font: #032b41;
@@ -26,6 +26,10 @@
 
   /* Border Color:  */
   --color-border: #e1e7ea;
+
+  /* Status Colors: */
+  --color-success: #2bd97c;
+  --color-error: #fb2c36;
 
   /* Font Sizes: */
   --font-size-sm: 0.875rem; /* 14px */
@@ -53,6 +57,45 @@
 
   /* Transition Speed:  */
   --transition: 0.2s ease;
+  --transition-spring: 0.35s
+    linear(
+      0,
+      0.0672 3%,
+      0.1412 6%,
+      0.2241 9%,
+      0.3189 11%,
+      0.428 14%,
+      0.5473 17%,
+      0.6557 20%,
+      0.7357 23%,
+      0.7913 26%,
+      0.8312 29%,
+      0.8611 31%,
+      0.8845 34%,
+      0.9031 37%,
+      0.9184 40%,
+      0.9311 43%,
+      0.9418 46%,
+      0.9508 49%,
+      0.9585 51%,
+      0.9651 54%,
+      0.9709 57%,
+      0.9758 60%,
+      0.98 63%,
+      0.9837 66%,
+      0.9868 69%,
+      0.9895 71%,
+      0.9918 74%,
+      0.9938 77%,
+      0.9954 80%,
+      0.9967 83%,
+      0.9978 86%,
+      0.9986 89%,
+      0.9993 91%,
+      0.9997 94%,
+      0.9999 97%,
+      1
+    );
 
   /* Navbar:  */
   --navbar-height-mobile: 60px;
@@ -65,7 +108,6 @@
   margin: 0;
 }
 
-html,
 body {
   overflow-x: hidden;
 }
@@ -95,6 +137,11 @@ li {
 button {
   cursor: pointer;
   border: none;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  background-color: transparent;
+  color: inherit;
 }
 
 .section {
@@ -118,24 +165,19 @@ button {
 }
 
 .button {
-  padding: var(--space-sm) var(--space-lg);
-  color: var(--color-primary-font);
-  background-color: var(--color-primary-accent);
-  border-radius: var(--radius-sm);
+  position: relative;
+  width: 100%;
   font-size: var(--font-size-md);
   font-weight: 500;
   text-align: center;
+  padding: 0 var(--space-lg);
+  border-radius: var(--radius-sm);
   transition: background-color var(--transition);
 }
 
 .button:disabled {
-  filter: grayscale(70%);
-  color: var(--color-muted-font);
+  filter: grayscale(30%);
   pointer-events: none;
-}
-
-.button:hover {
-  background-color: var(--color-btn-hover);
 }
 
 @media (min-width: 768px) {

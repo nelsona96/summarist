@@ -1,4 +1,52 @@
-.homeCta {
-    width: 100%;
-    max-width: 300px;
+.icon {
+  position: absolute;
+  left: 1.25rem;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.75rem;
+}
+
+/* 
+
+VARIANTS 
+
+*/
+
+.guest,
+.google {
+  color: #fff;
+}
+
+/* LOGIN: */
+.login {
+  background-color: var(--color-primary-accent);
+  color: var(--color-primary-font);
+}
+
+.login:hover {
+  background-color: var(--color-btn-hover);
+}
+
+/* GUEST */
+.guest {
+  background-color: #3a579d;
+}
+
+.guest:hover {
+  background-color: #29468c;
+}
+
+/* GOOGLE */
+.google {
+  background-color: #4285f4;
+}
+
+.google:hover {
+  background-color: #3174e3;
+}
+
+.googleIcon {
+  background-color: #fff;
+  border-radius: 4px;
+  padding: 2px;
 }
