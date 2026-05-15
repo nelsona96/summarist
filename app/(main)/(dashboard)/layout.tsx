@@ -1,15 +1,16 @@
+import { SidebarContextProvider } from "@/context/SidebarContext";
 import { ReactNode } from "react";
 
 export default function DashboardLayout({
   children,
 }: Readonly<{ children: ReactNode }>) {
   return (
-    <div>
+    <SidebarContextProvider>
       <aside>Sidebar Placeholder</aside>
       <main>
         <div>Searchbar Placeholder</div>
         {children}
       </main>
-    </div>
+    </SidebarContextProvider>
   );
 }
