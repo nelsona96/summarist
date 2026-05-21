@@ -1,0 +1,9 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 600vh;
+
+  @media (min-width: 768px) {
+    margin-left: 240px;
+  }
+}

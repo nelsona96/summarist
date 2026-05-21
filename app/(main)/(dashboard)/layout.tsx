@@ -1,3 +1,5 @@
+import styles from "./layout.module.css";
+import Sidebar from "@/components/layout/Sidebar";
 import { SidebarContextProvider } from "@/context/SidebarContext";
 import { ReactNode } from "react";
 
@@ -6,11 +8,13 @@ export default function DashboardLayout({
 }: Readonly<{ children: ReactNode }>) {
   return (
     <SidebarContextProvider>
-      <aside>Sidebar Placeholder</aside>
-      <main>
-        <div>Searchbar Placeholder</div>
-        {children}
-      </main>
+      <div className={styles.wrapper}>
+        <Sidebar />
+        <main>
+          <div>Searchbar Placeholder</div>
+          {children}
+        </main>
+      </div>
     </SidebarContextProvider>
   );
 }
