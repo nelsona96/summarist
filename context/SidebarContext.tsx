@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { createContext, useContext, useRef, useState } from "react";
 
 interface SidebarContextInterface {
   isOpen: boolean;

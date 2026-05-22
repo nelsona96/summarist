@@ -11,12 +11,18 @@ import {
   LuSearch,
   LuSettings,
   LuCircleHelp,
-  //   LuLogIn, - commented out until use to avoid ESLint error
+  LuLogIn,
   LuLogOut,
 } from "react-icons/lu";
 import { useSidebarContext } from "@/context/SidebarContext";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { signOut } from "firebase/auth";
+import { auth } from "@/lib/firebase";
+import { openModal } from "@/store/authModalSlice";
 
 export default function Sidebar() {
+  const dispatch = useAppDispatch();
+  const { user } = useAppSelector((state) => state.auth);
   const { isOpen, isVisible, toggleSidebar } = useSidebarContext();
 
   return (
@@ -101,12 +107,25 @@ export default function Sidebar() {
               </button>
             </li>
             <li className={styles.listItem}>
-              <Link href={"#"} className={styles.navLink}>
+              <button
+                onClick={() =>
+                  user
+                    ? signOut(auth)
+                    : dispatch(openModal({ pendingRedirect: "/for-you" }))
+                }
+                className={styles.navLink}
+              >
                 <span className={styles.navLinkContent}>
-                  <LuLogOut className={styles.icon} />
-                  <span className={styles.navLinkText}>Logout</span>
+                  {user ? (
+                    <LuLogOut className={styles.icon} />
+                  ) : (
+                    <LuLogIn className={styles.icon} />
+                  )}
+                  <span className={styles.navLinkText}>
+                    {user ? "Logout" : "Login"}
+                  </span>
                 </span>
-              </Link>
+              </button>
             </li>
           </ul>
         </nav>
