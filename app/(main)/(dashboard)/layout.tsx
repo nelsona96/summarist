@@ -8,12 +8,14 @@ export default function DashboardLayout({
 }: Readonly<{ children: ReactNode }>) {
   return (
     <SidebarContextProvider>
-      <div className={styles.wrapper}>
-        <Sidebar />
-        <main>
+      <div className={styles.grid}>
+        <div className={styles.sidebar}>
+          <Sidebar />
+        </div>
+        <header className={styles.header}>
           <div>Searchbar Placeholder</div>
-          {children}
-        </main>
+        </header>
+        <main className={styles.main}>{children}</main>
       </div>
     </SidebarContextProvider>
   );

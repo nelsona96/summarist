@@ -8,24 +8,20 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 100dvh;
+  height: 100%;
   backdrop-filter: brightness(50%);
 
   @media (min-width: 768px) {
+    position: static;
     backdrop-filter: brightness(100%);
-    width: 240px;
   }
 }
 
 .sidebar {
   width: 80%;
   min-width: 240px;
-  height: 100dvh;
+  height: 100%;
   background-color: #f7faf9;
-
-  @media (min-width: 768px) {
-    width: 240px;
-  }
 }
 
 .logoWrapper {
@@ -45,7 +41,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: calc(100dvh - 80px);
+  height: calc(100% - 80px);
   padding-bottom: var(--space-lg);
 }
 
