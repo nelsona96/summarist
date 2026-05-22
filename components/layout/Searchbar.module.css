@@ -1,0 +1,16 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  padding: 0 var(--space-md);
+}
+
+.menu {
+  display: flex;
+  font-size: var(--font-size-2xl);
+
+  @media (min-width: 768px) {
+    display: none;
+  }
+}

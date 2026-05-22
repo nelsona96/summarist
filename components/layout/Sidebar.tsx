@@ -14,10 +14,20 @@ import {
   //   LuLogIn, - commented out until use to avoid ESLint error
   LuLogOut,
 } from "react-icons/lu";
+import { useSidebarContext } from "@/context/SidebarContext";
 
 export default function Sidebar() {
+  const { isOpen, isVisible, toggleSidebar } = useSidebarContext();
+
   return (
-    <div className={styles.wrapper}>
+    <div
+      onClick={(e) => e.target === e.currentTarget && toggleSidebar()}
+      className={clsx({
+        [styles.wrapper]: true,
+        [styles.open]: isOpen,
+        [styles.visible]: isVisible,
+      })}
+    >
       <div className={styles.sidebar}>
         <div className={styles.logoWrapper}>
           <Image

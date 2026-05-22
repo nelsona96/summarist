@@ -1,3 +1,4 @@
+import Searchbar from "@/components/layout/Searchbar";
 import styles from "./layout.module.css";
 import Sidebar from "@/components/layout/Sidebar";
 import { SidebarContextProvider } from "@/context/SidebarContext";
@@ -13,7 +14,7 @@ export default function DashboardLayout({
           <Sidebar />
         </div>
         <header className={styles.header}>
-          <div>Searchbar Placeholder</div>
+          <Searchbar />
         </header>
         <main className={styles.main}>{children}</main>
       </div>

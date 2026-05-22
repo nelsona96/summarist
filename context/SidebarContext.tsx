@@ -1,13 +1,11 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 
 interface SidebarContextInterface {
   isOpen: boolean;
-  isClosing: boolean;
-  openSidebar: () => void;
-  startClose: () => void;
-  finalizeClose: () => void;
+  isVisible: boolean;
+  toggleSidebar: () => void;
 }
 
 const SidebarContext = createContext<SidebarContextInterface | undefined>(
@@ -32,26 +30,25 @@ export const SidebarContextProvider = ({
   children: React.ReactNode;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isClosing, setIsClosing] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
-  const openSidebar = () => {
-    setIsClosing(false);
-    setIsOpen(true);
-  };
+  const toggleSidebar = () => {
+    clearTimeout(timerRef.current);
 
-  const startClose = () => {
-    setIsClosing(true);
-  };
-
-  const finalizeClose = () => {
-    setIsClosing(false);
-    setIsOpen(false);
+    if (!isOpen) {
+      setIsOpen(true);
+      setIsVisible(true);
+    } else if (isOpen && isVisible) {
+      setIsOpen(false);
+      timerRef.current = setTimeout(() => {
+        setIsVisible(false);
+      }, 350);
+    }
   };
 
   return (
-    <SidebarContext
-      value={{ isOpen, isClosing, openSidebar, startClose, finalizeClose }}
-    >
+    <SidebarContext value={{ isOpen, isVisible, toggleSidebar }}>
       {children}
     </SidebarContext>
   );

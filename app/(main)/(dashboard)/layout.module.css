@@ -3,6 +3,7 @@
   display: grid;
   grid-template-columns: 0px 1fr;
   grid-template-rows: 80px 1fr;
+  transition: grid-template-columns var(--transition-spring);
 
   @media (min-width: 768px) {
     grid-template-columns: 240px 1fr;
@@ -20,4 +21,5 @@
 
 .main {
   grid-column: 2 / 3;
+  padding: 0 var(--space-md);
 }
