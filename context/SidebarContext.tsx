@@ -1,6 +1,7 @@
 "use client";
 
-import { createContext, useContext, useRef, useState } from "react";
+import { useAppSelector } from "@/hooks/redux";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 
 interface SidebarContextInterface {
   isOpen: boolean;
@@ -29,9 +30,15 @@ export const SidebarContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const { user } = useAppSelector((state) => state.auth);
   const [isOpen, setIsOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+
+  useEffect(() => {
+    if (isOpen && user) toggleSidebar();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
   const toggleSidebar = () => {
     clearTimeout(timerRef.current);
