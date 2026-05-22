@@ -10,6 +10,7 @@
   width: 100%;
   height: 100%;
   visibility: hidden;
+  pointer-events: none;
   transition:
     backdrop-filter var(--transition-spring),
     visibility var(--transition-spring);
@@ -18,11 +19,13 @@
     position: static;
     visibility: visible;
     opacity: 1;
+    pointer-events: auto;
   }
 }
 
 .wrapper.open {
   backdrop-filter: brightness(50%);
+  pointer-events: auto;
 }
 
 .wrapper.visible {
