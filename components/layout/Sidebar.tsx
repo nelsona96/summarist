@@ -20,12 +20,25 @@ import { signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { openModal } from "@/store/authModalSlice";
 import { usePathname } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Sidebar() {
   const pathname = usePathname();
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.auth);
   const { isOpen, isVisible, toggleSidebar } = useSidebarContext();
+
+  useEffect(() => {
+    if (isOpen && isVisible) {
+      document.body.style.overflowY = "hidden";
+    } else {
+      document.body.style.overflowY = "";
+    }
+
+    return () => {
+      document.body.style.overflowY = "";
+    };
+  }, [isOpen, isVisible]);
 
   return (
     <div
