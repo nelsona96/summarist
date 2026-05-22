@@ -19,8 +19,10 @@ import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { openModal } from "@/store/authModalSlice";
+import { usePathname } from "next/navigation";
 
 export default function Sidebar() {
+  const pathname = usePathname();
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.auth);
   const { isOpen, isVisible, toggleSidebar } = useSidebarContext();
@@ -48,7 +50,14 @@ export default function Sidebar() {
         <nav aria-label="Main navigation" className={styles.navLinks}>
           <ul className={styles.topLinks}>
             <li className={styles.listItem}>
-              <Link href={"#"} className={styles.navLink}>
+              <Link
+                href={"/for-you"}
+                aria-current={pathname === "/for-you" ? "page" : undefined}
+                className={clsx(
+                  styles.navLink,
+                  pathname === "/for-you" && styles.active,
+                )}
+              >
                 <span className={styles.navLinkContent}>
                   <LuHouse className={styles.icon} />
                   <span className={styles.navLinkText}>For You</span>
@@ -56,7 +65,14 @@ export default function Sidebar() {
               </Link>
             </li>
             <li className={styles.listItem}>
-              <Link href={"#"} className={styles.navLink}>
+              <Link
+                href={"/library"}
+                aria-current={pathname === "/library" ? "page" : undefined}
+                className={clsx(
+                  styles.navLink,
+                  pathname === "/library" && styles.active,
+                )}
+              >
                 <span className={styles.navLinkContent}>
                   <LuBookmark className={styles.icon} />
                   <span className={styles.navLinkText}>My Library</span>
@@ -108,11 +124,7 @@ export default function Sidebar() {
             </li>
             <li className={styles.listItem}>
               <button
-                onClick={() =>
-                  user
-                    ? signOut(auth)
-                    : dispatch(openModal({ pendingRedirect: "/for-you" }))
-                }
+                onClick={() => (user ? signOut(auth) : dispatch(openModal()))}
                 className={styles.navLink}
               >
                 <span className={styles.navLinkContent}>

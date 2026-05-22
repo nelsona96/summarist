@@ -68,6 +68,7 @@
 }
 
 .navLink {
+  position: relative;
   display: inline-block;
   padding: var(--space-md) 0;
   width: 100%;
@@ -77,6 +78,16 @@
   &:active {
     background-color: #f0efef;
   }
+}
+
+.active::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--space-xs);
+  height: 100%;
+  background-color: var(--color-primary-accent);
 }
 
 .navLinkContent {
