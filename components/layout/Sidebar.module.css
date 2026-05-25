@@ -11,6 +11,7 @@
   height: 100%;
   visibility: hidden;
   pointer-events: none;
+  z-index: 999;
   transition:
     backdrop-filter var(--transition-spring),
     visibility var(--transition-spring);
