@@ -5,6 +5,8 @@
   gap: var(--space-md);
   height: 100%;
   padding: 0 var(--space-md);
+  background-color: var(--color-primary-bg);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .inputWrapper,
