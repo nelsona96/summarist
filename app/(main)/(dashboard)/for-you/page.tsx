@@ -25,7 +25,9 @@ export default function Page() {
           <h2 id="recommended-heading" className={styles.sectionTitle}>
             Recommended For You
           </h2>
-          <h3 className={styles.sectionSubtitle}>We think you'll like these</h3>
+          <h3 className={styles.sectionSubtitle}>
+            We think you&apos;ll like these
+          </h3>
           <p>Placeholder</p>
         </div>
       </section>

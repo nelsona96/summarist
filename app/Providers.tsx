@@ -23,7 +23,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     <Provider store={store}>
       <AuthListener />
       <RouteListener />
-      {/* <SplashScreenToggle /> */}
+      <SplashScreenToggle />
       <ModalToggle />
       {children}
     </Provider>
