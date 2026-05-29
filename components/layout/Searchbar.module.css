@@ -2,7 +2,6 @@
   display: flex;
   align-items: center;
   height: 100%;
-  padding: 0 var(--space-lg);
   background-color: var(--color-primary-bg);
   border-bottom: 1px solid var(--color-border);
 }
@@ -15,6 +14,7 @@
   width: 100%;
   max-width: 1080px;
   margin: 0 auto;
+  padding: 0 var(--space-lg);
 }
 
 .inputWrapper,
