@@ -1,0 +1,147 @@
+/* 
+
+large variant
+
+*/
+
+.cardLg {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  padding: var(--space-md);
+  border-radius: var(--space-sm);
+  background-color: var(--color-highlight-bg);
+
+  @media (min-width: 580px) {
+    padding: var(--space-lg);
+  }
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
+
+  @media (min-width: 1200px) {
+    width: calc((100% / 3) * 2);
+  }
+}
+
+.subtitleLg {
+  text-wrap: pretty;
+
+  @media (min-width: 768px) {
+    width: 40%;
+  }
+}
+
+.divider {
+  display: none;
+
+  @media (min-width: 768px) {
+    display: block;
+    width: 1px;
+    background-color: #bac8ce;
+  }
+}
+
+.contentLg {
+  display: flex;
+  gap: var(--space-md);
+
+  @media (min-width: 768px) {
+    width: 60%;
+  }
+}
+
+.imgLg {
+  width: 140px;
+  height: 140px;
+}
+
+.textLg,
+.subtitleLg {
+  /* align text with top of container: */
+  transform: translateY(-4px);
+}
+
+.titleLg {
+  font-weight: 600;
+  margin-bottom: var(--space-xs);
+}
+
+.authorLg {
+  margin-bottom: var(--space-md);
+}
+
+/* 
+
+compact variant
+
+*/
+
+.cardSm {
+  position: relative;
+  width: 100%;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  border-radius: var(--space-xs);
+  padding: var(--space-xl) var(--space-md) var(--space-md);
+
+  &:hover {
+    background-color: var(--color-secondary-bg);
+  }
+}
+
+.premiumBadge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 0.63rem;
+  letter-spacing: 0.5px;
+  color: #fff;
+  background-color: #032b41;
+  border-radius: var(--space-lg);
+  padding: var(--space-xs) var(--space-sm);
+}
+
+.imgWrapperSm {
+  width: 172px;
+  height: 172px;
+  margin-bottom: var(--space-sm);
+}
+
+.imgSm {
+  width: 100%;
+  height: 100%;
+}
+
+.titleSm {
+  margin-bottom: var(--space-xs);
+}
+
+.authorSm {
+  color: var(--color-muted-font);
+  font-weight: 300;
+  margin-bottom: var(--space-sm);
+}
+
+.subtitleSm {
+  color: var(--color-secondary-font);
+  margin-bottom: var(--space-sm);
+}
+
+.details {
+  display: flex;
+  font-weight: 300;
+  gap: var(--space-md);
+  color: var(--color-muted-font);
+}
+
+.detail {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.iconSm {
+  font-size: var(--space-md);
+}
