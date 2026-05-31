@@ -36,7 +36,13 @@ export default function BookCard({ variant, book }: BookCardProps) {
 
   return (
     // will implement dynamic route with Link in future commit
-    <Link href={"#"}>
+    <Link
+      href={"#"}
+      className={clsx({
+        [styles.linkLg]: variant === "large",
+        [styles.linkSm]: variant === "compact",
+      })}
+    >
       <article
         className={clsx({
           [styles.cardLg]: large,

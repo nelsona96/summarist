@@ -4,6 +4,14 @@ large variant
 
 */
 
+.linkLg {
+  display: inline-block;
+
+  @media (min-width: 1200px) {
+    width: calc((100% / 3) * 2);
+  }
+}
+
 .cardLg {
   display: flex;
   flex-direction: column;
@@ -11,6 +19,7 @@ large variant
   padding: var(--space-md);
   border-radius: var(--space-sm);
   background-color: var(--color-highlight-bg);
+  width: 100%;
 
   @media (min-width: 580px) {
     padding: var(--space-lg);
@@ -18,10 +27,6 @@ large variant
 
   @media (min-width: 768px) {
     flex-direction: row;
-  }
-
-  @media (min-width: 1200px) {
-    width: calc((100% / 3) * 2);
   }
 }
 
