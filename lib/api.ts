@@ -2,7 +2,7 @@ import type { Book } from "@/types/book";
 
 const BASE_URL = "https://us-central1-summaristt.cloudfunctions.net";
 
-export async function getSelectedBook(): Promise<Book> {
+export async function getSelectedBook(): Promise<Book[]> {
   const response = await fetch(`${BASE_URL}/getBooks?status=selected`);
 
   if (!response.ok) {
