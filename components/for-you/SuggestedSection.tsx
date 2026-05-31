@@ -1,7 +1,8 @@
 import { getSuggestedBooks } from "@/lib/api";
+import BookCarousel from "../book/BookCarousel";
 
 export default async function SuggestedSection() {
   const books = await getSuggestedBooks();
 
-  return <div>Placeholder</div>;
+  return <BookCarousel books={books} />;
 }

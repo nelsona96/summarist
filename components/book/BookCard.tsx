@@ -65,7 +65,7 @@ export default function BookCard({ variant, book }: BookCardProps) {
           })}
         >
           {compact ? (
-            <div className={styles.imageWrapperSm}>{bookImage}</div>
+            <div className={styles.imgWrapperSm}>{bookImage}</div>
           ) : (
             bookImage
           )}
