@@ -3,6 +3,7 @@ import styles from "./page.module.css";
 import SelectedSection from "@/components/for-you/SelectedSection";
 import RecommendedSection from "@/components/for-you/RecommendedSection";
 import SuggestedSection from "@/components/for-you/SuggestedSection";
+import SelectedSkeleton from "@/components/for-you/SelectedSkeleton";
 
 export default function Page() {
   return (
@@ -19,7 +20,7 @@ export default function Page() {
             Selected Just For You
           </h2>
 
-          <Suspense fallback={<p>Loading...</p>}>
+          <Suspense fallback={<SelectedSkeleton />}>
             <SelectedSection />
           </Suspense>
         </div>
