@@ -28,18 +28,6 @@ export default function Sidebar() {
   const { user } = useAppSelector((state) => state.auth);
   const { isOpen, isVisible, toggleSidebar } = useSidebarContext();
 
-  useEffect(() => {
-    if (isOpen && isVisible) {
-      document.body.style.overflowY = "hidden";
-    } else {
-      document.body.style.overflowY = "";
-    }
-
-    return () => {
-      document.body.style.overflowY = "";
-    };
-  }, [isOpen, isVisible]);
-
   return (
     <div
       onClick={(e) => e.target === e.currentTarget && toggleSidebar()}
