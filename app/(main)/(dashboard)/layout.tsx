@@ -13,10 +13,12 @@ export default function DashboardLayout({
         <div className={styles.sidebar}>
           <Sidebar />
         </div>
-        <header className={styles.header}>
-          <Searchbar />
-        </header>
-        <main className={styles.main}>{children}</main>
+        <div className={styles.content}>
+          <header className={styles.header}>
+            <Searchbar />
+          </header>
+          <main className={styles.main}>{children}</main>
+        </div>
       </div>
     </SidebarContextProvider>
   );

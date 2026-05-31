@@ -8,6 +8,8 @@
 */
 
 :root {
+  color-scheme: light dark;
+
   /* Background Colors: */
   --color-primary-bg: #fff;
   --color-secondary-bg: #f1f6f4;
