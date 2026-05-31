@@ -1,14 +1,12 @@
-import BookCard from "@/components/book/BookCard";
-import styles from "./page.module.css";
-import { getSelectedBook } from "@/lib/api";
 import { Suspense } from "react";
+import styles from "./page.module.css";
+import SelectedSection from "@/components/for-you/SelectedSection";
 
 export default function Page() {
-  const selectedResponse = getSelectedBook();
-
   return (
     <>
       <h1 className="srOnly">For You</h1>
+
       <section
         id="Selected"
         aria-labelledby="selected-heading"
@@ -19,12 +17,12 @@ export default function Page() {
             Selected Just For You
           </h2>
 
-          {/* temporary loading state placeholder, will use skeleton in future commit */}
           <Suspense fallback={<p>Loading...</p>}>
-            <BookCard variant="large" bookPromise={selectedResponse} />
+            <SelectedSection />
           </Suspense>
         </div>
       </section>
+
       <section
         id="Recommended"
         aria-labelledby="recommended-heading"
@@ -40,6 +38,7 @@ export default function Page() {
           <p>Placeholder</p>
         </div>
       </section>
+
       <section
         id="Suggested"
         aria-labelledby="suggested-heading"

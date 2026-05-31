@@ -7,16 +7,14 @@ import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 import { LuClock, LuStar } from "react-icons/lu";
-import { use } from "react";
 
 interface BookCardProps {
   variant: "large" | "compact";
-  bookPromise: Promise<Book[]>;
+  book: Book;
 }
 
-export default function BookCard({ variant, bookPromise }: BookCardProps) {
+export default function BookCard({ variant, book }: BookCardProps) {
   const user = useAppSelector((state) => state.auth);
-  const [book] = use(bookPromise);
   const large = variant === "large";
   const compact = variant === "compact";
   const bookImage = (
