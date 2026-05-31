@@ -1,6 +1,8 @@
 import { Suspense } from "react";
 import styles from "./page.module.css";
 import SelectedSection from "@/components/for-you/SelectedSection";
+import RecommendedSection from "@/components/for-you/RecommendedSection";
+import SuggestedSection from "@/components/for-you/SuggestedSection";
 
 export default function Page() {
   return (
@@ -35,7 +37,10 @@ export default function Page() {
           <h3 className={styles.sectionSubtitle}>
             We think you&apos;ll like these
           </h3>
-          <p>Placeholder</p>
+
+          <Suspense fallback={<p>Loading...</p>}>
+            <RecommendedSection />
+          </Suspense>
         </div>
       </section>
 
@@ -49,7 +54,10 @@ export default function Page() {
             Suggested Books
           </h2>
           <h3 className={styles.sectionSubtitle}>Browse these books</h3>
-          <p>Placeholder</p>
+
+          <Suspense fallback={<p>Loading...</p>}>
+            <SuggestedSection />
+          </Suspense>
         </div>
       </section>
     </>
