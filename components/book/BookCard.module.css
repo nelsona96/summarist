@@ -6,6 +6,7 @@ large variant
 
 .linkLg {
   display: inline-block;
+  width: 100%;
 
   @media (min-width: 1200px) {
     width: calc((100% / 3) * 2);
@@ -16,10 +17,10 @@ large variant
   display: flex;
   flex-direction: column;
   gap: var(--space-lg);
+  width: 100%;
   padding: var(--space-md);
   border-radius: var(--space-sm);
   background-color: var(--color-highlight-bg);
-  width: 100%;
 
   @media (min-width: 580px) {
     padding: var(--space-lg);
