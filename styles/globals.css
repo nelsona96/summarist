@@ -146,6 +146,10 @@ button {
   color: inherit;
 }
 
+input {
+  color-scheme: light;
+}
+
 .srOnly {
   position: absolute;
   width: 1px;
