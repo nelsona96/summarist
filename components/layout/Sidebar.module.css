@@ -89,6 +89,20 @@
   &:active {
     background-color: #f0efef;
   }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border: 3px solid var(--color-primary-font);
+    border-radius: var(--space-sm);
+    z-index: 1;
+    pointer-events: none;
+  }
 }
 
 .active::after {

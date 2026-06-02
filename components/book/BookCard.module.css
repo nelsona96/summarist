@@ -1,3 +1,26 @@
+/*
+
+both variants
+
+*/
+
+.linkLg,
+.linkSm {
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    border-radius: var(--space-sm);
+    outline: 3px solid var(--color-primary-accent);
+    z-index: 999;
+  }
+}
+
+.linkSm:focus-visible {
+  outline-offset: -3px;
+}
+
 /* 
 
 large variant
