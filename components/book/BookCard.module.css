@@ -87,10 +87,12 @@ compact variant
 .cardSm {
   position: relative;
   width: 100%;
+  height: 100%;
   scroll-snap-align: start;
   scroll-snap-stop: always;
   border-radius: var(--space-xs);
   padding: var(--space-xl) var(--space-md) var(--space-md);
+  transition: background-color var(--transition);
 
   &:hover {
     background-color: var(--color-secondary-bg);
