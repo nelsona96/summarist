@@ -19,6 +19,7 @@ both variants
 
 .linkSm:focus-visible {
   outline-offset: -3px;
+  background-color: var(--color-secondary-bg);
 }
 
 /* 
