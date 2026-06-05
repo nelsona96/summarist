@@ -20,7 +20,6 @@ import { signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { openModal } from "@/store/authModalSlice";
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
 
 export default function Sidebar() {
   const pathname = usePathname();

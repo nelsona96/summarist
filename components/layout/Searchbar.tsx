@@ -70,6 +70,7 @@ export default function Searchbar() {
           onClick={toggleSidebar}
           aria-label="Toggle navigation"
           aria-expanded={isOpen}
+          aria-controls="sidebar"
           className={styles.menu}
         >
           <LuMenu aria-hidden="true" />
