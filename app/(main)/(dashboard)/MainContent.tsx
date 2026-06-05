@@ -5,11 +5,7 @@ import Searchbar from "@/components/layout/Searchbar";
 import { useSidebarContext } from "@/context/SidebarContext";
 import styles from "./layout.module.css";
 
-interface MainContentProps {
-  children: ReactNode;
-}
-
-export default function MainContent({ children }: MainContentProps) {
+export default function MainContent({ children }: { children: ReactNode }) {
   const { isOpen } = useSidebarContext();
 
   return (
@@ -17,7 +13,7 @@ export default function MainContent({ children }: MainContentProps) {
       <header className={styles.header}>
         <Searchbar />
       </header>
-      <main className={styles.main}>{children}</main>
+      <main className={styles.main}></main>
     </div>
   );
 }

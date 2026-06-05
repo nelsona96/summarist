@@ -14,7 +14,9 @@ export default function DashboardLayout({
         <div className={styles.sidebar}>
           <Sidebar />
         </div>
-        <MainContent children={children} />
+        <MainContent>
+          {children}
+        </MainContent>
       </div>
     </SidebarContextProvider>
   );
