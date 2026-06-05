@@ -3,6 +3,7 @@ import styles from "./layout.module.css";
 import Sidebar from "@/components/layout/Sidebar";
 import { SidebarContextProvider } from "@/context/SidebarContext";
 import { ReactNode } from "react";
+import MainContent from "./MainContent";
 
 export default function DashboardLayout({
   children,
@@ -13,12 +14,7 @@ export default function DashboardLayout({
         <div className={styles.sidebar}>
           <Sidebar />
         </div>
-        <div className={styles.content}>
-          <header className={styles.header}>
-            <Searchbar />
-          </header>
-          <main className={styles.main}>{children}</main>
-        </div>
+        <MainContent children={children} styles={styles} />
       </div>
     </SidebarContextProvider>
   );
