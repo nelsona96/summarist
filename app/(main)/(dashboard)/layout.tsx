@@ -1,4 +1,3 @@
-import Searchbar from "@/components/layout/Searchbar";
 import styles from "./layout.module.css";
 import Sidebar from "@/components/layout/Sidebar";
 import { SidebarContextProvider } from "@/context/SidebarContext";

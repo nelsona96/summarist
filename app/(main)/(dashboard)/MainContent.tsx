@@ -13,7 +13,7 @@ export default function MainContent({ children }: { children: ReactNode }) {
       <header className={styles.header}>
         <Searchbar />
       </header>
-      <main className={styles.main}></main>
+      <main className={styles.main}>{children}</main>
     </div>
   );
 }
