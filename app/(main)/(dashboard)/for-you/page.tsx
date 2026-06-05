@@ -35,9 +35,9 @@ export default function Page() {
           <h2 id="recommended-heading" className={styles.sectionTitle}>
             Recommended For You
           </h2>
-          <h3 className={styles.sectionSubtitle}>
+          <p className={styles.sectionSubtitle}>
             We think you&apos;ll like these
-          </h3>
+          </p>
 
           <Suspense fallback={<p>Loading...</p>}>
             <RecommendedSection />
@@ -54,7 +54,7 @@ export default function Page() {
           <h2 id="suggested-heading" className={styles.sectionTitle}>
             Suggested Books
           </h2>
-          <h3 className={styles.sectionSubtitle}>Browse these books</h3>
+          <p className={styles.sectionSubtitle}>Browse these books</p>
 
           <Suspense fallback={<p>Loading...</p>}>
             <SuggestedSection />
