@@ -7,6 +7,8 @@ import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 import { LuClock, LuStar } from "react-icons/lu";
+import { useEffect, useRef, useState } from "react";
+import Skeleton from "../ui/Skeleton";
 
 interface BookCardProps {
   variant: "large" | "compact";
@@ -15,24 +17,20 @@ interface BookCardProps {
 
 export default function BookCard({ variant, book }: BookCardProps) {
   const user = useAppSelector((state) => state.auth);
+  const imgRef = useRef<HTMLImageElement>(null);
+  const [imageLoaded, setImageLoaded] = useState(false);
+
   const large = variant === "large";
   const compact = variant === "compact";
-  const bookImage = (
-    <Image
-      src={book.imageLink}
-      alt={book.title}
-      width={180}
-      height={180}
-      className={clsx({
-        [styles.imgLg]: large,
-        [styles.imgSm]: compact,
-      })}
-    />
-  );
+
   const showPremiumBadge =
     variant === "compact" &&
     book.subscriptionRequired &&
     user?.subscriptionStatus !== "premium-plus";
+
+  useEffect(() => {
+    if (imgRef.current?.complete) setImageLoaded(true);
+  }, []);
 
   return (
     <Link
@@ -63,11 +61,28 @@ export default function BookCard({ variant, book }: BookCardProps) {
             [styles.contentSm]: compact,
           })}
         >
-          {compact ? (
-            <div className={styles.imgWrapperSm}>{bookImage}</div>
-          ) : (
-            bookImage
-          )}
+          <div
+            className={clsx({
+              [styles.imgWrapperLg]: large,
+              [styles.imgWrapperSm]: compact,
+            })}
+          >
+            <Image
+              src={book.imageLink}
+              alt={book.title}
+              ref={imgRef}
+              width={180}
+              height={180}
+              onLoad={() => setImageLoaded(true)}
+              onError={() => setImageLoaded(true)}
+              className={clsx({
+                [styles.imgLg]: large,
+                [styles.imgSm]: compact,
+              })}
+            />
+
+            {!imageLoaded && <Skeleton className={styles.imgSkeleton} />}
+          </div>
 
           <div
             className={clsx({

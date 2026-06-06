@@ -22,6 +22,20 @@ both variants
   background-color: var(--color-secondary-bg);
 }
 
+.imgWrapperLg,
+.imgWrapperSm {
+  position: relative;
+}
+
+.imgSkeleton {
+  position: absolute !important;
+  top: 0;
+  /* extends slightly to fully cover img if partial load */
+  left: -1px;
+  width: 102%;
+  height: 102%;
+}
+
 /* 
 
 large variant
