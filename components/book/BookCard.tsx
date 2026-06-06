@@ -35,9 +35,8 @@ export default function BookCard({ variant, book }: BookCardProps) {
     user?.subscriptionStatus !== "premium-plus";
 
   return (
-    // will implement dynamic route with Link in future commit
     <Link
-      href={"#"}
+      href={`/book/${book.id}`}
       className={clsx({
         [styles.linkLg]: variant === "large",
         [styles.linkSm]: variant === "compact",
