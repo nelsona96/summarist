@@ -7,10 +7,6 @@ interface SkeletonProps {
 
 export default function Skeleton({ className }: SkeletonProps) {
   return (
-    <div
-      role="status"
-      aria-label="Loading content"
-      className={clsx(styles.skeleton, className)}
-    ></div>
+    <div aria-hidden="true" className={clsx(styles.skeleton, className)}></div>
   );
 }

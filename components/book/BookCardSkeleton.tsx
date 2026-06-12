@@ -1,9 +1,23 @@
 import styles from "./BookCardSkeleton.module.css";
 import Skeleton from "../ui/Skeleton";
 
-export default function BookCardSkeleton() {
+type BookCardSkeletonProps =
+  | {
+      roleStatus: true;
+      ariaLabel: string;
+    }
+  | { roleStatus?: false; ariaLabel?: never };
+
+export default function BookCardSkeleton({
+  roleStatus,
+  ariaLabel,
+}: BookCardSkeletonProps) {
   return (
-    <div className={styles.card}>
+    <div
+      role={roleStatus ? "status" : undefined}
+      aria-label={roleStatus ? ariaLabel : undefined}
+      className={styles.card}
+    >
       <Skeleton className={styles.img} />
       <Skeleton className={styles.title} />
       <Skeleton className={styles.author} />

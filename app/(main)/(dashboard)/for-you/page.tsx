@@ -40,7 +40,11 @@ export default function Page() {
             We think you&apos;ll like these
           </p>
 
-          <Suspense fallback={<BookCarouselSkeleton />}>
+          <Suspense
+            fallback={
+              <BookCarouselSkeleton ariaLabel="Loading recommended books" />
+            }
+          >
             <RecommendedSection />
           </Suspense>
         </div>
@@ -57,7 +61,11 @@ export default function Page() {
           </h2>
           <p className={styles.sectionSubtitle}>Browse these books</p>
 
-          <Suspense fallback={<BookCarouselSkeleton />}>
+          <Suspense
+            fallback={
+              <BookCarouselSkeleton ariaLabel="Loading suggested books" />
+            }
+          >
             <SuggestedSection />
           </Suspense>
         </div>
