@@ -1,0 +1,47 @@
+.card {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  border-radius: var(--space-xs);
+  padding: var(--space-xl) var(--space-md) var(--space-md);
+}
+
+.img {
+  width: 172px;
+  height: 172px;
+  margin-bottom: 8px;
+}
+
+.title {
+  width: 65%;
+  height: 16px;
+  margin-bottom: 8px;
+}
+
+.author {
+  width: 85%;
+  height: 16px;
+  margin-bottom: 16px;
+}
+
+.subtitleOne,
+.subtitleTwo {
+  height: 16px;
+}
+
+.subtitleOne {
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.subtitleTwo {
+  width: 75%;
+  margin-bottom: 16px;
+}
+
+.details {
+  width: 55%;
+  height: 16px;
+}

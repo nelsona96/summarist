@@ -4,6 +4,7 @@ import SelectedSection from "@/components/for-you/SelectedSection";
 import RecommendedSection from "@/components/for-you/RecommendedSection";
 import SuggestedSection from "@/components/for-you/SuggestedSection";
 import SelectedSkeleton from "@/components/for-you/SelectedSkeleton";
+import BookCarouselSkeleton from "@/components/book/BookCarouselSkeleton";
 
 export default function Page() {
   return (
@@ -39,7 +40,7 @@ export default function Page() {
             We think you&apos;ll like these
           </p>
 
-          <Suspense fallback={<p>Loading...</p>}>
+          <Suspense fallback={<BookCarouselSkeleton />}>
             <RecommendedSection />
           </Suspense>
         </div>
@@ -56,7 +57,7 @@ export default function Page() {
           </h2>
           <p className={styles.sectionSubtitle}>Browse these books</p>
 
-          <Suspense fallback={<p>Loading...</p>}>
+          <Suspense fallback={<BookCarouselSkeleton />}>
             <SuggestedSection />
           </Suspense>
         </div>
