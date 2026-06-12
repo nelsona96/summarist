@@ -13,9 +13,10 @@ import Skeleton from "../ui/Skeleton";
 interface BookCardProps {
   variant: "large" | "compact";
   book: Book;
+  priority?: boolean;
 }
 
-export default function BookCard({ variant, book }: BookCardProps) {
+export default function BookCard({ variant, book, priority }: BookCardProps) {
   const user = useAppSelector((state) => state.auth);
   const imgRef = useRef<HTMLImageElement>(null);
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -27,6 +28,8 @@ export default function BookCard({ variant, book }: BookCardProps) {
     variant === "compact" &&
     book.subscriptionRequired &&
     user?.subscriptionStatus !== "premium-plus";
+
+  console.log(priority);
 
   useEffect(() => {
     if (imgRef.current?.complete) setImageLoaded(true);
@@ -70,6 +73,7 @@ export default function BookCard({ variant, book }: BookCardProps) {
             <Image
               src={book.imageLink}
               alt={book.title}
+              priority={priority}
               ref={imgRef}
               width={180}
               height={180}
