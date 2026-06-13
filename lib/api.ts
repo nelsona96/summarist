@@ -3,7 +3,7 @@ import type { Book } from "@/types/book";
 const BASE_URL = "https://us-central1-summaristt.cloudfunctions.net";
 
 export async function getSelectedBook(): Promise<Book> {
-  const response = await fetch(`${BASE_URL}/getBooks?status=selected`);
+  const response = await fetch(`${BASE_URL}/getBooks?status=selecte`);
 
   if (!response.ok) {
     throw new Error(
@@ -13,11 +13,14 @@ export async function getSelectedBook(): Promise<Book> {
 
   const books: Book[] = await response.json();
 
+  if (!books.length)
+    throw new Error("getSelectedBook: No selected book returned");
+
   return books[0];
 }
 
 export async function getRecommendedBooks(): Promise<Book[]> {
-  const response = await fetch(`${BASE_URL}/getBooks?status=recommended`);
+  const response = await fetch(`${BASE_URL}/getBooks?status=recommende`);
 
   if (!response.ok) {
     throw new Error(
@@ -25,11 +28,16 @@ export async function getRecommendedBooks(): Promise<Book[]> {
     );
   }
 
-  return response.json();
+  const books: Book[] = await response.json();
+
+  if (!books.length)
+    throw new Error("getRecommendedBooks: No recommended books returned");
+
+  return books;
 }
 
 export async function getSuggestedBooks(): Promise<Book[]> {
-  const response = await fetch(`${BASE_URL}/getBooks?status=suggested`);
+  const response = await fetch(`${BASE_URL}/getBooks?status=suggeste`);
 
   if (!response.ok) {
     throw new Error(
@@ -37,7 +45,12 @@ export async function getSuggestedBooks(): Promise<Book[]> {
     );
   }
 
-  return response.json();
+  const books: Book[] = await response.json();
+
+  if (!books.length)
+    throw new Error("getSuggestedBooks: No suggested books returned");
+
+  return books;
 }
 
 export async function getBookById(id: string): Promise<Book> {
