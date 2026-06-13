@@ -3,7 +3,7 @@ import type { Book } from "@/types/book";
 const BASE_URL = "https://us-central1-summaristt.cloudfunctions.net";
 
 export async function getSelectedBook(): Promise<Book> {
-  const response = await fetch(`${BASE_URL}/getBooks?status=selecte`);
+  const response = await fetch(`${BASE_URL}/getBooks?status=selected`);
 
   if (!response.ok) {
     throw new Error(
@@ -20,7 +20,7 @@ export async function getSelectedBook(): Promise<Book> {
 }
 
 export async function getRecommendedBooks(): Promise<Book[]> {
-  const response = await fetch(`${BASE_URL}/getBooks?status=recommende`);
+  const response = await fetch(`${BASE_URL}/getBooks?status=recommended`);
 
   if (!response.ok) {
     throw new Error(
@@ -37,7 +37,7 @@ export async function getRecommendedBooks(): Promise<Book[]> {
 }
 
 export async function getSuggestedBooks(): Promise<Book[]> {
-  const response = await fetch(`${BASE_URL}/getBooks?status=suggeste`);
+  const response = await fetch(`${BASE_URL}/getBooks?status=suggested`);
 
   if (!response.ok) {
     throw new Error(
