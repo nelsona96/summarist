@@ -3,7 +3,9 @@ import type { Book } from "@/types/book";
 const BASE_URL = "https://us-central1-summaristt.cloudfunctions.net";
 
 export async function getSelectedBook(): Promise<Book> {
-  const response = await fetch(`${BASE_URL}/getBooks?status=selected`);
+  const response = await fetch(`${BASE_URL}/getBooks?status=selected`, {
+    next: { revalidate: 86400 }, // re-validate at most every 24 hours
+  });
 
   if (!response.ok) {
     throw new Error(
@@ -20,7 +22,9 @@ export async function getSelectedBook(): Promise<Book> {
 }
 
 export async function getRecommendedBooks(): Promise<Book[]> {
-  const response = await fetch(`${BASE_URL}/getBooks?status=recommended`);
+  const response = await fetch(`${BASE_URL}/getBooks?status=recommended`, {
+    next: { revalidate: 86400 }, // re-validate at most every 24 hours
+  });
 
   if (!response.ok) {
     throw new Error(
@@ -37,7 +41,9 @@ export async function getRecommendedBooks(): Promise<Book[]> {
 }
 
 export async function getSuggestedBooks(): Promise<Book[]> {
-  const response = await fetch(`${BASE_URL}/getBooks?status=suggested`);
+  const response = await fetch(`${BASE_URL}/getBooks?status=suggested`, {
+    next: { revalidate: 86400 }, // re-validate at most every 24 hours
+  });
 
   if (!response.ok) {
     throw new Error(
