@@ -1,0 +1,24 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  color: var(--color-error);
+  text-wrap: pretty;
+  background-color: #ffd6d8;
+  border: 1px solid;
+  border-radius: var(--space-xs);
+  border-color: var(--color-error);
+  padding: var(--space-sm) var(--space-md);
+}
+
+.icon {
+  font-size: var(--font-size-xl);
+  transform: translateX(-4px);
+  flex-shrink: 0;
+}
+
+.message {
+  display: inline-block;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+}
