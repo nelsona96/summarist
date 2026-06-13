@@ -29,8 +29,6 @@ export default function BookCard({ variant, book, priority }: BookCardProps) {
     book.subscriptionRequired &&
     user?.subscriptionStatus !== "premium-plus";
 
-  console.log(priority);
-
   useEffect(() => {
     if (imgRef.current?.complete) setImageLoaded(true);
   }, []);

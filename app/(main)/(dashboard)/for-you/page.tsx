@@ -1,11 +1,11 @@
 import { Suspense } from "react";
 import styles from "./page.module.css";
+import clsx from "clsx";
 import SelectedSection from "@/components/for-you/SelectedSection";
 import RecommendedSection from "@/components/for-you/RecommendedSection";
 import SuggestedSection from "@/components/for-you/SuggestedSection";
 import SelectedSkeleton from "@/components/for-you/SelectedSkeleton";
 import BookCarouselSkeleton from "@/components/book/BookCarouselSkeleton";
-import clsx from "clsx";
 
 export default function Page() {
   return (
