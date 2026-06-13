@@ -1,3 +1,7 @@
+.section {
+  padding: var(--space-md) 0;
+}
+
 .sectionTitle {
   font-size: var(--font-size-lg);
 }

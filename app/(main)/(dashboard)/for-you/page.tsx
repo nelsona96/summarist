@@ -5,6 +5,7 @@ import RecommendedSection from "@/components/for-you/RecommendedSection";
 import SuggestedSection from "@/components/for-you/SuggestedSection";
 import SelectedSkeleton from "@/components/for-you/SelectedSkeleton";
 import BookCarouselSkeleton from "@/components/book/BookCarouselSkeleton";
+import clsx from "clsx";
 
 export default function Page() {
   return (
@@ -14,7 +15,7 @@ export default function Page() {
       <section
         id="Selected"
         aria-labelledby="selected-heading"
-        className="section"
+        className={clsx("section", styles.section)}
       >
         <div className="container">
           <h2 id="selected-heading" className={styles.sectionTitle}>
@@ -30,7 +31,7 @@ export default function Page() {
       <section
         id="Recommended"
         aria-labelledby="recommended-heading"
-        className="section"
+        className={clsx("section", styles.section)}
       >
         <div className="container">
           <h2 id="recommended-heading" className={styles.sectionTitle}>
@@ -53,7 +54,7 @@ export default function Page() {
       <section
         id="Suggested"
         aria-labelledby="suggested-heading"
-        className="section"
+        className={clsx("section", styles.section)}
       >
         <div className="container">
           <h2 id="suggested-heading" className={styles.sectionTitle}>
