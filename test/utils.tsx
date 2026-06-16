@@ -7,7 +7,7 @@ import authReducer from "@/store/authSlice";
 
 export * from "@testing-library/react";
 
-function makeStore() {
+export function makeStore() {
   return configureStore({
     reducer: {
       authModal: authModalReducer,
