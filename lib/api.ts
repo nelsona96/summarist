@@ -1,9 +1,11 @@
 import type { Book } from "@/types/book";
 
-const BASE_URL = "https://us-central1-summaristt.cloudfunctions.net";
+export const BASE_URL = "https://us-central1-summaristt.cloudfunctions.net";
 
 export async function getSelectedBook(): Promise<Book> {
-  const response = await fetch(`${BASE_URL}/getBooks?status=selected`);
+  const response = await fetch(`${BASE_URL}/getBooks?status=selected`, {
+    next: { revalidate: 86400 }, // re-validate at most every 24 hours
+  });
 
   if (!response.ok) {
     throw new Error(
@@ -11,11 +13,18 @@ export async function getSelectedBook(): Promise<Book> {
     );
   }
 
-  return response.json();
+  const books: Book[] = await response.json();
+
+  if (!books.length)
+    throw new Error("getSelectedBook: No selected book returned");
+
+  return books[0];
 }
 
 export async function getRecommendedBooks(): Promise<Book[]> {
-  const response = await fetch(`${BASE_URL}/getBooks?status=recommended`);
+  const response = await fetch(`${BASE_URL}/getBooks?status=recommended`, {
+    next: { revalidate: 86400 }, // re-validate at most every 24 hours
+  });
 
   if (!response.ok) {
     throw new Error(
@@ -23,11 +32,18 @@ export async function getRecommendedBooks(): Promise<Book[]> {
     );
   }
 
-  return response.json();
+  const books: Book[] = await response.json();
+
+  if (!books.length)
+    throw new Error("getRecommendedBooks: No recommended books returned");
+
+  return books;
 }
 
 export async function getSuggestedBooks(): Promise<Book[]> {
-  const response = await fetch(`${BASE_URL}/getBooks?status=suggested`);
+  const response = await fetch(`${BASE_URL}/getBooks?status=suggested`, {
+    next: { revalidate: 86400 }, // re-validate at most every 24 hours
+  });
 
   if (!response.ok) {
     throw new Error(
@@ -35,7 +51,12 @@ export async function getSuggestedBooks(): Promise<Book[]> {
     );
   }
 
-  return response.json();
+  const books: Book[] = await response.json();
+
+  if (!books.length)
+    throw new Error("getSuggestedBooks: No suggested books returned");
+
+  return books;
 }
 
 export async function getBookById(id: string): Promise<Book> {

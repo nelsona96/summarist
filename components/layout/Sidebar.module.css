@@ -1,0 +1,130 @@
+.notImplemented {
+  cursor: not-allowed;
+  color: var(--color-muted-font);
+}
+
+.wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100dvh;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: 999;
+  transition:
+    backdrop-filter var(--transition-spring),
+    visibility var(--transition-spring);
+
+  @media (min-width: 768px) {
+    position: static;
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+.wrapper.open {
+  backdrop-filter: brightness(50%);
+  pointer-events: auto;
+  touch-action: none;
+}
+
+.wrapper.open .navLinks {
+  touch-action: pan-y;
+}
+
+.wrapper.visible {
+  visibility: visible;
+}
+
+.sidebar {
+  width: 80%;
+  min-width: 240px;
+  height: 100%;
+  background-color: #f7faf9;
+  transform: translateX(-100%);
+  transition: transform var(--transition-spring);
+
+  @media (min-width: 768px) {
+    transform: translateX(0px);
+  }
+}
+
+.wrapper.open .sidebar {
+  transform: translateX(0px);
+}
+
+.logoWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
+}
+
+.logo {
+  width: 160px;
+  height: auto;
+  transform: translateX(-3px);
+}
+
+.navLinks {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: calc(100% - 80px);
+  padding-bottom: var(--space-lg);
+}
+
+.navLink {
+  position: relative;
+  display: inline-block;
+  padding: var(--space-md) 0;
+  width: 100%;
+  text-align: left;
+
+  &:hover,
+  &:active {
+    background-color: #f0efef;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border: 3px solid var(--color-primary-font);
+    border-radius: var(--space-sm);
+    z-index: 1;
+    pointer-events: none;
+  }
+}
+
+.active::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--space-xs);
+  height: 100%;
+  background-color: var(--color-primary-accent);
+}
+
+.navLinkContent {
+  display: flex;
+  align-items: center;
+  margin-left: var(--space-lg);
+}
+
+.icon {
+  font-size: 24px;
+}
+
+.navLinkText {
+  margin-left: var(--space-sm);
+}

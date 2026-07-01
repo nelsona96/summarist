@@ -1,5 +1,6 @@
 import { describe, it, expect, vi } from "vitest";
-import { render, screen } from "@/test/utils";
+import { screen } from "@testing-library/react";
+import { renderWithProviders as render } from "@/test/utils";
 import AuthModal from "./AuthModal";
 
 vi.mock("@/lib/firebase", () => ({

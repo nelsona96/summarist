@@ -1,0 +1,95 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  height: 80px;
+  background-color: var(--color-primary-bg);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
+}
+
+.inputWrapper,
+.input {
+  position: relative;
+  max-width: 320px;
+  width: 100%;
+}
+
+.inputWrapper:has(input:focus, .clearButton:focus, .searchButton:focus) {
+  input,
+  .searchButton {
+    border-color: var(--color-muted-font);
+  }
+}
+
+.input {
+  outline: none;
+  height: 40px;
+  border: 2px solid var(--color-border);
+  border-radius: var(--space-sm);
+  color: var(--color-secondary-font);
+  background-color: var(--color-secondary-bg);
+  padding: 0 78px 0 var(--space-md);
+  transition: border-color var(--transition);
+}
+
+.input::-webkit-search-cancel-button {
+  display: none;
+}
+
+.searchIcons {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.searchIcons,
+.searchButton,
+.clearButton {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.clearButton,
+.searchButton {
+  padding: 0 var(--space-sm);
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    border-radius: var(--space-sm);
+    outline: 3px solid var(--color-primary-accent);
+    z-index: 999;
+  }
+}
+
+.clearButton {
+  font-size: var(--font-size-lg);
+}
+
+.searchButton {
+  font-size: var(--font-size-xl);
+  border-left: 2px solid var(--color-border);
+  transition: border-color var(--transition);
+}
+
+.menu {
+  display: flex;
+  font-size: var(--font-size-2xl);
+
+  @media (min-width: 768px) {
+    display: none;
+  }
+}

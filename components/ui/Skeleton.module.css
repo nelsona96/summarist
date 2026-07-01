@@ -19,7 +19,7 @@
     #f0f3f4 50%,
     var(--color-border) 90%
   );
-  animation: 2s infinite ease-in-out shimmer;
+  animation: 1.35s infinite ease-in-out shimmer;
 }
 
 @keyframes shimmer {

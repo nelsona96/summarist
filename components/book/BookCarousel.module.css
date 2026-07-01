@@ -1,0 +1,11 @@
+.wrapper {
+  display: flex;
+  overflow-x: auto;
+  gap: var(--space-md);
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+}
+
+.wrapper::-webkit-scrollbar {
+  display: none;
+}

@@ -1,0 +1,15 @@
+.grid {
+  height: 100dvh;
+  display: grid;
+  grid-template-columns: 0px 1fr;
+  transition: grid-template-columns var(--transition-spring);
+
+  @media (min-width: 768px) {
+    grid-template-columns: 240px 1fr;
+  }
+}
+
+.content {
+  min-width: 0;
+  overflow-y: auto;
+}
