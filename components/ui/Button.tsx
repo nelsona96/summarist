@@ -16,6 +16,7 @@ export default function Button({
   height,
   ariaBusy,
   ariaLabel,
+  className,
 }: ButtonProps) {
   const handleClick = () => {
     onClick && onClick();
@@ -28,7 +29,7 @@ export default function Button({
       type={type}
       onClick={handleClick}
       disabled={disabled}
-      className={clsx("button", styles[variant])}
+      className={clsx("button", styles[variant], className)}
       style={{ maxWidth, height: height ?? "40px" }}
     >
       {variant === "guest" && (
