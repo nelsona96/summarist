@@ -10,4 +10,5 @@ export interface ButtonProps {
   height?: string;
   ariaBusy?: boolean;
   ariaLabel?: string;
+  className?: string;
 }
