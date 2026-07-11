@@ -1,3 +1,5 @@
+import { getBookById } from "@/lib/api";
+
 export default async function BookDetailsPage({
   params,
 }: {
@@ -5,10 +7,15 @@ export default async function BookDetailsPage({
 }) {
   const { bookId } = await params;
 
+  const book = await getBookById(bookId);
+
   return (
     <div>
-      <h1>Book Details</h1>
-      <p>Book ID: {bookId}</p>
+      <h1>{book.title}</h1>
+      <h2>{book.subTitle}</h2>
+      <p>{book.author}</p>
+      <br />
+      <p>{book.bookDescription}</p>
     </div>
   );
 }
