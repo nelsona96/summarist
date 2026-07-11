@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import {
   BASE_URL,
+  getBookById,
   getRecommendedBooks,
   getSelectedBook,
   getSuggestedBooks,
@@ -170,6 +171,53 @@ describe("getSuggestedBooks", () => {
 
     await expect(getSuggestedBooks()).rejects.toThrow(
       "getSuggestedBooks: Failed to fetch suggested book",
+    );
+  });
+});
+
+// getBookById
+describe("getBookById", () => {
+  beforeEach(() => {
+    globalThis.fetch = vi.fn();
+  });
+
+  it("returns correct data", async () => {
+    vi.mocked(fetch).mockResolvedValue({
+      ok: true,
+      status: 200,
+      json: async () => mockBook,
+    } as Response);
+
+    const book = await getBookById("id123");
+
+    expect(book).toEqual(mockBook);
+  });
+
+  it("calls correct URL with cache revalidation", async () => {
+    vi.mocked(fetch).mockResolvedValue({
+      ok: true,
+      status: 200,
+      json: async () => mockBook,
+    } as Response);
+
+    await getBookById("id123");
+
+    expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/getBook?id=id123`, {
+      next: {
+        revalidate: 604800,
+      },
+    });
+  });
+
+  it("throws on bad response", async () => {
+    vi.mocked(fetch).mockResolvedValue({
+      ok: false,
+      status: 500,
+      json: async () => {},
+    } as Response);
+
+    await expect(getBookById("id123")).rejects.toThrow(
+      "getBookById: Failed to fetch book id123",
     );
   });
 });
