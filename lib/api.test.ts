@@ -193,20 +193,24 @@ describe("getBookById", () => {
     expect(book).toEqual(mockBook);
   });
 
-  it("calls correct URL with cache revalidation", async () => {
+  it("calls correct URL with cache revalidation and URL encoding", async () => {
     vi.mocked(fetch).mockResolvedValue({
       ok: true,
       status: 200,
       json: async () => mockBook,
     } as Response);
 
-    await getBookById("id123");
+    const id = "id 123";
+    await getBookById(id);
 
-    expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/getBook?id=id123`, {
-      next: {
-        revalidate: 604800,
+    expect(fetch).toHaveBeenCalledWith(
+      `${BASE_URL}/getBook?id=${encodeURIComponent(id)}`,
+      {
+        next: {
+          revalidate: 604800,
+        },
       },
-    });
+    );
   });
 
   it("throws on bad response", async () => {
