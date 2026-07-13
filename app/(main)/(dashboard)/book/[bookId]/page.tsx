@@ -1,6 +1,8 @@
+import { getBookById } from "@/lib/api";
 import Image from "next/image";
 import styles from "./page.module.css";
-import { getBookById } from "@/lib/api";
+import BookDetailsButton from "@/components/book-details/BookDetailsButton";
+import { LuBookOpenText, LuAudioLines, LuBookmark } from "react-icons/lu";
 
 export default async function BookDetailsPage({
   params,
@@ -35,9 +37,38 @@ export default async function BookDetailsPage({
           <li>{book.keyIdeas} Key Ideas</li>
         </ul>
 
-        <div>{/* buttons will go here */}</div>
+        <div>
+          <BookDetailsButton
+            label={
+              <>
+                <LuBookOpenText aria-hidden />
+                Read
+              </>
+            }
+            className={styles.contentButton}
+          />
 
-        {/* Add to library button goes here */}
+          {book.audioLink && (
+            <BookDetailsButton
+              label={
+                <>
+                  <LuAudioLines aria-hidden />
+                  Listen
+                </>
+              }
+              className={styles.contentButton}
+            />
+          )}
+        </div>
+
+        <BookDetailsButton
+          label={
+            <>
+              <LuBookmark aria-hidden /> Add title to my library
+            </>
+          }
+          className={styles.libraryButton}
+        />
 
         <section aria-labelledby="book-description-heading">
           <h2 id="book-description-heading">What&apos;s it about?</h2>
