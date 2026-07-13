@@ -40,7 +40,7 @@ export default async function BookDetailsPage({
         {/* Add to library button goes here */}
 
         <section aria-labelledby="book-description-heading">
-          <h2 id="book-description-heading">What's it about?</h2>
+          <h2 id="book-description-heading">What&apos;s it about?</h2>
           <ul>
             {book.tags.map((tag, index) => (
               <li key={index}>{tag}</li>
