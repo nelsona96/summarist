@@ -40,24 +40,26 @@ export default async function BookDetailsPage({
             <p className={styles.subTitle}>{book.subTitle}</p>
           </div>
 
-          <ul className={styles.metadataList}>
-            <li className={styles.rating}>
-              <LuStar aria-hidden className={styles.metadataIcon} />{" "}
-              {book.averageRating} ({book.totalRating} ratings)
-            </li>
-            <li className={styles.duration}>
-              {/* placeholder until future phase when real audio duration will be implemented: */}
-              <LuClock aria-hidden className={styles.metadataIcon} /> 01:23
-            </li>
-            <li className={styles.type}>
-              <LuAudioLines aria-hidden className={styles.metadataIcon} />{" "}
-              {book.type}
-            </li>
-            <li className={styles.keyIdeas}>
-              <LuLightbulb aria-hidden className={styles.metadataIcon} />{" "}
-              {book.keyIdeas} Key Ideas
-            </li>
-          </ul>
+          <div className={styles.metadataListWrapper}>
+            <ul className={styles.metadataList}>
+              <li className={styles.metadataItem}>
+                <LuStar aria-hidden className={styles.metadataIcon} />{" "}
+                {book.averageRating} ({book.totalRating} ratings)
+              </li>
+              <li className={styles.metadataItem}>
+                {/* placeholder until future phase when real audio duration will be implemented: */}
+                <LuClock aria-hidden className={styles.metadataIcon} /> 01:23
+              </li>
+              <li className={styles.metadataItem}>
+                <LuAudioLines aria-hidden className={styles.metadataIcon} />{" "}
+                {book.type}
+              </li>
+              <li className={styles.metadataItem}>
+                <LuLightbulb aria-hidden className={styles.metadataIcon} />{" "}
+                {book.keyIdeas} Key Ideas
+              </li>
+            </ul>
+          </div>
 
           <div className={styles.contentButtons}>
             <BookDetailsButton
