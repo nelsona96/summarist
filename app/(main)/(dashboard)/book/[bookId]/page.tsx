@@ -42,19 +42,20 @@ export default async function BookDetailsPage({
 
           <ul className={styles.metadataList}>
             <li className={styles.rating}>
-              <LuStar className={styles.metadataIcon} /> {book.averageRating} (
-              {book.totalRating} ratings)
+              <LuStar aria-hidden className={styles.metadataIcon} />{" "}
+              {book.averageRating} ({book.totalRating} ratings)
             </li>
             <li className={styles.duration}>
               {/* placeholder until future phase when real audio duration will be implemented: */}
-              <LuClock className={styles.metadataIcon} /> 01:23
+              <LuClock aria-hidden className={styles.metadataIcon} /> 01:23
             </li>
             <li className={styles.type}>
-              <LuAudioLines className={styles.metadataIcon} /> {book.type}
+              <LuAudioLines aria-hidden className={styles.metadataIcon} />{" "}
+              {book.type}
             </li>
             <li className={styles.keyIdeas}>
-              <LuLightbulb className={styles.metadataIcon} /> {book.keyIdeas}{" "}
-              Key Ideas
+              <LuLightbulb aria-hidden className={styles.metadataIcon} />{" "}
+              {book.keyIdeas} Key Ideas
             </li>
           </ul>
 
