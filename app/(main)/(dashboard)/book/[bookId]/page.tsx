@@ -21,86 +21,105 @@ export default async function BookDetailsPage({
   const book = await getBookById(bookId);
 
   return (
-    <div className={styles.container}>
-      <div className={styles.bookDetailsImgWrapper}>
-        <Image
-          src={book.imageLink}
-          alt={book.title}
-          width={300}
-          height={300}
-          priority
-        />
-      </div>
-      <div className={styles.bookDetails}>
-        <div>
-          <h1>{book.title}</h1>
-          <p>{book.author}</p>
-          <p>{book.subTitle}</p>
-        </div>
-
-        <ul>
-          <li>
-            <LuStar /> {book.averageRating} ({book.totalRating} ratings)
-          </li>
-          <li>
-            {/* placeholder until future phase when real audio duration will be implemented: */}
-            <LuClock /> 01:23
-          </li>
-          <li>
-            <LuAudioLines /> {book.type}
-          </li>
-          <li>
-            <LuLightbulb /> {book.keyIdeas} Key Ideas
-          </li>
-        </ul>
-
-        <div>
-          <BookDetailsButton
-            label={
-              <>
-                <LuBookOpenText aria-hidden />
-                Read
-              </>
-            }
-            className={styles.contentButton}
+    <div className={styles.row}>
+      <div className={styles.container}>
+        <div className={styles.bookDetailsImgWrapper}>
+          <Image
+            src={book.imageLink}
+            alt={book.title}
+            width={300}
+            height={300}
+            priority
+            className={styles.bookDetailsImg}
           />
+        </div>
+        <div className={styles.bookDetails}>
+          <div>
+            <h1 className={styles.title}>{book.title}</h1>
+            <p className={styles.author}>{book.author}</p>
+            <p className={styles.subTitle}>{book.subTitle}</p>
+          </div>
 
-          {book.audioLink && (
+          <ul className={styles.metadataList}>
+            <li className={styles.rating}>
+              <LuStar className={styles.metadataIcon} /> {book.averageRating} (
+              {book.totalRating} ratings)
+            </li>
+            <li className={styles.duration}>
+              {/* placeholder until future phase when real audio duration will be implemented: */}
+              <LuClock className={styles.metadataIcon} /> 01:23
+            </li>
+            <li className={styles.type}>
+              <LuAudioLines className={styles.metadataIcon} /> {book.type}
+            </li>
+            <li className={styles.keyIdeas}>
+              <LuLightbulb className={styles.metadataIcon} /> {book.keyIdeas}{" "}
+              Key Ideas
+            </li>
+          </ul>
+
+          <div className={styles.contentButtons}>
             <BookDetailsButton
               label={
                 <>
-                  <LuAudioLines aria-hidden />
-                  Listen
+                  <LuBookOpenText aria-hidden />
+                  Read
                 </>
               }
               className={styles.contentButton}
             />
-          )}
+
+            {book.audioLink && (
+              <BookDetailsButton
+                label={
+                  <>
+                    <LuAudioLines aria-hidden />
+                    Listen
+                  </>
+                }
+                className={styles.contentButton}
+              />
+            )}
+          </div>
+
+          <BookDetailsButton
+            label={
+              <>
+                <LuBookmark aria-hidden /> Add title to my library
+              </>
+            }
+            className={styles.libraryButton}
+          />
+
+          <section
+            id="book-description"
+            aria-labelledby="book-description-heading"
+            className={styles.descriptionSection}
+          >
+            <h2 id="book-description-heading" className={styles.sectionTitle}>
+              What&apos;s it about?
+            </h2>
+            <ul className={styles.tagList}>
+              {book.tags.map((tag, index) => (
+                <li key={index} className={styles.tag}>
+                  {tag}
+                </li>
+              ))}
+            </ul>
+            <p className={styles.descriptionPara}>{book.bookDescription}</p>
+          </section>
+
+          <section
+            id="author-description"
+            aria-labelledby="author-description-heading"
+            className={styles.descriptionSection}
+          >
+            <h2 id="author-description-heading" className={styles.sectionTitle}>
+              About the author
+            </h2>
+            <p className={styles.descriptionPara}>{book.authorDescription}</p>
+          </section>
         </div>
-
-        <BookDetailsButton
-          label={
-            <>
-              <LuBookmark aria-hidden /> Add title to my library
-            </>
-          }
-          className={styles.libraryButton}
-        />
-
-        <section aria-labelledby="book-description-heading">
-          <h2 id="book-description-heading">What&apos;s it about?</h2>
-          <ul>
-            {book.tags.map((tag, index) => (
-              <li key={index}>{tag}</li>
-            ))}
-          </ul>
-          <p>{book.bookDescription}</p>
-        </section>
-
-        <section aria-labelledby="author-description-heading">
-          <h2 id="author-description-heading">About the author</h2>
-          <p>{book.authorDescription}</p>
-        </section>
       </div>
     </div>
   );
