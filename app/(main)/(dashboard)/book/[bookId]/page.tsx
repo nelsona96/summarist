@@ -94,7 +94,8 @@ export default async function BookDetailsPage({
           <BookDetailsButton
             label={
               <>
-                <LuBookmark aria-hidden /> Add title to my library
+                <LuBookmark aria-hidden className={styles.libraryButtonIcon} />{" "}
+                Add title to my library
               </>
             }
             className={styles.libraryButton}
