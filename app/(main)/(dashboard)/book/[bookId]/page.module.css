@@ -1,14 +1,25 @@
 .row {
+  max-width: 1080px;
+  width: 100%;
+  margin: 0 auto;
   padding: 0 var(--space-lg);
 }
 
 .container {
+  display: flex;
+  flex-direction: column;
   padding: var(--space-xl) 0;
+
+  @media (min-width: 990px) {
+    flex-direction: row-reverse;
+    align-items: flex-start;
+  }
 }
 
 .bookDetailsImgWrapper {
   display: flex;
   justify-content: center;
+  width: 100%;
   margin-bottom: var(--space-xl);
 }
 
@@ -17,6 +28,10 @@
   max-width: 300px;
   height: auto;
   aspect-ratio: 1/1;
+
+  @media (min-width: 990px) {
+    width: 300px;
+  }
 }
 
 .title {
