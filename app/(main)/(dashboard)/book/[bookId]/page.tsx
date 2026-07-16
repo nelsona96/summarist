@@ -23,7 +23,13 @@ export default async function BookDetailsPage({
   return (
     <div className={styles.container}>
       <div className={styles.bookDetailsImgWrapper}>
-        <Image src={book.imageLink} alt={book.title} width={300} height={300} />
+        <Image
+          src={book.imageLink}
+          alt={book.title}
+          width={300}
+          height={300}
+          priority
+        />
       </div>
       <div className={styles.bookDetails}>
         <div>
