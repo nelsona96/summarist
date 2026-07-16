@@ -65,7 +65,10 @@ export default async function BookDetailsPage({
             <BookDetailsButton
               label={
                 <>
-                  <LuBookOpenText aria-hidden />
+                  <LuBookOpenText
+                    aria-hidden
+                    className={styles.contentButtonIcon}
+                  />
                   Read
                 </>
               }
@@ -76,7 +79,10 @@ export default async function BookDetailsPage({
               <BookDetailsButton
                 label={
                   <>
-                    <LuAudioLines aria-hidden />
+                    <LuAudioLines
+                      aria-hidden
+                      className={styles.contentButtonIcon}
+                    />
                     Listen
                   </>
                 }

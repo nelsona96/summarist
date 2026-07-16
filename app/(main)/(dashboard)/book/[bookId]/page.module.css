@@ -64,3 +64,33 @@
   height: 20px;
   margin-right: var(--space-sm);
 }
+
+.contentButtons {
+  display: flex;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.contentButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 144px;
+  height: 48px !important;
+  background-color: #032b41 !important;
+  color: #fff !important;
+  cursor: pointer;
+  gap: var(--space-sm);
+  transition: var(--transition);
+
+  &:hover {
+    background-color: #0a3a52 !important;
+  }
+}
+
+.contentButtonIcon {
+  display: flex;
+  width: 20px;
+  height: 20px;
+}
