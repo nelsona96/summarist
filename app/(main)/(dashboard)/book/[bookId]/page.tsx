@@ -2,7 +2,14 @@ import { getBookById } from "@/lib/api";
 import Image from "next/image";
 import styles from "./page.module.css";
 import BookDetailsButton from "@/components/book-details/BookDetailsButton";
-import { LuBookOpenText, LuAudioLines, LuBookmark } from "react-icons/lu";
+import {
+  LuBookOpenText,
+  LuAudioLines,
+  LuBookmark,
+  LuStar,
+  LuClock,
+  LuLightbulb,
+} from "react-icons/lu";
 
 export default async function BookDetailsPage({
   params,
@@ -27,14 +34,18 @@ export default async function BookDetailsPage({
 
         <ul>
           <li>
-            {book.averageRating} ({book.totalRating} ratings)
+            <LuStar /> {book.averageRating} ({book.totalRating} ratings)
           </li>
           <li>
             {/* placeholder until future phase when real audio duration will be implemented: */}
-            01:23
+            <LuClock /> 01:23
           </li>
-          <li>{book.type}</li>
-          <li>{book.keyIdeas} Key Ideas</li>
+          <li>
+            <LuAudioLines /> {book.type}
+          </li>
+          <li>
+            <LuLightbulb /> {book.keyIdeas} Key Ideas
+          </li>
         </ul>
 
         <div>
