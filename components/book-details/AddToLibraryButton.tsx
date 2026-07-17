@@ -1,14 +1,11 @@
 "use client";
 
 import { RiBookmarkLine, RiBookmarkFill } from "react-icons/ri";
-import BookDetailsButton, { BookDetailsButtonProps } from "./BookDetailsButton";
+import BookDetailsButton from "./BookDetailsButton";
 import styles from "./AddToLibraryButton.module.css";
 import { useState } from "react";
 
-export default function AddToLibraryButton({
-  disabled,
-  onClick,
-}: BookDetailsButtonProps) {
+export default function AddToLibraryButton() {
   const [isInLibrary, setIsInLibrary] = useState(false);
 
   const toggleLibrary = () => {
@@ -32,7 +29,6 @@ export default function AddToLibraryButton({
           )}
         </>
       }
-      disabled={disabled}
       onClick={() => toggleLibrary()}
       className={styles.button}
     />

@@ -1,7 +1,7 @@
 import Button from "../ui/Button";
 import type { ButtonProps } from "@/types/button";
 
-export type BookDetailsButtonProps = Pick<
+type BookDetailsButtonProps = Pick<
   ButtonProps,
   "label" | "className" | "disabled" | "onClick"
 >;
