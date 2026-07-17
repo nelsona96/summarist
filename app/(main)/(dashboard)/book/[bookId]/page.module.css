@@ -119,30 +119,6 @@
   height: 20px;
 }
 
-.libraryButton {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-  max-width: 200px;
-  height: auto !important;
-  padding: 0;
-  background-color: transparent !important;
-  color: #0365f2 !important;
-  font-weight: 500;
-  margin-bottom: var(--space-xl);
-  transition: color var(--transition);
-
-  &:hover {
-    color: #0249b3 !important;
-  }
-}
-
-.libraryButtonIcon {
-  display: flex;
-  width: 24px;
-  height: 24px;
-}
-
 .descriptionSection {
   display: flex;
   flex-direction: column;

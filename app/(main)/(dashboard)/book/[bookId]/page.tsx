@@ -10,6 +10,7 @@ import {
   LuClock,
   LuLightbulb,
 } from "react-icons/lu";
+import AddToLibraryButton from "@/components/book-details/AddToLibraryButton";
 
 export default async function BookDetailsPage({
   params,
@@ -91,13 +92,17 @@ export default async function BookDetailsPage({
             )}
           </div>
 
-          <BookDetailsButton
+          {/* <BookDetailsButton
             label={
               <>
                 <LuBookmark aria-hidden className={styles.libraryButtonIcon} />{" "}
                 Add title to my library
               </>
             }
+            className={styles.libraryButton}
+          /> */}
+
+          <AddToLibraryButton
             className={styles.libraryButton}
           />
 
