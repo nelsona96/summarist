@@ -37,11 +37,20 @@
 .title {
   font-size: var(--font-size-xl);
   margin-bottom: var(--space-xs);
+
+  @media (min-width: 768px) {
+    font-size: var(--font-size-2xl);
+  }
 }
 
 .author {
+  font-size: var(--font-size-sm);
   font-weight: 500;
   margin-bottom: var(--space-sm);
+
+  @media (min-width: 768px) {
+    font-size: var(--font-size-md);
+  }
 }
 
 .subTitle {
