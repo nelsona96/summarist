@@ -4,7 +4,7 @@
   gap: var(--space-sm);
   max-width: fit-content;
   height: auto !important;
-  padding: 0;
+  padding: 0 !important;
   background-color: transparent !important;
   color: #0365f2 !important;
   font-weight: 500;
