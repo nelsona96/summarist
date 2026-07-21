@@ -41,6 +41,10 @@
   width: 100%;
 }
 
+.bookDetailsPremium {
+  margin-bottom: var(--space-xs);
+}
+
 .title {
   font-size: var(--font-size-xl);
   margin-bottom: var(--space-xs);

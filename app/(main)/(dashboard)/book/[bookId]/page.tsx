@@ -11,6 +11,7 @@ import {
   LuLightbulb,
 } from "react-icons/lu";
 import AddToLibraryButton from "@/components/book-details/AddToLibraryButton";
+import PremiumBadge from "@/components/ui/PremiumBadge";
 
 export default async function BookDetailsPage({
   params,
@@ -38,6 +39,11 @@ export default async function BookDetailsPage({
             </div>
 
             <div className={styles.bookDetailsHeaderContent}>
+              <PremiumBadge
+                requiresSubscription={book.subscriptionRequired}
+                className={styles.bookDetailsPremium}
+              />
+
               <h1 className={styles.title}>{book.title}</h1>
               <p className={styles.author}>{book.author}</p>
               <p className={styles.subTitle}>{book.subTitle}</p>
