@@ -6,9 +6,12 @@
 }
 
 .container {
+  padding: var(--space-xl) 0;
+}
+
+.bookDetailsHeader {
   display: flex;
   flex-direction: column;
-  padding: var(--space-xl) 0;
 
   @media (min-width: 990px) {
     flex-direction: row-reverse;
@@ -20,7 +23,6 @@
 .bookDetailsImgWrapper {
   display: flex;
   justify-content: center;
-  width: 100%;
   margin-bottom: var(--space-xl);
 }
 
@@ -33,6 +35,10 @@
   @media (min-width: 990px) {
     width: 300px;
   }
+}
+
+.bookDetailsHeaderContent {
+  width: 100%;
 }
 
 .title {

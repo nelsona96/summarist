@@ -24,75 +24,79 @@ export default async function BookDetailsPage({
   return (
     <div className={styles.row}>
       <div className={styles.container}>
-        <div className={styles.bookDetailsImgWrapper}>
-          <Image
-            src={book.imageLink}
-            alt={book.title}
-            width={300}
-            height={300}
-            priority
-            className={styles.bookDetailsImg}
-          />
-        </div>
         <div className={styles.bookDetails}>
-          <div>
-            <h1 className={styles.title}>{book.title}</h1>
-            <p className={styles.author}>{book.author}</p>
-            <p className={styles.subTitle}>{book.subTitle}</p>
-          </div>
-
-          <div className={styles.metadataListWrapper}>
-            <ul className={styles.metadataList}>
-              <li className={styles.metadataItem}>
-                <LuStar aria-hidden className={styles.metadataIcon} />{" "}
-                {book.averageRating} ({book.totalRating} ratings)
-              </li>
-              <li className={styles.metadataItem}>
-                {/* placeholder until future phase when real audio duration will be implemented: */}
-                <LuClock aria-hidden className={styles.metadataIcon} /> 01:23
-              </li>
-              <li className={styles.metadataItem}>
-                <LuAudioLines aria-hidden className={styles.metadataIcon} />{" "}
-                {book.type}
-              </li>
-              <li className={styles.metadataItem}>
-                <LuLightbulb aria-hidden className={styles.metadataIcon} />{" "}
-                {book.keyIdeas} Key Ideas
-              </li>
-            </ul>
-          </div>
-
-          <div className={styles.contentButtons}>
-            <BookDetailsButton
-              label={
-                <>
-                  <LuBookOpenText
-                    aria-hidden
-                    className={styles.contentButtonIcon}
-                  />
-                  Read
-                </>
-              }
-              className={styles.contentButton}
-            />
-
-            {book.audioLink && (
-              <BookDetailsButton
-                label={
-                  <>
-                    <LuAudioLines
-                      aria-hidden
-                      className={styles.contentButtonIcon}
-                    />
-                    Listen
-                  </>
-                }
-                className={styles.contentButton}
+          <div className={styles.bookDetailsHeader}>
+            <div className={styles.bookDetailsImgWrapper}>
+              <Image
+                src={book.imageLink}
+                alt={book.title}
+                width={300}
+                height={300}
+                priority
+                className={styles.bookDetailsImg}
               />
-            )}
-          </div>
+            </div>
 
-          <AddToLibraryButton />
+            <div className={styles.bookDetailsHeaderContent}>
+              <h1 className={styles.title}>{book.title}</h1>
+              <p className={styles.author}>{book.author}</p>
+              <p className={styles.subTitle}>{book.subTitle}</p>
+
+              <div className={styles.metadataListWrapper}>
+                <ul className={styles.metadataList}>
+                  <li className={styles.metadataItem}>
+                    <LuStar aria-hidden className={styles.metadataIcon} />{" "}
+                    {book.averageRating} ({book.totalRating} ratings)
+                  </li>
+                  <li className={styles.metadataItem}>
+                    {/* placeholder until future phase when real audio duration will be implemented: */}
+                    <LuClock aria-hidden className={styles.metadataIcon} />{" "}
+                    01:23
+                  </li>
+                  <li className={styles.metadataItem}>
+                    <LuAudioLines aria-hidden className={styles.metadataIcon} />{" "}
+                    {book.type}
+                  </li>
+                  <li className={styles.metadataItem}>
+                    <LuLightbulb aria-hidden className={styles.metadataIcon} />{" "}
+                    {book.keyIdeas} Key Ideas
+                  </li>
+                </ul>
+              </div>
+
+              <div className={styles.contentButtons}>
+                <BookDetailsButton
+                  label={
+                    <>
+                      <LuBookOpenText
+                        aria-hidden
+                        className={styles.contentButtonIcon}
+                      />
+                      Read
+                    </>
+                  }
+                  className={styles.contentButton}
+                />
+
+                {book.audioLink && (
+                  <BookDetailsButton
+                    label={
+                      <>
+                        <LuAudioLines
+                          aria-hidden
+                          className={styles.contentButtonIcon}
+                        />
+                        Listen
+                      </>
+                    }
+                    className={styles.contentButton}
+                  />
+                )}
+              </div>
+
+              <AddToLibraryButton />
+            </div>
+          </div>
 
           <section
             id="book-description"
