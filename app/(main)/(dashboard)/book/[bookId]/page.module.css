@@ -119,8 +119,21 @@
   gap: var(--space-sm);
   transition: var(--transition);
 
-  &:hover {
+  &:hover,
+  &:focus-visible {
     background-color: #0a3a52 !important;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    border-radius: var(--space-sm);
+    outline: 3px solid var(--color-primary-accent);
+    outline-offset: 3px;
+    z-index: 999;
+    transition: outline-offset 0s;
   }
 }
 
