@@ -2,6 +2,8 @@ import type { Book } from "@/types/book";
 
 export const BASE_URL = "https://us-central1-summaristt.cloudfunctions.net";
 
+export class BookNotFoundError extends Error {}
+
 export async function getSelectedBook(): Promise<Book> {
   const response = await fetch(`${BASE_URL}/getBooks?status=selected`, {
     next: { revalidate: 86400 }, // re-validate at most every 24 hours
@@ -73,7 +75,15 @@ export async function getBookById(id: string): Promise<Book> {
     );
   }
 
-  return response.json();
+  const text = await response.text();
+
+  if (!text) {
+    throw new BookNotFoundError(`getBookById: No book exists with id: '${id}'`);
+  }
+
+  const book: Book = JSON.parse(text);
+
+  return book;
 }
 
 export async function getBooksByAuthorOrTitle(query: string): Promise<Book[]> {
