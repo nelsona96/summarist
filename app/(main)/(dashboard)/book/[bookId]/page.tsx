@@ -1,4 +1,4 @@
-import { getBookById } from "@/lib/api";
+import { BookNotFoundError, getBookById } from "@/lib/api";
 import Image from "next/image";
 import styles from "./page.module.css";
 import BookDetailsButton from "@/components/book-details/BookDetailsButton";
@@ -12,6 +12,8 @@ import {
 } from "react-icons/lu";
 import AddToLibraryButton from "@/components/book-details/AddToLibraryButton";
 import PremiumBadge from "@/components/ui/PremiumBadge";
+import { notFound } from "next/navigation";
+import { Book } from "@/types/book";
 
 export default async function BookDetailsPage({
   params,
@@ -20,7 +22,13 @@ export default async function BookDetailsPage({
 }) {
   const { bookId } = await params;
 
-  const book = await getBookById(bookId);
+  let book: Book;
+  try {
+    book = await getBookById(bookId);
+  } catch (error) {
+    if (error instanceof BookNotFoundError) notFound();
+    throw error;
+  }
 
   return (
     <div className={styles.row}>
