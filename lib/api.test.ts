@@ -185,7 +185,7 @@ describe("getBookById", () => {
     vi.mocked(fetch).mockResolvedValue({
       ok: true,
       status: 200,
-      json: async () => mockBook,
+      text: async () => JSON.stringify(mockBook),
     } as Response);
 
     const book = await getBookById("id123");
@@ -197,7 +197,7 @@ describe("getBookById", () => {
     vi.mocked(fetch).mockResolvedValue({
       ok: true,
       status: 200,
-      json: async () => mockBook,
+      text: async () => JSON.stringify(mockBook),
     } as Response);
 
     const id = "id 123";
