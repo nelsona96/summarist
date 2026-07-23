@@ -5,7 +5,7 @@
   justify-content: center;
   align-items: center;
   gap: var(--space-xl);
-  height: 100dvh;
+  height: var(--fallback-height, 100dvh);
 }
 
 .errorWrapper {
@@ -15,6 +15,7 @@
   align-items: center;
   gap: var(--space-xl);
 }
+
 .errorMessage {
   font-size: var(--font-size-2xl);
   font-weight: 500;
@@ -23,8 +24,7 @@
 }
 
 @media (min-width: 768px) {
-    .errorMessage {
-  font-size: var(--font-size-3xl);
-
-    }
+  .errorMessage {
+    font-size: var(--font-size-3xl);
+  }
 }
