@@ -10,5 +10,7 @@ interface ErrorProps {
 export default function Error({ error, reset }: ErrorProps) {
   console.error(error.message);
 
-  return <ErrorFallback onReset={reset} />;
+  return (
+    <ErrorFallback onReset={reset} message="Oops! Something went wrong." />
+  );
 }
