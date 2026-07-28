@@ -19,6 +19,7 @@ export default function BookDetailsError({
     <ErrorFallback
       onReset={reset}
       message="Oops! Failed to load book details."
+      buttonLabel="Try Again"
       className={styles.bookDetailsErrorContainer}
     />
   );
