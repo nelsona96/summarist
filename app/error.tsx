@@ -11,6 +11,12 @@ export default function Error({ error, reset }: ErrorProps) {
   console.error(error.message);
 
   return (
-    <ErrorFallback onReset={reset} message="Oops! Something went wrong." />
+    <main>
+      <ErrorFallback
+        onReset={reset}
+        message="Oops! Something went wrong."
+        buttonLabel="Try Again"
+      />
+    </main>
   );
 }
