@@ -1,5 +1,4 @@
 import { BookNotFoundError, getBookById } from "@/lib/api";
-import Image from "next/image";
 import styles from "./page.module.css";
 import BookDetailsButton from "@/components/book-details/BookDetailsButton";
 import {
@@ -14,6 +13,7 @@ import AddToLibraryButton from "@/components/book-details/AddToLibraryButton";
 import PremiumBadge from "@/components/ui/PremiumBadge";
 import { notFound } from "next/navigation";
 import { Book } from "@/types/book";
+import BookDetailsImg from "@/components/book-details/BookDetailsImg";
 
 export default async function BookDetailsPage({
   params,
@@ -35,16 +35,7 @@ export default async function BookDetailsPage({
       <div className={styles.container}>
         <div className={styles.bookDetails}>
           <div className={styles.bookDetailsHeader}>
-            <div className={styles.bookDetailsImgWrapper}>
-              <Image
-                src={book.imageLink}
-                alt={book.title}
-                width={300}
-                height={300}
-                priority
-                className={styles.bookDetailsImg}
-              />
-            </div>
+            <BookDetailsImg src={book.imageLink} alt={book.title} />
 
             <div className={styles.bookDetailsHeaderContent}>
               <PremiumBadge
