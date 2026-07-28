@@ -17,8 +17,10 @@ export default function ErrorFallback({
 }: ErrorFallbackProps) {
   return (
     <div className={clsx(styles.container, className)}>
-      <div role="alert" className={styles.errorWrapper}>
-        <h1 className={styles.errorMessage}>{message}</h1>
+      <div className={styles.errorWrapper}>
+        <h1 role="alert" className={styles.errorMessage}>
+          {message}
+        </h1>
         <ErrorButton onClick={onReset} label={buttonLabel} />
       </div>
     </div>
