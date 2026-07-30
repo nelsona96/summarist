@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import styles from "./loading.module.css";
 import mainStyles from "./page.module.css";
 import Skeleton from "@/components/ui/Skeleton";
