@@ -28,6 +28,8 @@ describe("Premium badge", () => {
         auth: { ...baseAuthState, subscriptionStatus: "basic" },
       },
     });
+
+    expect(screen.queryByText("Premium")).toBeInTheDocument();
   });
 
   it("hides: subscriptionRequired | logged in | premium-plus", () => {
