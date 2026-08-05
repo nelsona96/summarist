@@ -4,7 +4,6 @@ import BookDetailsButton from "@/components/book-details/BookDetailsButton";
 import {
   LuBookOpenText,
   LuAudioLines,
-  LuBookmark,
   LuStar,
   LuClock,
   LuLightbulb,
