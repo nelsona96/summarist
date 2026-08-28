@@ -92,7 +92,7 @@ function RouteListener() {
     }
   }, [user, isAuthLoading, pathname, router]);
 
-  // Subscription gating (decicion logic held in pure function)
+  // Subscription gating (decision logic held in pure function)
   useEffect(() => {
     const action = getGatingAction({
       user,
