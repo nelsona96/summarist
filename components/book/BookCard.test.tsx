@@ -33,6 +33,8 @@ describe("BookCard premium badge", () => {
     subscriptionStatus: null,
     isAuthLoading: false,
     error: null,
+    pendingIntent: null,
+    intentPayload: null,
   };
 
   it("shows: subscriptionRequired | compact | not premium-plus", () => {
