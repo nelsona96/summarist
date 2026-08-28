@@ -1,11 +1,17 @@
 import { AppUser, SubscriptionStatus } from "@/types/user";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+export type PendingIntent = {
+  intent: "ACCESS_BOOK"; // this will be expanded as more intents are needed
+  payload: string;
+};
+
 interface AuthState {
   user: AppUser | null;
   subscriptionStatus: SubscriptionStatus;
   isAuthLoading: boolean;
   error: string | null;
+  pendingIntent: PendingIntent | null;
 }
 
 const initialState: AuthState = {
@@ -13,6 +19,7 @@ const initialState: AuthState = {
   subscriptionStatus: null,
   isAuthLoading: true,
   error: null,
+  pendingIntent: null,
 };
 
 export const authSlice = createSlice({
@@ -37,6 +44,17 @@ export const authSlice = createSlice({
     clearError: (state) => {
       state.error = null;
     },
+    setPendingIntent: (
+      state,
+      action: PayloadAction<{
+        pendingIntent: PendingIntent;
+      }>,
+    ) => {
+      state.pendingIntent = action.payload.pendingIntent;
+    },
+    clearPendingIntent: (state) => {
+      state.pendingIntent = null;
+    },
   },
 });
 
@@ -48,4 +66,6 @@ export const {
   setIsAuthLoading,
   setError,
   clearError,
+  setPendingIntent,
+  clearPendingIntent,
 } = authSlice.actions;

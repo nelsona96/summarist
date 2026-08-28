@@ -70,6 +70,7 @@ export default async function BookDetailsPage({
 
               <div className={styles.contentButtons}>
                 <BookDetailsButton
+                  bookId={book.id}
                   label={
                     <>
                       <LuBookOpenText
@@ -84,6 +85,7 @@ export default async function BookDetailsPage({
 
                 {book.audioLink && (
                   <BookDetailsButton
+                    bookId={book.id}
                     label={
                       <>
                         <LuAudioLines
