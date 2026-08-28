@@ -1,18 +1,17 @@
+import { type PendingIntent, setPendingIntent } from "@/store/authSlice";
 import { openModal } from "@/store/authModalSlice";
 import { useAppDispatch, useAppSelector } from "./redux";
-import { useRouter } from "next/navigation";
 
 export default function useRequireAuth() {
   const dispatch = useAppDispatch();
-  const router = useRouter();
   const isLoggedIn = useAppSelector((state) => state.auth.user !== null);
 
-  const requireAuth = (redirectPath: string) => {
-    if (isLoggedIn) {
-      router.push(redirectPath);
-    } else {
-      dispatch(openModal({ pendingRedirect: redirectPath }));
-    }
+  const requireAuth = ({ intent, payload }: PendingIntent) => {
+    dispatch(
+      setPendingIntent({ pendingIntent: { intent: intent, payload: payload } }),
+    );
+
+    if (!isLoggedIn) dispatch(openModal());
   };
 
   return requireAuth;
