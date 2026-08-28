@@ -11,12 +11,14 @@ import {
   setUser,
   setIsAuthLoading,
   setSubscriptionStatus,
+  clearPendingIntent,
 } from "@/store/authSlice";
 import { usePathname, useRouter } from "next/navigation";
 import { startClose } from "@/store/authModalSlice";
 import SplashScreen from "@/components/ui/SplashScreen";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { SubscriptionStatus } from "@/types/user";
+import { getGatingAction } from "@/lib/utils";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (
@@ -72,7 +74,8 @@ function AuthListener() {
 
 function RouteListener() {
   const dispatch = useAppDispatch();
-  const { user, isAuthLoading } = useAppSelector((state) => state.auth);
+  const { user, subscriptionStatus, isAuthLoading, pendingIntent } =
+    useAppSelector((state) => state.auth);
   const pathname = usePathname();
   const prevPath = useRef<string | null>(null);
   const router = useRouter();
@@ -88,6 +91,23 @@ function RouteListener() {
       router.replace("/for-you");
     }
   }, [user, isAuthLoading, pathname, router]);
+
+  // Subscription gating (decicion logic held in pure function)
+  useEffect(() => {
+    const action = getGatingAction({
+      user,
+      subscriptionStatus,
+      pathname,
+      pendingIntent,
+    });
+
+    if (action.type === "CLEAR") dispatch(clearPendingIntent());
+
+    if (action.type === "REDIRECT") {
+      router.push(action.to);
+      dispatch(clearPendingIntent());
+    }
+  }, [user, subscriptionStatus, pathname, pendingIntent, dispatch, router]);
 
   return null;
 }
