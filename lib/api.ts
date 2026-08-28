@@ -60,7 +60,12 @@ export async function getSuggestedBooks(): Promise<Book[]> {
 }
 
 export async function getBookById(id: string): Promise<Book> {
-  const response = await fetch(`${BASE_URL}/getBook?id=${id}`);
+  const response = await fetch(
+    `${BASE_URL}/getBook?id=${encodeURIComponent(id)}`,
+    {
+      next: { revalidate: 604800 }, // re-validate at most every 7 days
+    },
+  );
 
   if (!response.ok) {
     throw new Error(
