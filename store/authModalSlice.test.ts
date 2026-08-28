@@ -14,15 +14,6 @@ describe("authModalSlice", () => {
     expect(result.isClosing).toBe(false);
   });
 
-  it("openModal(pendingRedirect) additionally updates pendingRedirect in state", () => {
-    const result = reducer(
-      undefined,
-      openModal({ pendingRedirect: "/for-you" }),
-    );
-
-    expect(result.pendingRedirect).toBe("/for-you");
-  });
-
   it("openModal(currentVariant) additionally updates currentVariant in state", () => {
     const result = reducer(
       undefined,
@@ -38,16 +29,15 @@ describe("authModalSlice", () => {
     expect(result.isClosing).toBe(true);
   });
 
-  it("finalizeClose updates isOpen, isClosing, pendingRedirect, currentVariant in state", () => {
+  it("finalizeClose updates isOpen, isClosing, currentVariant in state", () => {
     const openState = reducer(
       undefined,
-      openModal({ pendingRedirect: "/library" }),
+      openModal(),
     );
     const result = reducer(openState, finalizeClose());
 
     expect(result.isOpen).toBe(false);
     expect(result.isClosing).toBe(false);
-    expect(result.pendingRedirect).toBe("");
     expect(result.currentVariant).toBe("login");
   });
 
