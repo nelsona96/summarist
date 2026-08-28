@@ -10,7 +10,6 @@ describe("Premium badge", () => {
     isAuthLoading: false,
     error: null,
     pendingIntent: null,
-    intentPayload: null,
   };
 
   it("shows: subscriptionRequired | not logged in", () => {
