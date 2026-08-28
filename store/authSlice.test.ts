@@ -5,6 +5,9 @@ import reducer, {
   clearError,
   setSubscriptionStatus,
   setIsAuthLoading,
+  setPendingIntent,
+  PendingIntent,
+  clearPendingIntent,
 } from "./authSlice";
 
 describe("authSlice", () => {
@@ -42,5 +45,34 @@ describe("authSlice", () => {
     const result = reducer(stateWithError, clearError());
 
     expect(result.error).toEqual(expectedResult);
+  });
+
+  it("setPendingIntent updates pendingIntent in state", () => {
+    const expectedResult: PendingIntent = {
+      intent: "ACCESS_BOOK",
+      payload: "abc123",
+    };
+    const result = reducer(
+      undefined,
+      setPendingIntent({ pendingIntent: expectedResult }),
+    );
+
+    expect(result.pendingIntent).toEqual(expectedResult);
+  });
+
+  it("clearPendingIntent clears pendingIntent in state", () => {
+    const initialState = reducer(
+      undefined,
+      setPendingIntent({
+        pendingIntent: {
+          intent: "ACCESS_BOOK",
+          payload: "abc123",
+        },
+      }),
+    );
+
+    const result = reducer(initialState, clearPendingIntent());
+
+    expect(result.pendingIntent).toBe(null);
   });
 });
