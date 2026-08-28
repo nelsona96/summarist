@@ -1,0 +1,9 @@
+.premiumBadge {
+  display: inline-block;
+  font-size: 0.63rem;
+  letter-spacing: 0.5px;
+  color: #fff;
+  background-color: #032b41;
+  border-radius: var(--space-lg);
+  padding: var(--space-xs) var(--space-sm);
+}

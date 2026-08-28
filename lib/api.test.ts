@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import {
   BASE_URL,
+  BookNotFoundError,
   getBookById,
   getRecommendedBooks,
   getSelectedBook,
@@ -185,7 +186,7 @@ describe("getBookById", () => {
     vi.mocked(fetch).mockResolvedValue({
       ok: true,
       status: 200,
-      json: async () => mockBook,
+      text: async () => JSON.stringify(mockBook),
     } as Response);
 
     const book = await getBookById("id123");
@@ -197,7 +198,7 @@ describe("getBookById", () => {
     vi.mocked(fetch).mockResolvedValue({
       ok: true,
       status: 200,
-      json: async () => mockBook,
+      text: async () => JSON.stringify(mockBook),
     } as Response);
 
     const id = "id 123";
@@ -223,5 +224,15 @@ describe("getBookById", () => {
     await expect(getBookById("id123")).rejects.toThrow(
       "getBookById: Failed to fetch book id123",
     );
+  });
+
+  it("throws on empty body text", async () => {
+    vi.mocked(fetch).mockResolvedValue({
+      ok: true,
+      status: 200,
+      text: async () => "",
+    } as Response);
+
+    await expect(getBookById("invalidId")).rejects.toThrow(BookNotFoundError);
   });
 });

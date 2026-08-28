@@ -1,5 +1,7 @@
 "use client";
 
+import styles from "./error.module.css";
+import ErrorFallback from "@/components/errors/ErrorFallback";
 import { useEffect } from "react";
 
 export default function BookDetailsError({
@@ -14,10 +16,11 @@ export default function BookDetailsError({
   }, [error]);
 
   return (
-    <div>
-      <div>Oops! Failed to load book details.</div>
-      <br />
-      <button onClick={reset}>Try Again</button>
-    </div>
+    <ErrorFallback
+      onReset={reset}
+      message="Oops! Failed to load book details."
+      buttonLabel="Try Again"
+      className={styles.bookDetailsErrorContainer}
+    />
   );
 }

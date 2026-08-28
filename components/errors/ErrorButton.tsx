@@ -3,12 +3,17 @@
 import Link from "next/link";
 import styles from "./ErrorButton.module.css";
 import clsx from "clsx";
-interface ErrorButtonOnClick {
+
+interface ErrorButtonProps {
+  label: string;
+}
+
+interface ErrorButtonOnClick extends ErrorButtonProps {
   onClick: () => void;
   href?: never;
 }
 
-interface ErrorButtonHREF {
+interface ErrorButtonHREF extends ErrorButtonProps {
   href: string;
   onClick?: never;
 }
@@ -16,6 +21,7 @@ interface ErrorButtonHREF {
 export default function ErrorButton({
   onClick,
   href,
+  label,
 }: ErrorButtonOnClick | ErrorButtonHREF) {
   if (onClick) {
     return (
@@ -24,7 +30,7 @@ export default function ErrorButton({
         type="button"
         className={clsx("button", styles.button)}
       >
-        Try Again
+        {label}
       </button>
     );
   }
@@ -32,7 +38,7 @@ export default function ErrorButton({
   if (href) {
     return (
       <Link href={href} className={clsx("button", styles.button)}>
-        Go Home
+        {label}
       </Link>
     );
   }

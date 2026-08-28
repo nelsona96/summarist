@@ -1,0 +1,36 @@
+.button {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  max-width: fit-content;
+  height: auto !important;
+  padding: 0 !important;
+  background-color: transparent !important;
+  color: #0365f2 !important;
+  font-weight: 500;
+  margin-bottom: var(--space-xl);
+  transition: color var(--transition);
+
+  &:hover,
+  &:focus-visible {
+    color: #0249b3 !important;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    border-radius: var(--space-xs);
+    outline: 3px solid var(--color-primary-accent);
+    outline-offset: 4px;
+    z-index: 999;
+    transition: outline-offset 0s;
+  }
+}
+
+.icon {
+  display: flex;
+  width: 24px;
+  height: 24px;
+}
