@@ -6,8 +6,8 @@ export const librarySlice = createSlice({
   name: "library",
   initialState,
   reducers: {
-    setLibrary: (state, action: PayloadAction<string[]>) => {
-      state = action.payload;
+    setLibrary: (_, action: PayloadAction<string[]>) => {
+      return action.payload;
     },
   },
 });
