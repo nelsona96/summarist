@@ -16,15 +16,24 @@ import {
 import { usePathname, useRouter } from "next/navigation";
 import { startClose } from "@/store/authModalSlice";
 import SplashScreen from "@/components/ui/SplashScreen";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  onSnapshot,
+  setDoc,
+} from "firebase/firestore";
 import { SubscriptionStatus } from "@/types/user";
 import { getGatingAction } from "@/lib/utils";
+import { setLibrary } from "@/store/librarySlice";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <Provider store={store}>
       <AuthListener />
       <RouteListener />
+      <LibraryListener />
       <SplashScreenToggle />
       <ModalToggle />
       {children}
@@ -108,6 +117,31 @@ function RouteListener() {
       dispatch(clearPendingIntent());
     }
   }, [user, subscriptionStatus, pathname, pendingIntent, dispatch, router]);
+
+  return null;
+}
+
+function LibraryListener() {
+  const dispatch = useAppDispatch();
+  const { user } = useAppSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (user) {
+      const libraryRef = collection(db, `users/${user.uid}/library`);
+
+      const unsubscribe = onSnapshot(libraryRef, (librarySnap) => {
+        const libraryArray: string[] = librarySnap.docs.map(
+          (id) => id.data()["bookId"],
+        );
+
+        dispatch(setLibrary(libraryArray));
+      });
+
+      return unsubscribe;
+    } else {
+      dispatch(setLibrary([]));
+    }
+  }, [user, dispatch]);
 
   return null;
 }
