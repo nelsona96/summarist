@@ -162,6 +162,8 @@ function LibraryListener() {
         );
 
         await setDoc(bookRef, { bookId: action.bookId });
+
+        dispatch(clearPendingIntent());
       }
 
       if (action.type === "REMOVE") {
@@ -171,9 +173,9 @@ function LibraryListener() {
         );
 
         await deleteDoc(bookRef);
-      }
 
-      dispatch(clearPendingIntent());
+        dispatch(clearPendingIntent());
+      }
     };
 
     updateLibrary();
