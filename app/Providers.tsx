@@ -190,7 +190,7 @@ function LibraryListener() {
     };
 
     updateLibrary();
-  }, [user, pendingIntent, dispatch]);
+  }, [user, pendingIntent, pathname, dispatch]);
 
   return null;
 }
