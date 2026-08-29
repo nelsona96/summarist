@@ -162,9 +162,14 @@ function LibraryListener() {
           `users/${action.userId}/library/${action.bookId}`,
         );
 
-        await setDoc(bookRef, { bookId: action.bookId });
-
-        dispatch(clearPendingIntent());
+        try {
+          await setDoc(bookRef, { bookId: action.bookId });
+        } catch (error) {
+          // light error handling, can add to ui in the future
+          console.error(error);
+        } finally {
+          dispatch(clearPendingIntent());
+        }
       }
 
       if (action.type === "REMOVE") {
@@ -173,9 +178,14 @@ function LibraryListener() {
           `users/${action.userId}/library/${action.bookId}`,
         );
 
-        await deleteDoc(bookRef);
-
-        dispatch(clearPendingIntent());
+        try {
+          await deleteDoc(bookRef);
+        } catch (error) {
+          // light error handling, can add to ui in the future
+          console.error(error);
+        } finally {
+          dispatch(clearPendingIntent());
+        }
       }
     };
 
