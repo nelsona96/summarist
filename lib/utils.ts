@@ -42,9 +42,9 @@ interface GatingActionProps {
 
 export function getGatingAction({
   user,
+  pendingIntent,
   subscriptionStatus,
   pathname,
-  pendingIntent,
 }: GatingActionProps): GatingAction {
   // Access book content / player:
   if (pendingIntent?.intent === "ACCESS_BOOK") {
@@ -61,12 +61,16 @@ export function getGatingAction({
 
   // Toggle book saved to library:
   if (pendingIntent?.intent === "SAVE_TO_LIBRARY") {
+    if (!pathname?.startsWith("/book")) return { type: "CLEAR" };
+
     if (user && pendingIntent) {
       return { type: "SAVE", userId: user.uid, bookId: pendingIntent.payload };
     }
   }
 
   if (pendingIntent?.intent === "REMOVE_FROM_LIBRARY") {
+    if (!pathname?.startsWith("/book")) return { type: "CLEAR" };
+
     if (user && pendingIntent) {
       return {
         type: "REMOVE",

@@ -152,6 +152,7 @@ function LibraryListener() {
     const action = getGatingAction({
       user,
       pendingIntent,
+      pathname,
     });
 
     const updateLibrary = async () => {
