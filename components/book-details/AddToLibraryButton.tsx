@@ -10,7 +10,7 @@ export default function AddToLibraryButton({ bookId }: { bookId: string }) {
   const requireAuth = useRequireAuth();
   const isInLibrary = useAppSelector((state) => state.library.includes(bookId));
 
-  const toggleLibrary = async () => {
+  const toggleLibrary = () => {
     if (isInLibrary) {
       requireAuth({ intent: "REMOVE_FROM_LIBRARY", payload: bookId });
     } else {
