@@ -135,7 +135,7 @@ function LibraryListener() {
 
       const unsubscribe = onSnapshot(libraryRef, (librarySnap) => {
         const libraryArray: string[] = librarySnap.docs.map(
-          (id) => id.data().bookId,
+          (bookDoc) => bookDoc.data().bookId,
         );
 
         dispatch(setLibrary(libraryArray));
