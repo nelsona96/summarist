@@ -23,26 +23,32 @@ export function notImplemented() {
 
 // Subscription gate - pure function for decision logic
 type GatingAction =
-  | { type: "CLEAR" }
+  // intent = "ACCESS_BOOK":
   | { type: "REDIRECT"; to: string }
+  // intent = "SAVE_TO_LIBRARY" | "REMOVE_FROM_LIBRARY"
+  | { type: "SAVE"; userId: string; bookId: string }
+  | { type: "REMOVE"; userId: string; bookId: string }
+  // clear intent:
+  | { type: "CLEAR" }
+  // do nothing:
   | { type: "WAIT" };
 
 interface GatingActionProps {
   user: AppUser | null;
-  subscriptionStatus: SubscriptionStatus;
-  pathname: string;
   pendingIntent: PendingIntent | null;
+  subscriptionStatus?: SubscriptionStatus;
+  pathname?: string;
 }
 
 export function getGatingAction({
   user,
+  pendingIntent,
   subscriptionStatus,
   pathname,
-  pendingIntent,
 }: GatingActionProps): GatingAction {
   // Access book content / player:
   if (pendingIntent?.intent === "ACCESS_BOOK") {
-    if (!pathname.startsWith("/book")) return { type: "CLEAR" };
+    if (!pathname?.startsWith("/book")) return { type: "CLEAR" };
 
     if (user && subscriptionStatus) {
       if (subscriptionStatus === "premium-plus") {
@@ -50,6 +56,27 @@ export function getGatingAction({
       } else {
         return { type: "REDIRECT", to: "/choose-plan" };
       }
+    }
+  }
+
+  // Toggle book saved to library:
+  if (pendingIntent?.intent === "SAVE_TO_LIBRARY") {
+    if (!pathname?.startsWith("/book")) return { type: "CLEAR" };
+
+    if (user && pendingIntent) {
+      return { type: "SAVE", userId: user.uid, bookId: pendingIntent.payload };
+    }
+  }
+
+  if (pendingIntent?.intent === "REMOVE_FROM_LIBRARY") {
+    if (!pathname?.startsWith("/book")) return { type: "CLEAR" };
+
+    if (user && pendingIntent) {
+      return {
+        type: "REMOVE",
+        userId: user.uid,
+        bookId: pendingIntent.payload,
+      };
     }
   }
 

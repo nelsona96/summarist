@@ -16,15 +16,24 @@ import {
 import { usePathname, useRouter } from "next/navigation";
 import { startClose } from "@/store/authModalSlice";
 import SplashScreen from "@/components/ui/SplashScreen";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDoc,
+  onSnapshot,
+  setDoc,
+} from "firebase/firestore";
 import { SubscriptionStatus } from "@/types/user";
 import { getGatingAction } from "@/lib/utils";
+import { setLibrary } from "@/store/librarySlice";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <Provider store={store}>
       <AuthListener />
       <RouteListener />
+      <LibraryListener />
       <SplashScreenToggle />
       <ModalToggle />
       {children}
@@ -108,6 +117,80 @@ function RouteListener() {
       dispatch(clearPendingIntent());
     }
   }, [user, subscriptionStatus, pathname, pendingIntent, dispatch, router]);
+
+  return null;
+}
+
+function LibraryListener() {
+  const dispatch = useAppDispatch();
+  const { user, pendingIntent, subscriptionStatus } = useAppSelector(
+    (state) => state.auth,
+  );
+  const pathname = usePathname();
+
+  // listen to firebase, update redux
+  useEffect(() => {
+    if (user) {
+      const libraryRef = collection(db, `users/${user.uid}/library`);
+
+      const unsubscribe = onSnapshot(libraryRef, (librarySnap) => {
+        const libraryArray: string[] = librarySnap.docs.map(
+          (bookDoc) => bookDoc.data().bookId,
+        );
+
+        dispatch(setLibrary(libraryArray));
+      });
+
+      return unsubscribe;
+    } else {
+      dispatch(setLibrary([]));
+    }
+  }, [user, dispatch]);
+
+  // add/remove book from library based on returned gating action
+  useEffect(() => {
+    const action = getGatingAction({
+      user,
+      pendingIntent,
+      pathname,
+    });
+
+    const updateLibrary = async () => {
+      if (action.type === "SAVE") {
+        const bookRef = doc(
+          db,
+          `users/${action.userId}/library/${action.bookId}`,
+        );
+
+        try {
+          await setDoc(bookRef, { bookId: action.bookId });
+        } catch (error) {
+          // light error handling, can add to ui in the future
+          console.error(error);
+        } finally {
+          dispatch(clearPendingIntent());
+        }
+      }
+
+      if (action.type === "REMOVE") {
+        const bookRef = doc(
+          db,
+          `users/${action.userId}/library/${action.bookId}`,
+        );
+
+        try {
+          await deleteDoc(bookRef);
+        } catch (error) {
+          // light error handling, can add to ui in the future
+          console.error(error);
+        } finally {
+          dispatch(clearPendingIntent());
+        }
+      }
+    };
+
+    updateLibrary();
+  }, [user, pendingIntent, pathname, dispatch]);
 
   return null;
 }

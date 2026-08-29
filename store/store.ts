@@ -2,10 +2,12 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 
 import authModalReducer from "./authModalSlice";
 import authReducer from "./authSlice";
+import libraryReducer from "./librarySlice";
 
 const rootReducer = combineReducers({
   authModal: authModalReducer,
   auth: authReducer,
+  library: libraryReducer,
 });
 
 export function setupStore(preloadedState?: PreloadedState) {

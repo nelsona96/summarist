@@ -3,13 +3,19 @@
 import { RiBookmarkLine, RiBookmarkFill } from "react-icons/ri";
 import BookDetailsButton from "./BookDetailsButton";
 import styles from "./AddToLibraryButton.module.css";
-import { useState } from "react";
+import { useAppSelector } from "@/hooks/redux";
+import useRequireAuth from "@/hooks/useRequireAuth";
 
-export default function AddToLibraryButton() {
-  const [isInLibrary, setIsInLibrary] = useState(false);
+export default function AddToLibraryButton({ bookId }: { bookId: string }) {
+  const requireAuth = useRequireAuth();
+  const isInLibrary = useAppSelector((state) => state.library.includes(bookId));
 
   const toggleLibrary = () => {
-    setIsInLibrary((prev) => !prev);
+    if (isInLibrary) {
+      requireAuth({ intent: "REMOVE_FROM_LIBRARY", payload: bookId });
+    } else {
+      requireAuth({ intent: "SAVE_TO_LIBRARY", payload: bookId });
+    }
   };
 
   return (

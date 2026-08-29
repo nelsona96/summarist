@@ -100,7 +100,7 @@ export default async function BookDetailsPage({
                 )}
               </div>
 
-              <AddToLibraryButton />
+              <AddToLibraryButton bookId={book.id} />
             </div>
           </div>
 

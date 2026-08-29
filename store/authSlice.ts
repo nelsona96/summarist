@@ -2,7 +2,7 @@ import { AppUser, SubscriptionStatus } from "@/types/user";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export type PendingIntent = {
-  intent: "ACCESS_BOOK"; // this will be expanded as more intents are needed
+  intent: "ACCESS_BOOK" | "SAVE_TO_LIBRARY" | "REMOVE_FROM_LIBRARY";
   payload: string;
 };
 
