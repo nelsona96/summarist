@@ -172,6 +172,8 @@ function LibraryListener() {
 
         await deleteDoc(bookRef);
       }
+
+      dispatch(clearPendingIntent());
     };
 
     updateLibrary();
