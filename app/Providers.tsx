@@ -18,9 +18,9 @@ import { startClose } from "@/store/authModalSlice";
 import SplashScreen from "@/components/ui/SplashScreen";
 import {
   collection,
+  deleteDoc,
   doc,
   getDoc,
-  getDocs,
   onSnapshot,
   setDoc,
 } from "firebase/firestore";
@@ -123,8 +123,12 @@ function RouteListener() {
 
 function LibraryListener() {
   const dispatch = useAppDispatch();
-  const { user } = useAppSelector((state) => state.auth);
+  const { user, pendingIntent, subscriptionStatus } = useAppSelector(
+    (state) => state.auth,
+  );
+  const pathname = usePathname();
 
+  // listen to firebase, update redux
   useEffect(() => {
     if (user) {
       const libraryRef = collection(db, `users/${user.uid}/library`);
@@ -142,6 +146,38 @@ function LibraryListener() {
       dispatch(setLibrary([]));
     }
   }, [user, dispatch]);
+
+  // add/remove book from library based on returned gating action
+  useEffect(() => {
+    const action = getGatingAction({
+      user,
+      pendingIntent,
+      pathname,
+      subscriptionStatus,
+    });
+
+    const updateLibrary = async () => {
+      if (action.type === "SAVE") {
+        const bookRef = doc(
+          db,
+          `users/${action.userId}/library/${action.bookId}`,
+        );
+
+        await setDoc(bookRef, { bookId: action.bookId });
+      }
+
+      if (action.type === "REMOVE") {
+        const bookRef = doc(
+          db,
+          `users/${action.userId}/library/${action.bookId}`,
+        );
+
+        await deleteDoc(bookRef);
+      }
+    };
+
+    updateLibrary();
+  }, [user, pendingIntent, dispatch]);
 
   return null;
 }
