@@ -1,37 +1,207 @@
 "use client";
 
+import type { Book } from "@/types/book";
+import { useCallback, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { auth } from "@/lib/firebase";
+import { getBookById } from "@/lib/api";
+import styles from "./page.module.css";
+import BookCarousel from "@/components/book/BookCarousel";
+import Skeleton from "@/components/ui/Skeleton";
+import BookCarouselSkeleton from "@/components/book/BookCarouselSkeleton";
+import Button from "@/components/ui/Button";
 import { openModal } from "@/store/authModalSlice";
-import { signOut } from "firebase/auth";
+import Image from "next/image";
+import clsx from "clsx";
 import Link from "next/link";
+import BookCarouselError from "@/components/book/BookCarouselError";
 
 export default function Page() {
-  const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.auth);
+  const savedBookIds = useAppSelector((state) => state.library);
+  const [savedBooks, setSavedBooks] = useState<Book[]>([]);
+  const [finishedBooks] = useState<Book[]>([]); // will add real finished books feature in a later phase
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
+
+  const fetchBooks = useCallback(
+    async (bookIds: string[]): Promise<Book[] | undefined> => {
+      setError(null);
+
+      try {
+        setIsLoading(true);
+        const results = await Promise.all(bookIds.map((id) => getBookById(id)));
+        return results;
+      } catch (error) {
+        setError(error as Error);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [],
+  );
+
+  useEffect(() => {
+    let ignore = false;
+
+    if (savedBookIds.length === 0) {
+      setSavedBooks([]);
+      setIsLoading(false);
+      return;
+    }
+
+    fetchBooks(savedBookIds).then((results) => {
+      if (results && !ignore) setSavedBooks(results);
+    });
+
+    return () => {
+      ignore = true;
+    };
+  }, [savedBookIds, fetchBooks]);
+
   return (
-    // Temporary/placeholder for soft gate testing
-    <div>
-      <br />
-      <Link href={"/for-you"}>Go Back</Link>
-      <br />
-      <br />
-      <h2>This is a protected route/feature!</h2>
-      <p>Only subscribed users can see the following:</p>
-      <br />
-      {user ? (
-        <>
-          <p>Hello {user.email}, thank you for being a subscribed user!</p>
-          <br />
-          <button onClick={() => signOut(auth)}>Logout</button>
-        </>
+    <>
+      <h1 className="srOnly">My Library</h1>
+
+      {!user ? (
+        <LoggedOutUi />
       ) : (
         <>
-          <p>Please login to see content.</p>
-          <br />
-          <button onClick={() => dispatch(openModal())}>Login</button>
+          <section
+            aria-labelledby="saved-books-heading"
+            className={styles.section}
+          >
+            <div className="container">
+              <h2 id="saved-books-heading" className={styles.sectionTitle}>
+                Saved Books
+              </h2>
+
+              {isLoading ? (
+                <Skeleton className={styles.subtitleSkeleton} />
+              ) : (
+                <p className={styles.sectionSubtitle}>
+                  {`${savedBooks.length} ${savedBooks.length === 1 ? "item" : "items"}`}
+                </p>
+              )}
+
+              {isLoading ? (
+                <BookCarouselSkeleton ariaLabel="Loading saved books" />
+              ) : error ? (
+                <BookCarouselError
+                  message="Failed to load saved books"
+                  onRetry={() =>
+                    fetchBooks(savedBookIds).then(
+                      (results) => results && setSavedBooks(results),
+                    )
+                  }
+                />
+              ) : savedBooks.length === 0 ? (
+                <NoSavedBooksUi />
+              ) : (
+                <BookCarousel books={savedBooks} />
+              )}
+            </div>
+          </section>
+
+          <section
+            aria-labelledby="finished-books-heading"
+            className={styles.section}
+          >
+            <div className="container">
+              <h2 id="finished-books-heading" className={styles.sectionTitle}>
+                Finished Books
+              </h2>
+
+              {
+                // will wire in with real data when feature is fully implemented
+                false ? (
+                  <Skeleton className={styles.subtitleSkeleton} />
+                ) : (
+                  <p className={styles.sectionSubtitle}>
+                    {`${finishedBooks.length} ${finishedBooks.length === 1 ? "item" : "items"}`}
+                  </p>
+                )
+              }
+
+              {false ? (
+                <BookCarouselSkeleton ariaLabel="Loading finished books" />
+              ) : // not adding error handling until feature is fully implemented
+              finishedBooks.length === 0 ? (
+                <NoFinishedBooksUi />
+              ) : (
+                <BookCarousel books={finishedBooks} />
+              )}
+            </div>
+          </section>
         </>
       )}
+    </>
+  );
+}
+
+function LoggedOutUi() {
+  const dispatch = useAppDispatch();
+
+  return (
+    <section className={styles.section}>
+      <div className={clsx("container", styles.loginContainer)}>
+        <Image
+          src="/assets/login.png"
+          alt=""
+          width={460}
+          height={317}
+          className={styles.loginImg}
+        />
+
+        <p className={styles.loginPara}>
+          Log in to your account to see your library.
+        </p>
+
+        <Button
+          onClick={() => dispatch(openModal())}
+          variant="login"
+          type="button"
+          label="Login"
+          className={styles.button}
+        />
+      </div>
+    </section>
+  );
+}
+
+function NoSavedBooksUi() {
+  return (
+    <div className={styles.noBooksCard}>
+      <p className={styles.noBooksCta}>Save your favorite books!</p>
+      <p className={styles.noBooksPara}>
+        When you save a book, it will appear here.
+      </p>
+
+      <Link
+        href="/for-you"
+        aria-label="Browse books to save to your library"
+        className={clsx("button", styles.noBooksCtaLink)}
+      >
+        Browse Books
+      </Link>
+    </div>
+  );
+}
+
+function NoFinishedBooksUi() {
+  return (
+    <div className={styles.noBooksCard}>
+      <p className={styles.noBooksCta}>Done and dusted!</p>
+      <p className={styles.noBooksPara}>
+        When you finish a book, you can find it here later.
+      </p>
+
+      <Link
+        href="/for-you"
+        aria-label="Browse books to read or listen to"
+        className={clsx("button", styles.noBooksCtaLink)}
+      >
+        Browse Books
+      </Link>
     </div>
   );
 }
