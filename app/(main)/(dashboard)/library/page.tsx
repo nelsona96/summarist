@@ -23,28 +23,39 @@ export default function Page() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
-  const fetchBooks = useCallback(async (bookIds: string[]) => {
-    setError(null);
+  const fetchBooks = useCallback(
+    async (bookIds: string[]): Promise<Book[] | undefined> => {
+      setError(null);
 
-    try {
-      setIsLoading(true);
-      const results = await Promise.all(bookIds.map((id) => getBookById(id)));
-      setSavedBooks(results);
-    } catch (error) {
-      setError(error as Error);
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
+      try {
+        setIsLoading(true);
+        const results = await Promise.all(bookIds.map((id) => getBookById(id)));
+        return results;
+      } catch (error) {
+        setError(error as Error);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [],
+  );
 
   useEffect(() => {
+    let ignore = false;
+
     if (savedBookIds.length === 0) {
       setSavedBooks([]);
       setIsLoading(false);
       return;
     }
 
-    fetchBooks(savedBookIds);
+    fetchBooks(savedBookIds).then((results) => {
+      if (results && !ignore) setSavedBooks(results);
+    });
+
+    return () => {
+      ignore = true;
+    };
   }, [savedBookIds, fetchBooks]);
 
   return (
@@ -77,7 +88,11 @@ export default function Page() {
               ) : error ? (
                 <BookCarouselError
                   message="Failed to load saved books"
-                  onRetry={() => fetchBooks(savedBookIds)}
+                  onRetry={() =>
+                    fetchBooks(savedBookIds).then(
+                      (results) => results && setSavedBooks(results),
+                    )
+                  }
                 />
               ) : savedBooks.length === 0 ? (
                 <NoSavedBooksUi />
