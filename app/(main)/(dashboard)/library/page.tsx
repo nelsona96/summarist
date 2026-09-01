@@ -18,6 +18,7 @@ export default function Page() {
   const { user } = useAppSelector((state) => state.auth);
   const savedBookIds = useAppSelector((state) => state.library);
   const [savedBooks, setSavedBooks] = useState<Book[]>([]);
+  const [finishedBooks, setFinishedBooks] = useState<Book[]>([]); // will add real finished books feature in a later phase
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
@@ -86,13 +87,13 @@ export default function Page() {
                 <Skeleton className={styles.subtitleSkeleton} />
               )}
               {!isLoading ? (
-                savedBooks.length === 0 ? (
-                  <NoSavedBooksUi />
+                finishedBooks.length === 0 ? (
+                  <NoFinishedBooksUi />
                 ) : (
                   <BookCarousel books={savedBooks} />
                 )
               ) : (
-                <BookCarouselSkeleton ariaLabel="Loading saved books" />
+                <BookCarouselSkeleton ariaLabel="Loading finished books" />
               )}
             </div>
           </section>
@@ -140,6 +141,26 @@ function NoSavedBooksUi() {
       <p className={styles.noBooksCta}>Save your favorite books!</p>
       <p className={styles.noBooksPara}>
         When you save a book, it will appear here.
+      </p>
+      <Button
+        onClick={() => router.push("/for-you")}
+        variant="login"
+        type="button"
+        label="Browse Books"
+        className={styles.noBooksCtaBtn}
+      />
+    </div>
+  );
+}
+
+function NoFinishedBooksUi() {
+  const router = useRouter();
+
+  return (
+    <div className={styles.noBooksCard}>
+      <p className={styles.noBooksCta}>Done and dusted!</p>
+      <p className={styles.noBooksPara}>
+        When you finish a book, you can find it here later.
       </p>
       <Button
         onClick={() => router.push("/for-you")}
