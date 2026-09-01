@@ -1,7 +1,7 @@
 "use client";
 
 import type { Book } from "@/types/book";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { getBookById } from "@/lib/api";
 import styles from "./page.module.css";
@@ -13,6 +13,7 @@ import { openModal } from "@/store/authModalSlice";
 import Image from "next/image";
 import clsx from "clsx";
 import Link from "next/link";
+import BookCarouselError from "@/components/book/BookCarouselError";
 
 export default function Page() {
   const { user } = useAppSelector((state) => state.auth);
@@ -22,6 +23,20 @@ export default function Page() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
+  const fetchBooks = useCallback(async (bookIds: string[]) => {
+    setError(null);
+
+    try {
+      setIsLoading(true);
+      const results = await Promise.all(bookIds.map((id) => getBookById(id)));
+      setSavedBooks(results);
+    } catch (error) {
+      setError(error as Error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
   useEffect(() => {
     if (savedBookIds.length === 0) {
       setSavedBooks([]);
@@ -29,20 +44,8 @@ export default function Page() {
       return;
     }
 
-    const fetchBooks = async (bookIds: string[]) => {
-      try {
-        setIsLoading(true);
-        const results = await Promise.all(bookIds.map((id) => getBookById(id)));
-        setSavedBooks(results);
-      } catch (error) {
-        setError(error as Error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     fetchBooks(savedBookIds);
-  }, [savedBookIds]);
+  }, [savedBookIds, fetchBooks]);
 
   return (
     <>
@@ -66,6 +69,11 @@ export default function Page() {
 
               {isLoading ? (
                 <BookCarouselSkeleton ariaLabel="Loading saved books" />
+              ) : error ? (
+                <BookCarouselError
+                  message="Failed to load saved books"
+                  onRetry={() => fetchBooks(savedBookIds)}
+                />
               ) : savedBooks.length === 0 ? (
                 <NoSavedBooksUi />
               ) : (
@@ -91,7 +99,8 @@ export default function Page() {
 
               {false ? (
                 <BookCarouselSkeleton ariaLabel="Loading finished books" />
-              ) : finishedBooks.length === 0 ? (
+              ) : // not adding error handling until feature is fully implemented
+              finishedBooks.length === 0 ? (
                 <NoFinishedBooksUi />
               ) : (
                 <BookCarousel books={finishedBooks} />
