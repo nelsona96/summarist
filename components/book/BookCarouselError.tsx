@@ -6,7 +6,13 @@ import Button from "../ui/Button";
 import styles from "./BookCarouselError.module.css";
 import BookCarouselSkeleton from "./BookCarouselSkeleton";
 
-export default function BookCarouselError({ message }: { message: string }) {
+export default function BookCarouselError({
+  message,
+  onRetry,
+}: {
+  message: string;
+  onRetry?: () => Promise<void>;
+}) {
   const router = useRouter();
 
   return (
@@ -17,7 +23,7 @@ export default function BookCarouselError({ message }: { message: string }) {
       <div className={styles.overlay}>
         <ErrorMessage message={message} />
         <Button
-          onClick={() => router.refresh()}
+          onClick={onRetry ? onRetry : () => router.refresh()}
           variant="login"
           type="button"
           label={"Try Again"}
