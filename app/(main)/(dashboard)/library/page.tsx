@@ -29,12 +29,10 @@ export default function Page() {
       return;
     }
 
-    const fetchSavedBooks = async () => {
+    const fetchBooks = async (bookIds: string[]) => {
       try {
         setIsLoading(true);
-        const results = await Promise.all(
-          savedBookIds.map((id) => getBookById(id)),
-        );
+        const results = await Promise.all(bookIds.map((id) => getBookById(id)));
         setSavedBooks(results);
       } catch (error) {
         setError(error as Error);
@@ -43,7 +41,7 @@ export default function Page() {
       }
     };
 
-    fetchSavedBooks();
+    fetchBooks(savedBookIds);
   }, [savedBookIds]);
 
   return (
