@@ -55,9 +55,14 @@ export default function Page() {
         <LoggedOutUi />
       ) : (
         <>
-          <section className={styles.section}>
+          <section
+            aria-labelledby="saved-books-heading"
+            className={styles.section}
+          >
             <div className="container">
-              <h2 className={styles.sectionTitle}>Saved Books</h2>
+              <h2 id="saved-books-heading" className={styles.sectionTitle}>
+                Saved Books
+              </h2>
 
               {isLoading ? (
                 <Skeleton className={styles.subtitleSkeleton} />
@@ -82,9 +87,14 @@ export default function Page() {
             </div>
           </section>
 
-          <section className={styles.section}>
+          <section
+            aria-labelledby="finished-books-heading"
+            className={styles.section}
+          >
             <div className="container">
-              <h2 className={styles.sectionTitle}>Finished Books</h2>
+              <h2 id="finished-books-heading" className={styles.sectionTitle}>
+                Finished Books
+              </h2>
 
               {
                 // will wire in with real data when feature is fully implemented
@@ -121,7 +131,7 @@ function LoggedOutUi() {
       <div className={clsx("container", styles.loginContainer)}>
         <Image
           src="/assets/login.png"
-          alt="Login image"
+          alt=""
           width={460}
           height={317}
           className={styles.loginImg}
@@ -151,7 +161,11 @@ function NoSavedBooksUi() {
         When you save a book, it will appear here.
       </p>
 
-      <Link href="/for-you" className={clsx("button", styles.noBooksCtaLink)}>
+      <Link
+        href="/for-you"
+        aria-label="Browse books to save to your library"
+        className={clsx("button", styles.noBooksCtaLink)}
+      >
         Browse Books
       </Link>
     </div>
@@ -166,7 +180,11 @@ function NoFinishedBooksUi() {
         When you finish a book, you can find it here later.
       </p>
 
-      <Link href="/for-you" className={clsx("button", styles.noBooksCtaLink)}>
+      <Link
+        href="/for-you"
+        aria-label="Browse books to read or listen to"
+        className={clsx("button", styles.noBooksCtaLink)}
+      >
         Browse Books
       </Link>
     </div>
