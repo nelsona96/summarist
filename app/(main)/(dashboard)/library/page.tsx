@@ -16,23 +16,25 @@ import { useRouter } from "next/navigation";
 
 export default function Page() {
   const { user } = useAppSelector((state) => state.auth);
-  const bookIds = useAppSelector((state) => state.library);
-  const [books, setBooks] = useState<Book[]>([]);
+  const savedBookIds = useAppSelector((state) => state.library);
+  const [savedBooks, setSavedBooks] = useState<Book[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    if (bookIds.length === 0) {
-      setBooks([]);
+    if (savedBookIds.length === 0) {
+      setSavedBooks([]);
       setIsLoading(false);
       return;
     }
 
-    const fetchBooks = async () => {
+    const fetchSavedBooks = async () => {
       try {
         setIsLoading(true);
-        const results = await Promise.all(bookIds.map((id) => getBookById(id)));
-        setBooks(results);
+        const results = await Promise.all(
+          savedBookIds.map((id) => getBookById(id)),
+        );
+        setSavedBooks(results);
       } catch (error) {
         setError(error as Error);
       } finally {
@@ -40,8 +42,8 @@ export default function Page() {
       }
     };
 
-    fetchBooks();
-  }, [bookIds]);
+    fetchSavedBooks();
+  }, [savedBookIds]);
 
   return (
     <>
@@ -50,27 +52,51 @@ export default function Page() {
       {!user ? (
         <LoggedOutUi />
       ) : (
-        <section className={styles.section}>
-          <div className="container">
-            <h2 className={styles.sectionTitle}>Saved Books</h2>
-            {!isLoading ? (
-              <p className={styles.sectionSubtitle}>
-                {`${books.length} ${books.length === 1 ? "item" : "items"}`}
-              </p>
-            ) : (
-              <Skeleton className={styles.subtitleSkeleton} />
-            )}
-            {!isLoading ? (
-              books.length === 0 ? (
-                <NoSavedBooksUi />
+        <>
+          <section className={styles.section}>
+            <div className="container">
+              <h2 className={styles.sectionTitle}>Saved Books</h2>
+              {!isLoading ? (
+                <p className={styles.sectionSubtitle}>
+                  {`${savedBooks.length} ${savedBooks.length === 1 ? "item" : "items"}`}
+                </p>
               ) : (
-                <BookCarousel books={books} />
-              )
-            ) : (
-              <BookCarouselSkeleton ariaLabel="Loading saved books" />
-            )}
-          </div>
-        </section>
+                <Skeleton className={styles.subtitleSkeleton} />
+              )}
+              {!isLoading ? (
+                savedBooks.length === 0 ? (
+                  <NoSavedBooksUi />
+                ) : (
+                  <BookCarousel books={savedBooks} />
+                )
+              ) : (
+                <BookCarouselSkeleton ariaLabel="Loading saved books" />
+              )}
+            </div>
+          </section>
+
+          <section className={styles.section}>
+            <div className="container">
+              <h2 className={styles.sectionTitle}>Finished Books</h2>
+              {!isLoading ? (
+                <p className={styles.sectionSubtitle}>
+                  {`${savedBooks.length} ${savedBooks.length === 1 ? "item" : "items"}`}
+                </p>
+              ) : (
+                <Skeleton className={styles.subtitleSkeleton} />
+              )}
+              {!isLoading ? (
+                savedBooks.length === 0 ? (
+                  <NoSavedBooksUi />
+                ) : (
+                  <BookCarousel books={savedBooks} />
+                )
+              ) : (
+                <BookCarouselSkeleton ariaLabel="Loading saved books" />
+              )}
+            </div>
+          </section>
+        </>
       )}
     </>
   );
