@@ -55,21 +55,21 @@ export default function Page() {
           <section className={styles.section}>
             <div className="container">
               <h2 className={styles.sectionTitle}>Saved Books</h2>
-              {!isLoading ? (
+
+              {isLoading ? (
+                <Skeleton className={styles.subtitleSkeleton} />
+              ) : (
                 <p className={styles.sectionSubtitle}>
                   {`${savedBooks.length} ${savedBooks.length === 1 ? "item" : "items"}`}
                 </p>
-              ) : (
-                <Skeleton className={styles.subtitleSkeleton} />
               )}
-              {!isLoading ? (
-                savedBooks.length === 0 ? (
-                  <NoSavedBooksUi />
-                ) : (
-                  <BookCarousel books={savedBooks} />
-                )
-              ) : (
+
+              {isLoading ? (
                 <BookCarouselSkeleton ariaLabel="Loading saved books" />
+              ) : savedBooks.length === 0 ? (
+                <NoSavedBooksUi />
+              ) : (
+                <BookCarousel books={savedBooks} />
               )}
             </div>
           </section>
@@ -77,21 +77,21 @@ export default function Page() {
           <section className={styles.section}>
             <div className="container">
               <h2 className={styles.sectionTitle}>Finished Books</h2>
-              {!isLoading ? (
+
+              {isLoading ? (
+                <Skeleton className={styles.subtitleSkeleton} />
+              ) : (
                 <p className={styles.sectionSubtitle}>
                   {`${finishedBooks.length} ${finishedBooks.length === 1 ? "item" : "items"}`}
                 </p>
-              ) : (
-                <Skeleton className={styles.subtitleSkeleton} />
               )}
-              {!isLoading ? (
-                finishedBooks.length === 0 ? (
-                  <NoFinishedBooksUi />
-                ) : (
-                  <BookCarousel books={finishedBooks} />
-                )
-              ) : (
+
+              {isLoading ? (
                 <BookCarouselSkeleton ariaLabel="Loading finished books" />
+              ) : finishedBooks.length === 0 ? (
+                <NoFinishedBooksUi />
+              ) : (
+                <BookCarousel books={finishedBooks} />
               )}
             </div>
           </section>
