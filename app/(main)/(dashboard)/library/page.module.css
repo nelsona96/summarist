@@ -49,3 +49,30 @@
 .button {
   max-width: 180px;
 }
+
+/* no saved books styles */
+
+.noBooksCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  text-wrap: pretty;
+  width: 100%;
+  max-width: fit-content;
+  margin: 0 auto;
+  gap: var(--space-sm);
+  padding: var(--space-lg) var(--space-xl);
+  border-radius: var(--space-sm);
+  background-color: var(--color-secondary-bg);
+}
+
+.noBooksCta {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+}
+
+.noBooksCtaBtn {
+  margin-top: var(--space-md);
+  width: fit-content;
+}
