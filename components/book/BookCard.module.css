@@ -129,6 +129,7 @@ compact variant
 .cardSm {
   position: relative;
   width: 100%;
+  max-width: 204px;
   height: 100%;
   scroll-snap-align: start;
   scroll-snap-stop: always;
