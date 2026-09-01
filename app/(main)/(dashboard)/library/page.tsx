@@ -19,7 +19,7 @@ export default function Page() {
   const { user } = useAppSelector((state) => state.auth);
   const savedBookIds = useAppSelector((state) => state.library);
   const [savedBooks, setSavedBooks] = useState<Book[]>([]);
-  const [finishedBooks, setFinishedBooks] = useState<Book[]>([]); // will add real finished books feature in a later phase
+  const [finishedBooks] = useState<Book[]>([]); // will add real finished books feature in a later phase
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
