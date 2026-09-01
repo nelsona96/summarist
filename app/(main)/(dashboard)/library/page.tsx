@@ -12,7 +12,6 @@ import Button from "@/components/ui/Button";
 import { openModal } from "@/store/authModalSlice";
 import Image from "next/image";
 import clsx from "clsx";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 export default function Page() {
