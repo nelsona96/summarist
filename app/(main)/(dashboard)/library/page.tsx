@@ -79,15 +79,18 @@ export default function Page() {
             <div className="container">
               <h2 className={styles.sectionTitle}>Finished Books</h2>
 
-              {isLoading ? (
-                <Skeleton className={styles.subtitleSkeleton} />
-              ) : (
-                <p className={styles.sectionSubtitle}>
-                  {`${finishedBooks.length} ${finishedBooks.length === 1 ? "item" : "items"}`}
-                </p>
-              )}
+              {
+                // will wire in with real data when feature is fully implemented
+                false ? (
+                  <Skeleton className={styles.subtitleSkeleton} />
+                ) : (
+                  <p className={styles.sectionSubtitle}>
+                    {`${finishedBooks.length} ${finishedBooks.length === 1 ? "item" : "items"}`}
+                  </p>
+                )
+              }
 
-              {isLoading ? (
+              {false ? (
                 <BookCarouselSkeleton ariaLabel="Loading finished books" />
               ) : finishedBooks.length === 0 ? (
                 <NoFinishedBooksUi />
