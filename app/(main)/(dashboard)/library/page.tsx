@@ -81,7 +81,7 @@ export default function Page() {
               <h2 className={styles.sectionTitle}>Finished Books</h2>
               {!isLoading ? (
                 <p className={styles.sectionSubtitle}>
-                  {`${savedBooks.length} ${savedBooks.length === 1 ? "item" : "items"}`}
+                  {`${finishedBooks.length} ${finishedBooks.length === 1 ? "item" : "items"}`}
                 </p>
               ) : (
                 <Skeleton className={styles.subtitleSkeleton} />
@@ -90,7 +90,7 @@ export default function Page() {
                 finishedBooks.length === 0 ? (
                   <NoFinishedBooksUi />
                 ) : (
-                  <BookCarousel books={savedBooks} />
+                  <BookCarousel books={finishedBooks} />
                 )
               ) : (
                 <BookCarouselSkeleton ariaLabel="Loading finished books" />
