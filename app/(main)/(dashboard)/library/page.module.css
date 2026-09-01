@@ -72,7 +72,16 @@
   font-weight: 600;
 }
 
-.noBooksCtaBtn {
-  margin-top: var(--space-md);
+.noBooksCtaLink {
   width: fit-content;
+  display: flex;
+  align-items: center;
+  height: 40px;
+  margin-top: var(--space-md);
+  background-color: var(--color-primary-accent);
+  color: var(--color-primary-font);
+}
+
+.noBooksCtaLink:hover {
+  background-color: var(--color-btn-hover);
 }

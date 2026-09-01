@@ -13,6 +13,7 @@ import { openModal } from "@/store/authModalSlice";
 import Image from "next/image";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function Page() {
   const { user } = useAppSelector((state) => state.auth);
@@ -132,41 +133,31 @@ function LoggedOutUi() {
 }
 
 function NoSavedBooksUi() {
-  const router = useRouter();
-
   return (
     <div className={styles.noBooksCard}>
       <p className={styles.noBooksCta}>Save your favorite books!</p>
       <p className={styles.noBooksPara}>
         When you save a book, it will appear here.
       </p>
-      <Button
-        onClick={() => router.push("/for-you")}
-        variant="login"
-        type="button"
-        label="Browse Books"
-        className={styles.noBooksCtaBtn}
-      />
+
+      <Link href="/for-you" className={clsx("button", styles.noBooksCtaLink)}>
+        Browse Books
+      </Link>
     </div>
   );
 }
 
 function NoFinishedBooksUi() {
-  const router = useRouter();
-
   return (
     <div className={styles.noBooksCard}>
       <p className={styles.noBooksCta}>Done and dusted!</p>
       <p className={styles.noBooksPara}>
         When you finish a book, you can find it here later.
       </p>
-      <Button
-        onClick={() => router.push("/for-you")}
-        variant="login"
-        type="button"
-        label="Browse Books"
-        className={styles.noBooksCtaBtn}
-      />
+
+      <Link href="/for-you" className={clsx("button", styles.noBooksCtaLink)}>
+        Browse Books
+      </Link>
     </div>
   );
 }
