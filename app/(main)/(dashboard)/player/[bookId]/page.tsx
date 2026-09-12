@@ -1,6 +1,8 @@
 import type { Book } from "@/types/book";
 import { notFound } from "next/navigation";
 import { BookNotFoundError, getBookById } from "@/lib/api";
+import PlayerGate from "@/components/player/PlayerGate";
+import BookSummary from "@/components/player/BookSummary";
 
 export default async function PlayerPage({
   params,
@@ -20,8 +22,9 @@ export default async function PlayerPage({
 
   return (
     <div>
-      <h1>{book.title}</h1>
-      <p>{book.author}</p>
+      <PlayerGate subscriptionRequired={book.subscriptionRequired}>
+        <BookSummary title={book.title} summary={book.summary} />
+      </PlayerGate>
     </div>
   );
 }
