@@ -1,3 +1,5 @@
-export default function PlayerLoading() {
-  return <div>Loading...</div>;
+import PlayerLoading from "@/components/player/PlayerLoading";
+
+export default function Loading() {
+  return <PlayerLoading />;
 }
