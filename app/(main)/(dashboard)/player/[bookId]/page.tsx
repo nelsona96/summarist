@@ -2,7 +2,6 @@ import type { Book } from "@/types/book";
 import { notFound } from "next/navigation";
 import { BookNotFoundError, getBookById } from "@/lib/api";
 import PlayerGate from "@/components/player/PlayerGate";
-import BookSummary from "@/components/player/BookSummary";
 
 export default async function PlayerPage({
   params,
@@ -11,10 +10,11 @@ export default async function PlayerPage({
 }) {
   const { bookId } = await params;
 
-  let book: Book;
+  let subRequired: boolean;
 
   try {
-    book = await getBookById(bookId);
+    const { subscriptionRequired }: Book = await getBookById(bookId);
+    subRequired = subscriptionRequired;
   } catch (error) {
     if (error instanceof BookNotFoundError) notFound();
     throw error;
@@ -22,9 +22,7 @@ export default async function PlayerPage({
 
   return (
     <div>
-      <PlayerGate subscriptionRequired={book.subscriptionRequired}>
-        <BookSummary title={book.title} summary={book.summary} />
-      </PlayerGate>
+      <PlayerGate bookId={bookId} subscriptionRequired={subRequired} />
     </div>
   );
 }
