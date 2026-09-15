@@ -1,4 +1,5 @@
 import type { Book } from "@/types/book";
+import styles from "./page.module.css";
 import { notFound } from "next/navigation";
 import { BookNotFoundError, getBookById } from "@/lib/api";
 import PlayerGate from "@/components/player/PlayerGate";
@@ -21,7 +22,7 @@ export default async function PlayerPage({
   }
 
   return (
-    <div>
+    <div className={styles.playerContainer}>
       <PlayerGate bookId={bookId} subscriptionRequired={subRequired} />
     </div>
   );
