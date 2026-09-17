@@ -1,4 +1,9 @@
 .spinner {
   position: fixed;
   inset: 0;
+
+  @media (min-width: 768px) {
+    width: calc(100vw - 240px);
+    transform: translateX(240px);
+  }
 }
