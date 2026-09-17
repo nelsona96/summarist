@@ -1,0 +1,14 @@
+.titleWrapper {
+  margin-bottom: var(--space-xl);
+  padding-bottom: var(--space-md);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.title {
+  font-size: var(--font-size-xl);
+}
+
+.summary {
+    white-space: pre-line;
+    line-height: 1.4;
+}

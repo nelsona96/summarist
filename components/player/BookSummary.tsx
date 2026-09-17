@@ -1,3 +1,5 @@
+import styles from "./BookSummary.module.css";
+
 export default function BookSummary({
   title,
   summary,
@@ -6,9 +8,11 @@ export default function BookSummary({
   summary: string;
 }) {
   return (
-    <div>
-      <h1>{title}</h1>
-      <p>{summary}</p>
-    </div>
+    <>
+      <div className={styles.titleWrapper}>
+        <h1 className={styles.title}>{title}</h1>
+      </div>
+      <p className={styles.summary}>{summary}</p>
+    </>
   );
 }

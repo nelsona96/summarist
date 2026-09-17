@@ -5,7 +5,7 @@ import clsx from "clsx";
 export default function LoadingSpinner({
   size,
 }: {
-  size: "sm" | "md" | "lg" | "xl";
+  size: "sm" | "md" | "lg" | "xl" | "xxl";
 }) {
   return (
     <AiOutlineLoading3Quarters
