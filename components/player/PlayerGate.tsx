@@ -6,6 +6,8 @@ import { useAppSelector } from "@/hooks/redux";
 import { getBookById } from "@/lib/api";
 import BookSummary from "./BookSummary";
 import PlayerLoading from "./PlayerLoading";
+import ErrorFallback from "../errors/ErrorFallback";
+import styles from "./PlayerGate.module.css";
 
 interface PlayerGateProps {
   bookId: string;
@@ -21,8 +23,14 @@ export default function PlayerGate({
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
+  const [retryKey, setRetryKey] = useState(0);
   const [bookTitle, setBookTitle] = useState<string | null>(null);
   const [bookSummary, setBookSummary] = useState<string | null>(null);
+
+  const retry = () => {
+    setError(null);
+    setRetryKey((key) => key + 1);
+  };
 
   useEffect(() => {
     if (!user || (bookTitle && bookSummary)) return;
@@ -48,7 +56,7 @@ export default function PlayerGate({
     } else {
       fetchBook();
     }
-  }, [bookId, subscriptionRequired, user, isPremiumPlus]);
+  }, [bookId, subscriptionRequired, user, isPremiumPlus, retryKey]);
 
   if (!user) {
     return <NotLoggedIn />;
@@ -57,7 +65,14 @@ export default function PlayerGate({
   } else if (loading) {
     return <PlayerLoading />;
   } else if (error) {
-    return <div>Oops! There was an error loading this book.</div>; // placeholder error state, will use ErrorFallback in the future
+    return (
+      <ErrorFallback
+        onReset={retry}
+        message="Oops! Failed to load book summary."
+        buttonLabel="Try Again"
+        className={styles.errorContainer}
+      />
+    );
   } else if (bookTitle && bookSummary) {
     return <BookSummary title={bookTitle} summary={bookSummary} />;
   }
