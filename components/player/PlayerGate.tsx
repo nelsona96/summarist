@@ -8,6 +8,7 @@ import BookSummary from "./BookSummary";
 import PlayerLoading from "./PlayerLoading";
 import ErrorFallback from "../errors/ErrorFallback";
 import styles from "./PlayerGate.module.css";
+import NotLoggedIn from "../ui/NotLoggedIn";
 
 interface PlayerGateProps {
   bookId: string;
@@ -59,10 +60,13 @@ export default function PlayerGate({
   }, [bookId, subscriptionRequired, user, isPremiumPlus, retryKey]);
 
   if (!user) {
-    return <NotLoggedIn />;
-  } else if (subscriptionRequired && !isPremiumPlus) {
-    return <UpgradePlan />;
-  } else if (loading) {
+    return (
+      <NotLoggedIn
+        message="Log in to your account to see this book's content."
+        className={styles.playerNotLoggedIn}
+      />
+    );
+  } else if (loading || subscriptionStatus === null) {
     return <PlayerLoading />;
   } else if (error) {
     return (
@@ -73,17 +77,11 @@ export default function PlayerGate({
         className={styles.errorContainer}
       />
     );
+  } else if (subscriptionRequired && !isPremiumPlus) {
+    return <UpgradePlan />;
   } else if (bookTitle && bookSummary) {
     return <BookSummary title={bookTitle} summary={bookSummary} />;
   }
-}
-
-function NotLoggedIn() {
-  return (
-    <div>
-      <p>Please login to see the content.</p>
-    </div>
-  );
 }
 
 function UpgradePlan() {

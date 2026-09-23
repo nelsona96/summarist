@@ -1,3 +1,4 @@
-.errorContainer {
+.errorContainer,
+.playerNotLoggedIn {
   --fallback-height: calc(100dvh - 144px);
 }

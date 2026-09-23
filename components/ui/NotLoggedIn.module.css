@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: var(--fallback-height, 100dvh);
+  /* height: calc(100dvh - 144px); */
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translateY(-60px);
+}
+
+.image {
+  width: 100%;
+  max-width: 460px;
+  height: auto;
+}
+
+.message {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  text-align: center;
+  text-wrap: pretty;
+  margin-bottom: var(--space-md);
+}
+
+.button {
+  max-width: 180px;
+}
