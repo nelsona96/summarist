@@ -9,6 +9,7 @@ import PlayerLoading from "./PlayerLoading";
 import ErrorFallback from "../errors/ErrorFallback";
 import styles from "./PlayerGate.module.css";
 import NotLoggedIn from "../ui/NotLoggedIn";
+import UpgradePlan from "../ui/UpgradePlan";
 
 interface PlayerGateProps {
   bookId: string;
@@ -78,16 +79,13 @@ export default function PlayerGate({
       />
     );
   } else if (subscriptionRequired && !isPremiumPlus) {
-    return <UpgradePlan />;
+    return (
+      <UpgradePlan
+        message="Please upgrade your plan to see this book's content."
+        className={styles.playerUpgradePlan}
+      />
+    );
   } else if (bookTitle && bookSummary) {
     return <BookSummary title={bookTitle} summary={bookSummary} />;
   }
-}
-
-function UpgradePlan() {
-  return (
-    <div>
-      <p>Please upgrade your plan to see the content.</p>
-    </div>
-  );
 }
