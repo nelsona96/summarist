@@ -7,7 +7,7 @@ import clsx from "clsx";
 
 interface NotLoggedInProps {
   message: string;
-  className: string;
+  className?: string;
 }
 
 export default function NotLoggedIn({ message, className }: NotLoggedInProps) {
