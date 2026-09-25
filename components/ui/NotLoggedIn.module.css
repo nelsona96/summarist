@@ -1,0 +1,30 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image {
+  width: 100%;
+  max-width: 460px;
+  height: auto;
+}
+
+.message {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  text-align: center;
+  text-wrap: pretty;
+  margin-bottom: var(--space-md);
+}
+
+.button {
+  max-width: 180px;
+}

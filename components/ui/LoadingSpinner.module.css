@@ -21,6 +21,10 @@
   font-size: var(--font-size-3xl);
 }
 
+.xxl {
+  font-size: 4rem;
+}
+
 @keyframes spinner {
   from {
     rotate: 0deg;

@@ -6,6 +6,10 @@ import { useAppSelector } from "@/hooks/redux";
 import { getBookById } from "@/lib/api";
 import BookSummary from "./BookSummary";
 import PlayerLoading from "./PlayerLoading";
+import ErrorFallback from "../errors/ErrorFallback";
+import styles from "./PlayerGate.module.css";
+import NotLoggedIn from "../ui/NotLoggedIn";
+import UpgradePlan from "../ui/UpgradePlan";
 
 interface PlayerGateProps {
   bookId: string;
@@ -21,8 +25,14 @@ export default function PlayerGate({
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
+  const [retryKey, setRetryKey] = useState(0);
   const [bookTitle, setBookTitle] = useState<string | null>(null);
   const [bookSummary, setBookSummary] = useState<string | null>(null);
+
+  const retry = () => {
+    setError(null);
+    setRetryKey((key) => key + 1);
+  };
 
   useEffect(() => {
     if (!user || (bookTitle && bookSummary)) return;
@@ -48,33 +58,34 @@ export default function PlayerGate({
     } else {
       fetchBook();
     }
-  }, [bookId, subscriptionRequired, user, isPremiumPlus]);
+  }, [bookId, subscriptionRequired, user, isPremiumPlus, retryKey]);
 
   if (!user) {
-    return <NotLoggedIn />;
-  } else if (subscriptionRequired && !isPremiumPlus) {
-    return <UpgradePlan />;
-  } else if (loading) {
+    return (
+      <NotLoggedIn
+        message="Log in to your account to see this book's content."
+        className={styles.playerNotLoggedIn}
+      />
+    );
+  } else if (loading || subscriptionStatus === null) {
     return <PlayerLoading />;
   } else if (error) {
-    return <div>Oops! There was an error loading this book.</div>; // placeholder error state, will use ErrorFallback in the future
+    return (
+      <ErrorFallback
+        onReset={retry}
+        message="Oops! Failed to load book summary."
+        buttonLabel="Try Again"
+        className={styles.errorContainer}
+      />
+    );
+  } else if (subscriptionRequired && !isPremiumPlus) {
+    return (
+      <UpgradePlan
+        message="Please upgrade your plan to see this book's content."
+        className={styles.playerUpgradePlan}
+      />
+    );
   } else if (bookTitle && bookSummary) {
     return <BookSummary title={bookTitle} summary={bookSummary} />;
   }
-}
-
-function NotLoggedIn() {
-  return (
-    <div>
-      <p>Please login to see the content.</p>
-    </div>
-  );
-}
-
-function UpgradePlan() {
-  return (
-    <div>
-      <p>Please upgrade your plan to see the content.</p>
-    </div>
-  );
 }
