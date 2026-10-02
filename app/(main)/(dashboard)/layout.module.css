@@ -13,3 +13,12 @@
   min-width: 0;
   overflow-y: auto;
 }
+
+.playerContent {
+  overflow-y: auto;
+  height: calc(100dvh - var(--player-height-mobile));
+
+  @media (min-width: 768px) {
+    height: calc(100dvh - var(--player-height-desktop));
+  }
+}
