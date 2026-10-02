@@ -26,12 +26,14 @@ export default function Sidebar() {
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.auth);
   const { isOpen, isVisible, toggleSidebar } = useSidebarContext();
+  const isPlayerPage = pathname.startsWith("/player");
 
   return (
     <div
       onClick={(e) => e.target === e.currentTarget && toggleSidebar()}
       className={clsx({
         [styles.wrapper]: true,
+        [styles.playerWrapper]: isPlayerPage,
         [styles.open]: isOpen,
         [styles.visible]: isVisible,
       })}
