@@ -3,3 +3,16 @@
 .playerUpgradePlan {
   --fallback-height: calc(100dvh - 144px);
 }
+
+.audioPlayerWrapper {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: pink;
+  height: var(--player-height-mobile);
+
+  @media (min-width: 768px) {
+    height: var(--player-height-desktop);
+  }
+}
