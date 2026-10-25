@@ -86,11 +86,6 @@ export default function PlayerGate({
       />
     );
   } else if (bookTitle && bookSummary) {
-    return (
-      <>
-        <BookSummary title={bookTitle} summary={bookSummary} />
-        <div className={styles.audioPlayerWrapper}></div>
-      </>
-    );
+    return <BookSummary title={bookTitle} summary={bookSummary} />;
   }
 }

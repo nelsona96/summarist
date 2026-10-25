@@ -6,6 +6,7 @@ import { useSidebarContext } from "@/context/SidebarContext";
 import styles from "./layout.module.css";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
+import AudioPlayer from "@/components/player/AudioPlayer";
 
 export default function MainContent({ children }: { children: ReactNode }) {
   const { isOpen } = useSidebarContext();
@@ -23,7 +24,10 @@ export default function MainContent({ children }: { children: ReactNode }) {
       <header className={styles.header}>
         <Searchbar />
       </header>
-      <main className={styles.main}>{children}</main>
+      <main className={styles.main}>
+        {children}
+        <AudioPlayer />
+      </main>
     </div>
   );
 }
