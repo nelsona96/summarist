@@ -102,6 +102,10 @@
   /* Navbar:  */
   --navbar-height-mobile: 60px;
   --navbar-height-desktop: 80px;
+
+  /* Audio Player: */
+  --player-height-mobile: 80px;
+  --player-height-desktop: 80px;
 }
 
 @layer base {

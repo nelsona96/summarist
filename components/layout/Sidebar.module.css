@@ -24,6 +24,14 @@
   }
 }
 
+.playerWrapper {
+  height: calc(100dvh - var(--player-height-mobile));
+
+  @media (min-width: 768px) {
+    height: calc(100dvh - var(--player-height-desktop));
+  }
+}
+
 .wrapper.open {
   backdrop-filter: brightness(50%);
   pointer-events: auto;
